@@ -1,5 +1,7 @@
 # pg-paper-review
 
+[[_TOC_]]
+
 ### Paper Review List
 
 reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
@@ -47,6 +49,12 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 와 같은 형태의 neural network으로 표현하며,
 
  *policy gradient* approach를 이용해 다음과 같이 policy parameter를 퍼포먼스 방향으로의 gradient에 비례하도록 parameter를 업데이트 해준다면
+
+```math
+\Delta\theta \approx \alpha\frac{\partial\rho}{\partial\theta}
+```
+
+
 $$
 \Delta\theta \approx \alpha\frac{\partial\rho}{\partial\theta}
 $$
