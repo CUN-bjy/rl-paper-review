@@ -48,7 +48,9 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
  *policy gradient* approach를 이용해 다음과 같이 policy parameter를 퍼포먼스 방향으로의 gradient에 비례하도록 parameter를 업데이트 해준다면
 
-<img align="center" src="./img/latex1.png">
+
+
+<p align="center"><img src="./img/latex1.png"/></p>
 
 performance(reward)가 극대화 하는 지점에서 local optimal policy로 수렴하게 될 것이다.
 
