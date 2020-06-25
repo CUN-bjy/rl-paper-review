@@ -48,7 +48,7 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
  *policy gradient* approach를 이용해 다음과 같이 policy parameter를 퍼포먼스 방향으로의 gradient에 비례하도록 parameter를 업데이트 해준다면
 
-![](./img/latex1.png)
+<img align="center" src="./img/latex1.png">
 
 performance(reward)가 극대화 하는 지점에서 local optimal policy로 수렴하게 될 것이다.
 
@@ -68,20 +68,16 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    **Theorem 1 (Policy Gradient)**
 
-   ![](./img/latex3.png)
-   
-   
+   <img align="center" src="./img/latex3.png">
    
    이 수식은 결국 위 두가지 approximation 방법 모두에 적용이 가능하며 appendix에 두가지 방법을 이용해 모두 증명해놓았다. 
+   
+   <img align="center" src="./img/latex2.png">
 
-   ![](img/latex2.png)
-   
-   
-   
    기본적으로 두 증명 모두 위 식과 같이 value function과 action-value function의 기본 정의로부터 유도된다. 유도하는 방식은 Q-function을 어떤 방정식으로 구해내느냐에 따라 달라지니 appendix를 유심히 살펴보시길 바란다. 결국 Theorem 1이 의미하는 바는 논문에도 잘 설명되어있듯이, **distribution of states가 policy changes에 어떤 영향도 주지 않는다는 것이다.** 이는 **sampling을 통해 gradient를 근사하기에 편리한 특성**을 지닌다는 뜻이다. 물론 Q-function도 반드시 추정되어야 하는데 이를위한 한가지 방법은 실제 reward값을 이용하는 것이다.(???)
-
+   
     
-
+   
 2. Policy Gradient with Approximation
 
    
