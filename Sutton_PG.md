@@ -108,7 +108,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
    
    논문에서는 위 Theorem 2의 첫번째 수식을 이용해 아래 수식을 쉽게 증명해낸다.
    
-개인적으로 첫번째 수식의 등장은 조금은 뜬금없이 느껴졌는데, 해당 [link](https://books.google.co.kr/books?id=OeprCQAAQBAJ&pg=PA209&lpg=PA209&dq=compatibility+with+policy+parameterization&source=bl&ots=1FrXxTSUPV&sig=ACfU3U1OGq_XlO-SHJbYPhlRMbccpRo03A&hl=ko&sa=X&ved=2ahUKEwi80-rY1KHqAhXaw4sBHenhBjsQ6AEwAHoECAoQAQ#v=onepage&q=compatibility%20with%20policy%20parameterization&f=false](https://books.google.co.kr/books?id=OeprCQAAQBAJ&pg=PA209&lpg=PA209&dq=compatibility+with+policy+parameterization&source=bl&ots=1FrXxTSUPV&sig=ACfU3U1OGq_XlO-SHJbYPhlRMbccpRo03A&hl=ko&sa=X&ved=2ahUKEwi80-rY1KHqAhXaw4sBHenhBjsQ6AEwAHoECAoQAQ#v=onepage&q=compatibility with policy parameterization&f=false)) 를 보고나서야 어느정도 납득이 되었다.
+개인적으로 첫번째 수식의 등장은 조금은 뜬금없이 느껴졌는데, 해당 [link](https://bit.ly/2VnABnC) 를 보고나서야 어느정도 납득이 되었다.
    
 첫 수식에 대해서는 **(Semi-compatible approximation)**에대해 정의 되어있어야 한다.
    
