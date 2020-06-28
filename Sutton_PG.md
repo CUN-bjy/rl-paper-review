@@ -110,7 +110,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
    
 개인적으로 첫번째 수식의 등장은 조금은 뜬금없이 느껴졌는데, 해당 [link](https://bit.ly/2VnABnC) 를 보고나서야 어느정도 납득이 되었다.
    
-첫 수식에 대해서는 **(Semi-compatible approximation)**에대해 정의 되어있어야 한다.
+첫 수식에 대해서는 **(Semi-compatible approximation)** 에대해 정의 되어있어야 한다.
    
 그의 정의는 다음과 같다.
    
