@@ -32,6 +32,10 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
 [Deterministic policy gradient algorithms]
 
+Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (2014).
+
+[review_page](./DPG.md)  |  [paper_link](http://proceedings.mlr.press/v32/silver14.pdf)
+
 
 
 ### 3. DDPG

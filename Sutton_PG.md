@@ -1,3 +1,5 @@
+[이전페이지](README.md)
+
 ### 1. Sutton_PG
 
 [Policy gradient methods for reinforcement learning with function approximation]
@@ -8,7 +10,7 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
 
 
-#### 1) intro
+#### [intro]
 
 이 논문이 발표될 당시 RL의 주된 접근 방식은 '*value-function* approach'였다.
 
@@ -38,7 +40,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
 
 
-#### 2) main
+#### [main]
 
 본론에서는 새로운 내용들 보다는 서문에서 다루었던 내용들의 수학적 증명으로 이어진다.
 
@@ -105,31 +107,31 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
    <p align="center"><img src="./img/latex7.png"/></p>
    
 <p align="center"><img src="./img/latex8.png"/></p>
-   
+
    논문에서는 위 Theorem 2의 첫번째 수식을 이용해 아래 수식을 쉽게 증명해낸다.
-   
+
 개인적으로 첫번째 수식의 등장은 조금은 뜬금없이 느껴졌는데, 해당 [link](https://bit.ly/2VnABnC) 를 보고나서야 어느정도 납득이 되었다.
-   
+
 첫 수식에 대해서는 **(Semi-compatible approximation)** 에대해 정의 되어있어야 한다.
-   
+
 그의 정의는 다음과 같다.
-   
+
 ​	(1) Q-function을 두개의 파라미터 벡터 w,xi 로 이루어진 근사함수로 만들어보자.
-   
+
 ​		해당 근사함수는 state-action value와 해당 state 자체에 대한 value function으로 나눌 수 있을 것이다.
-   
+
 <p align="center"><img src="./img/latex9.png"/></p>
-   
+
    ​	(2) 이때, state-action을 의미하는 근사함수 f가 policy parameterization과 호환될 수 있다면 그 근사는 semi-compatible하다고 한다.(??)
-   
+
    ​		여기서 의미하는 compatible함을 전제하는 조건은 다음 식을 만족해야하며, 결국 이렇다는 가정 하에 Theorem은 성공적으로 증명되는 것이다.
    <p align="center"><img src="./img/latex10.png"/></p>
 
    ​		논문에 주석으로 달려있는것을 보니 아마도 저런 가정을 막 해버려도 해당 이론이 정당함을 Tsitsiklis라는 사람이 증명한듯 하다.
-   
+
    ​		(위 식은 자연스레 Theorem 2의 첫번째 수식으로 간단히 귀결된다.)
-   
-    
+
+​    
 
    결론적으로 Theorem 2을 통해 저자가 전달하고자 하는 것은 근사함수 f가 Q-function를 충분히 근사할 수 있다면,
 
