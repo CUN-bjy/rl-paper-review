@@ -10,7 +10,7 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 
 
 
-#### [Abstract]
+### [Abstract]
 
 - 해당 논문에서는 continuous action을 다루는 RL을 위한, ***deterministic* policy gradient algorithm**을 다룬다. 
   - 이는 action-value function의 expected gradient의 형태로 나타나며, 일반적인 stochastic PG에서보다도 효과적으로 추정될 수 있다.
@@ -21,7 +21,7 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 
 
 
-#### [Introduction]
+### [Introduction]
 
 Policy Gradient 알고리즘은 일반적으로 stochastic한 정책을 통해 샘플링을 한 후 보다 나은 reward를 얻을 수 있는 방향으로 정책파라미터를 조정한다.
 
@@ -66,31 +66,140 @@ stochastic의 경우에는  policy gradient가 **state와 action spaces 모두�
 
 
 
-#### [Background]
+### [Background]
 
-##### Preliminaries
+#### Preliminaries
 
-##### Stochastic Policy Gradient Theorem
+일반적인 stochastic policy가 정의된 MDP에서 우리는 아래와 같이 **performance objective**를 정의할 수 있으며,
 
-##### Stochastic Actor-Critic Algorithms
+expectation의 형태로 나타낼 수 있다. (변수설명은 논문 참조)
+$$
+J(\pi_\theta) = \int_S \rho^\pi(s)\int_A \pi_\theta(s,a)r(s,a)dads
+\\ = E_{s\sim p^\pi,a\sim\pi^\theta}[r(s,a)]\qquad\quad
+$$
 
-##### Off-Policy Actor-Critic
+#### Stochastic Policy Gradient Theorem
+
+**Policy Gradient** algorithms은 continuous action reinforcement learning algorithm에서 가장 유명한 알고리즘일 것이다.
+
+이 알고리즘의 주된 아이디어는 정책파라미터인 theta를 아래의 **performance gradient**의 방향으로 조정하는 것이다. 
+$$
+\nabla_\theta J(\pi_\theta) = \int_S\rho^\pi(s)\int_A\nabla_\theta\pi_\theta(a|s)Q^\pi(s,a)dads
+\\ \quad\quad=E_{s\sim\rho^\pi,a\sim\pi_\theta}[\nabla_\theta log\pi_\theta(a|s)Q^\pi(s,a)]
+$$
+policy gradient알고리즘은 놀라울정도로 간단하다.
+
+state distribution은 정책파라미터에 연관성이 있는데도 불구하고, state distribution의 gradient와 policy gradient는 서로 무관하다.
+
+위 사실은 performance gradient를 계산할 필요없이 sampling을 통해 expectation을 구할 수 있도록 도와주었다.
+
+이 덕분에 다양한 policy gradient algorithm들이 유도되기 시작하였고, 
+
+이러한 알고리즘들을 다루기 위해서는 **action-value funciton을 어떻게 추정할 것인가**에 대한 문제로 귀결되었다.
 
 
 
-#### [Gradients of Deterministics Policies]
+#### Stochastic Actor-Critic Algorithms
 
-##### Action-Value Gradients
-
-##### Deterministic Policy Gradient Theorem
+**actor-critic** 알고리즘은 policy gradient기반의 구조에서 가장 널리 쓰이며, actor와 critic 두가지 요소로 이루어져있다.
 
 
 
-#### [Deterministic Actor-Critic Algorithms]
+**actor**는 performance gradient의 stochastic gradient ascent를 이용해 stochastic policy를 조절하며, 
 
-##### On-Policy Deterministic Actor-Critic
+알려지지 않은 action-value function을 파라미터로 근사해  대체한다.
+$$
+\nabla_\theta J(\pi_\theta) = E_{s\sim\rho^\pi,a\sim\pi_\theta}[\nabla_\theta log\pi_\theta(a|s)Q^w(s,a)]
+$$
+**critic**은 action-value function을 적절한 정책 평가 알고리즘(e.g. temporal-difference learning)으로 추정한다.
 
-##### Off-Policy Deterministic Actor-Critic
+일반적으로 action-value function을 function approximator로 대체하는 것은 bias하다고 알려져있으나,
 
-##### Compatible Function Approximation
+function approximator가 **compatible** 하다면 bias하지 않다.
+
+
+
+여기서 compatible한 funciton approximator의 조건은 다음과 같다.
+$$
+\text{i)}\quad Q^w(s,a) = \nabla_\theta log\pi_\theta(a|s)^Tw
+\\ \text{ii)} \quad \text{parameter } w\text{ are chosen to minimize the mean-squared error} 
+\\ \epsilon^2(w) = E_{s\sim \rho^\pi,a\sim\pi_\theta}[(Q^w(s,a)-Q^\pi(s,a))^2]
+$$
+
+
+#### Off-Policy Actor-Critic
+
+별도의 behaviour policy로부터 trajectories를 sampling하는 **off-policy** 방식의 policy gradient algorithm은 종종 유용하게 사용된다.
+$$
+\beta(a|s) \neq \pi_\theta(a|s)
+$$
+일반적인 off-policy 방법에서, **performance objective**는 아래의 식과 같이 
+
+behaviour policy의 state distribution에 대해 averaged된 target policy의 value function으로 수정된다.(???한국어로 어떻게 번역을해야할까)
+
+(참고: modified to be the value function of ther target policy, averaged over the state distribution of the behaviour policy)
+$$
+J_\beta(\pi_\theta) = \int_S\rho^\beta(s)V^\pi(s)ds
+\\ \qquad\qquad\qquad\qquad\quad = \int_S\int_A\rho^\beta(s)\pi_\theta(a|s)Q^\pi(s,a)dads
+$$
+또, 이에 대해 미분된 performance objective는 **off-policy policy-gradient**로 근사된다.
+$$
+\nabla_\theta J_\beta(\pi_\theta) \approx \int_S\int_A\rho^\beta(s)\nabla_\theta\pi_\theta(a|s)Q^\pi(s,a)dads
+\\ \qquad\qquad\qquad = E_{s\sim\rho^\beta,a\sim\beta}[\frac{\pi_\theta(a|s)}{\beta_\theta(a|s)}\nabla_\theta log\pi_\theta(a|s)Q^\pi(s,a)]
+$$
+위 식의 근사는 [(Degris 2012b)](https://arxiv.org/abs/1205.4839) 이 논문에 근거한 근사이며, action-value gradient과 연관된 term이 제거된 것이다.
+
+위 논문에 의하면 이러한 approximation이 gradient ascent가 수렴하는 방향으로 local optima가 형성되므로 충분히 좋은 근사라고 주장한다.
+
+
+
+위 논문에서 소개된, **Off-Policy Actor-Critic(OffPAC)**은 behaviour policy를 사용해 trajectories sample을 생성한다.
+
+**critic**은 이 때 생성된 trajectories로부터 off-policy로 state-value function을 추정해내며,
+
+이때 gradient temporal-difference learning을 사용한다.
+
+또한, **actor**는 trajectories로부터 off-policy로 target policy의 파라미터를 업데이트 시킨다.
+
+이때는 stochastic gradient ascent를 이용해 업데이트한다.
+
+
+
+여기서 actor와 critic은 behaviour policy가 아닌 target policy를 사용했다는 것을 반영하기위해,
+
+**importance sampling ratio**를 사용한다.
+$$
+\text{importance sampling ratio : } \space\frac{\pi_\theta(a|s)}{\beta_\theta(a|s)}
+$$
+
+
+### [Gradients of Deterministics Policies]
+
+이 장에서는 어떻게 policy gradient framework이 deterministic policy까지 확장되는가를 보인다.
+
+먼저, deterministic policy gradient에 담긴 이론적인 것들을 전달하고, 이를 증명한다.
+
+마지막으로, deterministic policy gradient theorem이 사실은 stochastic policy gradient theorem의 특수 케이스임을 보인다.
+
+
+
+#### Action-Value Gradients
+
+
+
+
+
+#### Deterministic Policy Gradient Theorem
+
+#### Limit of the Stochastic Policy Gradient 
+
+
+
+### [Deterministic Actor-Critic Algorithms]
+
+#### On-Policy Deterministic Actor-Critic
+
+#### Off-Policy Deterministic Actor-Critic
+
+#### Compatible Function Approximation
 
