@@ -185,11 +185,49 @@ $$
 
 #### Action-Value Gradients
 
+model-free RL algorithm은 주로 일반화된 policy iteration 기법을 기반으로 두고있으며,
 
+이는 **policy evaluation** 과  **policy improvement**로 이루어져있다.
+
+
+
+**policy evalution** 방법은 Monte-Carlo evaluation 이나 temporal-difference learning 방법 등으로 action-value function을 추정한다.
+
+**policy improvement** 방법은 추정된 action-value function에 의해 policy가 업데이트 되며, 
+
+주로 action-value function의 greedy maximization방법으로 업데이트한다.
+
+
+
+하지만 continuous action spaces에서는 이러한 방식의 policy improvement는 매 스텝 global maximization을 요구하기에 문제가 많았다.
+
+그 대신에 간단하고 계산적으로도 매우 좋아보이는 대안이 있는데, 바로 **Q-function의 gradient 방향으로 policy를 업데이트** 하는 것이다.
+$$
+\theta^{k+1} = \theta^k + \alpha E_{s\sim\rho^{\mu^k}}p[\nabla_\theta Q^{\mu^k}(s,\mu_\theta(s))]
+$$
+이러한 방식은 매 state마다 다른 방향으로의 policy improvement가 진행되며, 이들은 state distribution에 대한 기대값으로 취해져 평균치를 이룰 것이다.
+
+
+
+또한, chain rule의 적용을 통해 위 식을 action에 대한 action-value function과 policy parameter에 대한 policy gradient로 나눌 수 있다.
+$$
+\theta^{k+1} = \theta^k + \alpha E_{s\sim\rho^{\mu^k}}[\nabla_\theta\mu_\theta(s)\nabla_a{Q^{\mu^k}(s,a)}|_{a=\mu_\theta(s)}]
+$$
+하지만, policy의 변화에 의해 방문하게되는 states가 바뀌게 되고 결국  state distribution이 변할것이다. 
+
+이는 결국 distribution에 대한 변화를 모두 설명하지 못하고서는 improvement를 보장할 수 있다기에 불확실함을 가진다고 생각될 것이다. 
+
+그러나, stochastic policy gradient theorem에서 보여진 것과 같이 **state distribuiton의 gradient는 계산할 필요가 없다**.
+
+따라서, 위 식에서 보여진 직관적인(?) 업데이트방식은 분명 performance objective의 gradient를 따르니 걱정하지 말도록하자.
 
 
 
 #### Deterministic Policy Gradient Theorem
+
+
+
+
 
 #### Limit of the Stochastic Policy Gradient 
 
