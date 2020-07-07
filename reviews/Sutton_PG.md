@@ -1,4 +1,4 @@
-[이전페이지](README.md)
+[HOME](../README.md)
 
 ### 1. Sutton_PG
 
@@ -30,7 +30,7 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
  *policy gradient* approach를 이용해 다음과 같이 policy parameter를 퍼포먼스 방향으로의 gradient에 비례하도록 parameter를 업데이트 해준다면
 
-<p align="center"><img src="./img/latex1.png"/></p>
+<p align="center"><img src="../img/latex1.png"/></p>
 
 performance(reward)가 극대화 하는 지점에서 local optimal policy로 수렴하게 될 것이다.
 
@@ -54,13 +54,13 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    ***Theorem 1 (Policy Gradient)***
 
-   <p align="center"><img src="./img/latex3.png"/></p>
+   <p align="center"><img src="../img/latex3.png"/></p>
 
    이 수식은 결국 위 두 가지 approximation 방법 모두에 적용이 가능하며 appendix에 각 각 증명이 되어있다.
 
    
 
-   <p align="center"><img src="./img/latex2.png"/></p>
+   <p align="center"><img src="../img/latex2.png"/></p>
 
    기본적으로 두 증명 모두 위 식과 같이 value function과 action-value function의 기본 정의로부터 유도된다. 
 
@@ -72,7 +72,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    아래 수식과 같이 unbiased-estimator를 구해 근사할 수 있을 것이다.
 
-   <p align="center"><img src="./img/latex4.png"/></p>
+   <p align="center"><img src="../img/latex4.png"/></p>
 
    또, 위 식에서 Q-function의 경우 계산값을 도출하기 어려워, 해당 policy를 따라 수집된 Reward를 이용해 근사되어야 할 것이다.
 
@@ -86,11 +86,11 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    근사함수 f에 대해 그의 파라미터 w가 동일한 policy를 따라 학습되고 업데이트 된다면 다음과 같은 식이 성립된다.
    
-   <p align="center"><img src="./img/latex5.png"/></p>
+   <p align="center"><img src="../img/latex5.png"/></p>
    
    만일 근사함수 f가 충분히 만족스러운 성능을 낼 때, local optimum에 수렴할 것이고 그땐 아래와 같은 수식 역시 성립된다.
    
-   <p align="center"><img src="./img/latex6.png"/></p>
+   <p align="center"><img src="../img/latex6.png"/></p>
    
    ​	위 식에 대한 설명을 하자면,	
 
@@ -104,9 +104,8 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    ***Theorem 2 (Policy Gradient with Function Approximation)***
    
-   <p align="center"><img src="./img/latex7.png"/></p>
-   
-<p align="center"><img src="./img/latex8.png"/></p>
+   <p align="center"><img src="../img/latex7.png"/></p>
+<p align="center"><img src="../img/latex8.png"/></p>
 
    논문에서는 위 Theorem 2의 첫번째 수식을 이용해 아래 수식을 쉽게 증명해낸다.
 
@@ -120,12 +119,12 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
 ​		해당 근사함수는 state-action value와 해당 state 자체에 대한 value function으로 나눌 수 있을 것이다.
 
-<p align="center"><img src="./img/latex9.png"/></p>
+<p align="center"><img src="../img/latex9.png"/></p>
 
    ​	(2) 이때, state-action을 의미하는 근사함수 f가 policy parameterization과 호환될 수 있다면 그 근사는 semi-compatible하다고 한다.(??)
 
    ​		여기서 의미하는 compatible함을 전제하는 조건은 다음 식을 만족해야하며, 결국 이렇다는 가정 하에 Theorem은 성공적으로 증명되는 것이다.
-   <p align="center"><img src="./img/latex10.png"/></p>
+   <p align="center"><img src="../img/latex10.png"/></p>
 
    ​		논문에 주석으로 달려있는것을 보니 아마도 저런 가정을 막 해버려도 해당 이론이 정당함을 Tsitsiklis라는 사람이 증명한듯 하다.
 
@@ -145,7 +144,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    예를 들어 policy를 다음과 같이 Gibbs distribution(softmax)의 형태로 이루어져있다고 가정해보자.
 
-   <p align="center"><img src="./img/latex11.png"/></p>
+   <p align="center"><img src="../img/latex11.png"/></p>
 
    여기서 phi(s,a)는 state-action pair를 나타내는 일종의 feature(trajectory) vector이며
 
@@ -153,11 +152,11 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    아래와 같은 수식을 도출해낼 수 있다.
 
-   <p align="center"><img src="./img/latex12.png"/></p>
+   <p align="center"><img src="../img/latex12.png"/></p>
 
    위 식을 적분한다면 근사함수 f는 아래와 같이 구해진다.
 
-   <p align="center"><img src="./img/latex13.png"/></p>
+   <p align="center"><img src="../img/latex13.png"/></p>
 
    해당 예시를 들어 설명하고자 하는 내용은 다음과 같다.
 
@@ -180,7 +179,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
    이는 advantage function을 나타내는 다음 식과 같이 유추될 수 있으며,
 
    semi-compatible approximation을 위해 Q-function을 새로이 가정했던 내용과 같은 맥락으로 귀추된다.
-   <p align="center"><img src="./img/latex14.png"/></p>
+   <p align="center"><img src="../img/latex14.png"/></p>
 
    따라서, 근사함수 f를 advantage function과 같이 생각해도 좋다는 결론이 나온다.
 
@@ -189,7 +188,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
    하지만 위 식은 policy가 softmax의 형태와 같을 경우 근사함수 f가 advantage function과 같은 특성을 지닌다는 의미이며,
 
    해당 식을 조금 더 일반화 하자면 다음과 같이 정의될 수 있다.
-   <p align="center"><img src="./img/latex15.png"/></p>
+   <p align="center"><img src="../img/latex15.png"/></p>
 
    상태에 대한 **임의의 함수 v를 추가**하여 value function을 근사하는 함수 전체를 **advantages의 형태로 만들어 일반화** 한 것이다.
 
@@ -216,10 +215,10 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
    ​	(1) compatibility condition을 만족하고
 
    ​	(2) 아래 부등식을 만족하는 미분가능한 어떤 function approximator이며
-   <p align="center"><img src="./img/latex16.png"/></p>
+   <p align="center"><img src="../img/latex16.png"/></p>
    
    ​	(3) 아래와 같은 방법으로 각 parameter(w,theta)를 업데이트 한다면, 
-   <p align="center"><img src="./img/latex17.png"/></p>
+   <p align="center"><img src="../img/latex17.png"/></p>
    
    
    

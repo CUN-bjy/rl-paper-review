@@ -1,4 +1,4 @@
-[이전 페이지](README.md)
+[HOME](../README.md)
 
 ### 2. DPG
 

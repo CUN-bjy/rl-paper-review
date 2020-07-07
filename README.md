@@ -24,7 +24,7 @@ reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/20
 
 Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
-[review_page](./Sutton_PG.md)	|   [paper link](http://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf)
+[review_page](./reviews/Sutton_PG.md)	|   [paper link](http://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf)
 
 
 
@@ -34,7 +34,7 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
 Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (2014).
 
-[review_page](./DPG.md)  |  [paper_link](http://proceedings.mlr.press/v32/silver14.pdf)
+[review_page](./reviews/DPG.md)  |  [paper_link](http://proceedings.mlr.press/v32/silver14.pdf)
 
 
 
