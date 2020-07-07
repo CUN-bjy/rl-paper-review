@@ -225,11 +225,33 @@ $$
 
 #### Deterministic Policy Gradient Theorem
 
+stochastic policy와 유사한 방법으로 performance objective를 표현하자면 다음의 식과 같다.
+$$
+J(\mu_\theta) = E[r^\gamma_1|\mu]=\int_S\rho^\mu(s)r(s,\mu_\theta(s))ds
+\\ = E_{s\sim\rho^\mu}[r(s,\mu_\theta(s))] \qquad\quad
+$$
+또한, 해당 performance objective를 지난번에 리뷰한 Sutton의 논문과 유사한 방식으로 policy gradient를 유도해 낸다.
 
+해당 증명은 Appendix에 증명되어 있으며, 그 결과는 아래 식과 같다.
+
+
+
+**Theorem 1** Deterministic Policy Gradient Theorem
+$$
+\nabla_\theta J(\mu_\theta) = \int_S \rho^\mu(s)\nabla_\theta\mu_\theta(s)\nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}ds
+\\\quad\quad = E_{s\sim\rho^\mu}[\nabla_\theta\mu_\theta(s)\nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}]
+$$
+위 식에서도 나타나듯이, expectation값을 구할 때 모든 **state에 대해서만 고려해주면 되는 것이 해당 Theorem의 장점**이다.
+
+stochastic 방식은 state와 action에 대한 기댓값을 구해야 하기 때문에 deterministic방식이 더욱 효율적이라는 것이다.
 
 
 
 #### Limit of the Stochastic Policy Gradient 
+
+
+
+
 
 
 
