@@ -249,6 +249,16 @@ stochastic 방식은 state와 action에 대한 기댓값을 구해야 하기 때
 
 #### Limit of the Stochastic Policy Gradient 
 
+deterministic policy gradient는 사실은 stochastic policy gradient의 스페셜케이스이다.(Appendix C 참고)
+
+stochastic policy
+
+
+
+
+$$
+\lim_{\sigma\to0}\nabla_\theta J(\pi_{\mu_\theta,\sigma}) = \nabla_\theta J(\mu_\theta)
+$$
 
 
 
