@@ -249,9 +249,11 @@ stochastic 방식은 state와 action에 대한 기댓값을 구해야 하기 때
 
 #### Limit of the Stochastic Policy Gradient 
 
-deterministic policy gradient는 사실은 stochastic policy gradient의 스페셜케이스이다.(Appendix C 참고)
+이 논문에서는 deterministic policy gradient가 사실은 stochastic policy gradient의 스페셜케이스이라는 사실을 보인다.(Appendix C 참고)
 
-stochastic policy
+stochastic policy를 deterministic policy로 파라미터화 했을 때, stochastic policy의 variance parameter가 0에 수렴할 때, 
+
+stochastic policy와 deterministic policy가 동등하며, 이때 stochastic policy gradient와 deterministic policy gradient 역시 동일하게 수렴한다.
 
 
 
