@@ -251,27 +251,77 @@ stochastic 방식은 state와 action에 대한 기댓값을 구해야 하기 때
 
 이 논문에서는 deterministic policy gradient가 사실은 stochastic policy gradient의 스페셜케이스이라는 사실을 보인다.(Appendix C 참고)
 
-stochastic policy를 deterministic policy로 파라미터화 했을 때, stochastic policy의 variance parameter가 0에 수렴할 때, 
-
-stochastic policy와 deterministic policy가 동등하며, 이때 stochastic policy gradient와 deterministic policy gradient 역시 동일하게 수렴한다.
 
 
+deterministic policy로 파라미터화된 stochastic policy가 있다고 가정하자.
+
+그리고 이 policy의 variance parameter가 0에 수렴할 때, stochastic policy와 deterministic policy가 동등하며.
+
+이때 stochastic policy gradient와 deterministic policy gradient 역시 동일하게 수렴한다.
 
 
+
+**Theorem 2** 
 $$
-\lim_{\sigma\to0}\nabla_\theta J(\pi_{\mu_\theta,\sigma}) = \nabla_\theta J(\mu_\theta)
+\text{Consider a stochastic policy } \pi_{\mu_\theta,\sigma} \text{ such that }\pi_{\mu_\theta,\sigma}(a|s) = \nu_\sigma(\mu_\theta(s),a)
+\\\lim_{\sigma\to0}\nabla_\theta J(\pi_{\mu_\theta,\sigma}) = \nabla_\theta J(\mu_\theta)
 $$
 
+이 사실을 통해 deterministic policy gradient가 stochastic policy gradient의 한 부분이므로,
 
-
+그동안 policy gradient에 적용되었던 모든 이론적 내용들이 **deterministic policy에도 호환 가능**하다는 사실을 나타낸다. 
 
 
 
 ### [Deterministic Actor-Critic Algorithms]
 
+이번 절에서는 on-policy와 off-policy actor-critic 알고리즘에 deterministic policy gradient를 사용한다.
+
+첫번째로, 쉬운 예를 들기 위해 간단한 **SARSA critic방법을 이용해 on-policy 업데이트**를 진행하며
+
+다음으로, **Q-learning critic을 사용해 off-policy 업데이트**를 진행해 이 논문의 메인 아이디어를 전달한다.
+
+
+
+이러한 알고리즘들은 결국 실질적인 문제점들을 마주치게 된다.
+
+바로 Function Approximator의 **편향성(bias)**과 off-policy learning으로 부터 야기된 **불안정함(high-varience)**이다.
+
+때문에 보다 이론적인 접근으로 **compatible function approximation**과 **gradient temporal-difference learning**을 소개한다.
+
+
+
 #### On-Policy Deterministic Actor-Critic
+
+일반적으로, deterministic policy를 따라 행동하면 **충분한 exploration을 보장할 수 없으며, local-optima로 유도되곤 한다**.
+
+그럼에도 불구하고 SARSA actor-critic(on-policy actor-critic)을 첫번째 예로 든 이유는 교육적인 것(**쉬운 설명**을 위해)이 주된 목적이다.
+
+하지만, **충분한 노이즈가 있는 환경**에서의 학습시킨다면 deterministic policy를 이용하더라도 충분히 탐험하는 효과가 있을 것이니 유용한 방법일 수 있다.
+
+
+
+stochastic actor-critic에서와 마찬가지로 deterministic actor-critic에도 **actor와 critic** 두가지 요소를 가지고 있다.
+
+critic은 action-value function을 추정하며, actor는 action-value function의 gradient를 최대화하는 방식이다.
+
+특히, actor는 deterministic policy의 **파라미터를 stochastic gradient asent 방식으로 업데이트** 하게된다.
+
+또한, action-value function은 미분 가능한 근사함수로 대체되며 critic은 이를 근사/추정 한다.
+$$
+\delta_t = r_t \space+\space \gamma Q^w(s_{t+1},a_{t+1}) \space-\space Q^w(s_t,a_t)
+\\w_{t+1} =w_t\space +\space \alpha_w\delta_t\nabla_wQ^w(s_t,a_t)
+\\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)\nabla_aQ^w(s_t,a_t)|_{a=\mu_\theta(s)}
+$$
+
 
 #### Off-Policy Deterministic Actor-Critic
 
+
+
+
+
 #### Compatible Function Approximation
+
+
 
