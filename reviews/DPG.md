@@ -121,7 +121,7 @@ function approximator가 **compatible** 하다면 bias하지 않다.
 
 여기서 compatible한 funciton approximator의 조건은 다음과 같다.
 $$
-\text{i)}\quad Q^w(s,a) = \nabla_\theta log\pi_\theta(a|s)^Tw
+\text{i)}\quad Q^w(s,a) = \nabla_\theta log\pi_\theta(a|s)^\intercal w
 \\ \text{ii)} \quad \text{parameter } w\text{ are chosen to minimize the mean-squared error} 
 \\ \epsilon^2(w) = E_{s\sim \rho^\pi,a\sim\pi_\theta}[(Q^w(s,a)-Q^\pi(s,a))^2]
 $$
@@ -359,5 +359,34 @@ $$
 
 #### Compatible Function Approximation
 
+stochastic case와 비슷하게 compatible function approximator를 찾아 deterministic policy gradient 식 내부의 action-value값을 대체해야 한다.
+
+즉, **deterministic policy gradient에 영향을 주지 않으면서 근사함수의 gradient로 action-value gradient를 대체할 수 있는 critic**을 찾아야함을 의미한다.
 
 
+
+다음의 수식은 on-policy와 off-policy에 모두 적용되는 Theorem이다.
+
+**Thoerem 3.** 
+$$
+\text{A function approximator } Q^w(s,a) \text{ is compatible with a deterministic policy } \mu_\theta(s)
+\\\text{, that mean }\nabla_\theta J_\beta(\theta) = E[\nabla_\theta\mu_\theta(s)\nabla_aQ^w(s,a)|_{a=\mu_\theta(s)}] \text{, if below conditions satisfied.}\\
+$$
+
+
+$$
+\\\text{condition }1.\space  \nabla_aQ^w(s,a)|_{a=\mu_\theta(s)} = \nabla_\theta\mu_\theta(s)^\intercal w \quad\text{ and}
+\\\text{condition }2.\space  w \text{ minimizes the mean-squared error}
+\\MSE(\theta,w) = E[\epsilon(s;\theta,w)^\intercal\epsilon(s;\theta,w)] \text{ where } \epsilon(s;\theta,w) = \nabla_aQ^w(s,a)|_{a=\mu_\theta(s)} - \nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}
+$$
+(증명은 논문에 간단히 정리되어있다.)
+
+
+
+위 Theorem에 따라, 모든 deterministic policy는 다음과 같은 compatible function approximator form이 존재한다.
+$$
+Q^w(s,a) = (a - \mu_\theta(s))^\intercal w + V^v(s)
+$$
+여기서 뒤에 붙은 term은 미분 가능한 baseline함수이며 action과 독립적으로 작용하는 value-function이다.
+
+예를 들면, 
