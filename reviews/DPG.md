@@ -317,7 +317,43 @@ $$
 
 #### Off-Policy Deterministic Actor-Critic
 
+이번엔 off-policy 방법과 deterministic actor-critic을 결합하는 방법을 소개한다.
 
+off-policy deterministic actor-critic은 [off-policy stochastic actor-critic](#off-policy-actor-critic)에서 소개된 방법과 마찬가지로 
+
+**임의의 stochastic behavior policy에 의해 생성된 trajectories를 통해 deterministic target policy를 학습**한다.
+
+
+
+또한, performance objective를 behavior policy의 state distribution에 대해 averaged된 target policy에 대한 value-function식으로 변형한다.
+$$
+J_\beta(\mu_\theta) = \int_s \rho^\beta(s)V^\mu(s)ds
+\\ \qquad\qquad\space\quad\space= \int_S \rho^\beta(s)Q^\mu(s,\mu_\theta(s))ds
+$$
+
+
+아래 주어진 식이 바로 off-policy deterministic policy gradient이다.
+
+stochastic 방식과 마찬가지로 action-value gradient term이 제거해 근사한 것이다. [(Degris 2012b)](https://arxiv.org/abs/1205.4839)
+$$
+\nabla_\theta J_\beta(\mu_\theta) \approx \int_S\rho^\beta(s)\nabla_\theta\mu_\theta(a|s)Q^\mu(s,a)ds
+\\ \qquad\qquad\qquad= E_{s\sim\rho^\beta}[\nabla_\theta\mu_\theta(s)\nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}]
+$$
+이제는 actor-critic 알고리즘을 전개할 차례이다. 즉, **policy를 off-policy deterministic policy gradient의 방향으로 업데이트** 하는 것이다.
+
+물론 이번에도 action-value function을 미분가능한 근사함수로 대체하며, **critic은 behavior policy에 의해 생성된 trajectories를 이용해 이를 추정**한다.
+
+해당 논문에서는 아래 주어진 <u>*off-policy deterministic actor-critic(OPDAC)*</u>와 같이 critic이 Q-learning(TD) update를 사용하였다.
+$$
+\delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1})) - Q^w(s_t,a_t)
+\\w_{t+1} = w_t + \alpha_w\delta_t\nabla_wQ^w(s_t,a_t)\
+\\ \theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)\nabla_aQ^w(s_t,a_t)|_{a=\mu_\theta(s)}
+$$
+또한, 여기서 주목해야하는 사실은 위 식에서는 importance sampling이 보이지 않는다는 것인데,
+
+일반적인 off-policy 알고리즘과는 다르게, deterministic gradient에서는 **action에대한 적분항이 없기 때문에 actor에서 importance sampling이 필요없다**.
+
+게다가 **Q-learning방식의 update를 사용하는 critic역시 importance sampling term을 제거할 수 있다**.
 
 
 
