@@ -383,10 +383,27 @@ $$
 
 
 
-위 Theorem에 따라, 모든 deterministic policy는 다음과 같은 compatible function approximator form이 존재한다.
+*[Basis for condition 1]*
+
+모든 deterministic policy는 다음과 같은 **compatible function approximator form**이 존재한다.
 $$
 Q^w(s,a) = (a - \mu_\theta(s))^\intercal w + V^v(s)
 $$
-여기서 뒤에 붙은 term은 미분 가능한 baseline함수이며 action과 독립적으로 작용하는 value-function이다.
+여기서 뒤에 붙은 term은 미분 가능한 baseline함수이며 action과 독립적으로 작용하는 **value-function**이다.
 
-예를 들면, 
+예를 들면, 파라미터 v에 대해 아래 식과 같은 형태로 볼 수 있다.
+$$
+\text{linear combination of state features } \phi(s) \text{ and parameter }v
+\\V^v(s) = v^\intercal\phi(s)
+$$
+반면, 첫번째 항은 특정 상태 s에서의 deterministic policy 액션 a를 취하는 **advantage-function**을 추정한 것이다.
+
+advantage function은 다음과 같은 형태의 linear function approximator로 볼 수 있다.
+$$
+A^w(s,a) = \phi(s,a)^\intercal w 
+\\\text{ with state-action features } \phi(s,a) \overset{\underset{\mathrm{def}}{}}{=} \nabla_\theta\mu_\theta(s)(a-\mu_\theta(s))
+$$
+<u>이러한 형식의 function approximator는 Theorem 3의 condition 1을 만족한다.</u>
+
+
+
