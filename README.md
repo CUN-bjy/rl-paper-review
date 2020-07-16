@@ -4,7 +4,8 @@
 
 reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
 
-<img align=left src="https://progress-bar.dev/14/"></img>
+<img align=left src="https://progress-bar.dev/14/"/>
+> progress <
 
 - [x] [1. Sutton_PG](#1.-Sutton_PG)
 - [ ] [2. DPG](#2.-DPG)
