@@ -407,15 +407,43 @@ $$
 
 
 
+linear function approximator는 global하게는 action-value를 예측하는데에 그리 효과적이지는 않다.
+
+매우 큰 action에 대해서는 action-value가 발산하는 경향이 있기 때문이다.
+
+하지만, local critic으로서는 매우 효과적이다. 특히 <u>현재의 policy로부터 생기는 작은 편차들의 local advantages를 효과적으로 표현</u>해준다.
+
+결과적으로 **linear function approximator는 actor가 policy parameter를 학습시키기 위한 방향을 고르기에 충분**하다.
+
+
+
 [*Basis for condition 2*]
 
 condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true gradient 사이의 MSE가 최소화 되는 parameter w**를 찾아야 한다. 
+
+이 문제는 features(trajectories)와 targets(true gradient)사이의 linear regression 문제라고 볼 수 있다.
+
+
+
+하지만, true gradient의 unbiased sample을 얻는것은 만만치 않은 문제이다.
+
+실제로 condition1을 만족시키기위해 linear function approximator를  사용하였지만,
+
+**일반적인 policy evaluation방법(Q-learning, SARSA)을 사용해 parameter w를 학습시켰을 때에는 condition 2 를 만족시키지 못했다.** 
+
+
+
+
 $$
 \delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1}))-Q^w(s_t,a_t)
 \\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)(\nabla_\theta\mu_\theta(s_t)^\intercal w_t)
 \\w_{t+1} = w_t + \alpha_w\delta_t\phi(s_t,a_t)
 \\v_{t+1} = v_t + \alpha_v\delta_t\phi(s_t)
 $$
+
+
+
+
 
 
 
