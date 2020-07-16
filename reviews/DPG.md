@@ -343,7 +343,7 @@ $$
 
 물론 이번에도 action-value function을 미분가능한 근사함수로 대체하며, **critic은 behavior policy에 의해 생성된 trajectories를 이용해 이를 추정**한다.
 
-해당 논문에서는 아래 주어진 <u>*off-policy deterministic actor-critic(OPDAC)*</u>와 같이 critic이 Q-learning(TD) update를 사용하였다.
+해당 논문에서는 아래 주어진 <u>*off-policy deterministic actor-critic(OPDAC)*</u>와 같이 critic이 Q-learning update를 사용하였다.
 $$
 \delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1})) - Q^w(s_t,a_t)
 \\w_{t+1} = w_t + \alpha_w\delta_t\nabla_wQ^w(s_t,a_t)\
@@ -407,3 +407,24 @@ $$
 
 
 
+[*Basis for condition 2*]
+
+condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true gradient 사이의 MSE가 최소화 되는 parameter w**를 찾아야 한다. 
+$$
+\delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1}))-Q^w(s_t,a_t)
+\\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)(\nabla_\theta\mu_\theta(s_t)^\intercal w_t)
+\\w_{t+1} = w_t + \alpha_w\delta_t\phi(s_t,a_t)
+\\v_{t+1} = v_t + \alpha_v\delta_t\phi(s_t)
+$$
+
+
+
+$$
+\delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1}))-Q^w(s_t,a_t)
+\\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)(\nabla_\theta\mu_\theta(s_t)^\intercal w_t
+\\w_{t+1} = w_t + \alpha_w\delta_t\phi(s_t,a_t)\qquad\qquad\quad
+\\\qquad\qquad\qquad - \alpha_w\gamma\phi(s_{t+1},\mu_\theta(s_{t+1}))(\phi(s_t,a_t)^\intercal u_t)
+\\v_{t+1} = v_t + \alpha_v\delta_t\phi(s_t)\qquad\qquad\quad
+\\\qquad -\alpha_v\gamma\phi(s_{t+1})(\phi(s_t,a_t)^\intercal u_t)
+\\u_{t+1} = u_t + \alpha_u(\delta_t - \phi(s_t,a_t)^\intercal u_t)\phi(s_t,a_t)
+$$
