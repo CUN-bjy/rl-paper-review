@@ -4,7 +4,8 @@
 
 reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
 
-<img align=left src="https://progress-bar.dev/14/"/>
+<img align=left src="https://progress-bar.dev/29/"/>
+
 > progress <
 
 - [x] [1. Sutton_PG](#1.-Sutton_PG)
@@ -44,6 +45,8 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 ### 3. DDPG
 
 [Continuous control with deep reinforcement learning]
+
+
 
 
 

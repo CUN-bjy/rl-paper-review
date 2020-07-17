@@ -26,10 +26,9 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 Policy Gradient 알고리즘은 일반적으로 stochastic한 정책을 통해 샘플링을 한 후 보다 나은 reward를 얻을 수 있는 방향으로 정책파라미터를 조정한다.
 
 반면, 이 논문에서는 deterministic policy를 다루며, 마찬가지로 policy gradient방향으로 정책 파라미터를 조절한다.
-$$
-\pi_\theta(a|s) = P[a|s;\theta]  \qquad\qquad\qquad\quad a = \mu_\theta(s)
-\\ \qquad\quad[\text{stochastic policy}] \qquad\quad\qquad [\text{deterministic policy}]
-$$
+
+<p align="center"><img src="../img/latex18.png"/></p>
+
 deterministic policy gradient는 간단한 model-free의 형태로 존재하는데, 이는 action-value function의 gradient를 따른다.
 
 또한, 이 논문에서는  deterministic policy gradient가 stochastic policy gradient의 특별한 케이스(policy의 varience가 0에 수렴)임을 보일 것이다.
@@ -73,20 +72,19 @@ stochastic의 경우에는  policy gradient가 **state와 action spaces 모두�
 일반적인 stochastic policy가 정의된 MDP에서 우리는 아래와 같이 **performance objective**를 정의할 수 있으며,
 
 expectation의 형태로 나타낼 수 있다. (변수설명은 논문 참조)
-$$
-J(\pi_\theta) = \int_S \rho^\pi(s)\int_A \pi_\theta(s,a)r(s,a)dads
-\\ = E_{s\sim p^\pi,a\sim\pi^\theta}[r(s,a)]\qquad\quad
-$$
+
+<p align="center"><img src="../img/latex19.png"/></p>
+
+
 
 #### Stochastic Policy Gradient Theorem
 
 **Policy Gradient** algorithms은 continuous action reinforcement learning algorithm에서 가장 유명한 알고리즘일 것이다.
 
 이 알고리즘의 주된 아이디어는 정책파라미터인 theta를 아래의 **performance gradient**의 방향으로 조정하는 것이다. 
-$$
-\nabla_\theta J(\pi_\theta) = \int_S\rho^\pi(s)\int_A\nabla_\theta\pi_\theta(a|s)Q^\pi(s,a)dads
-\\ \quad\quad=E_{s\sim\rho^\pi,a\sim\pi_\theta}[\nabla_\theta log\pi_\theta(a|s)Q^\pi(s,a)]
-$$
+
+<p align="center"><img src="../img/latex20.png"/></p>
+
 policy gradient알고리즘은 놀라울정도로 간단하다.
 
 state distribution은 정책파라미터에 연관성이 있는데도 불구하고, state distribution의 gradient와 policy gradient는 서로 무관하다.
@@ -108,9 +106,9 @@ state distribution은 정책파라미터에 연관성이 있는데도 불구하�
 **actor**는 performance gradient의 stochastic gradient ascent를 이용해 stochastic policy를 조절하며, 
 
 알려지지 않은 action-value function을 파라미터로 근사해  대체한다.
-$$
-\nabla_\theta J(\pi_\theta) = E_{s\sim\rho^\pi,a\sim\pi_\theta}[\nabla_\theta log\pi_\theta(a|s)Q^w(s,a)]
-$$
+
+<p align="center"><img src="../img/latex21.png"/></p>
+
 **critic**은 action-value function을 적절한 정책 평가 알고리즘(e.g. temporal-difference learning)으로 추정한다.
 
 일반적으로 action-value function을 function approximator로 대체하는 것은 bias하다고 알려져있으나,
@@ -120,33 +118,30 @@ function approximator가 **compatible** 하다면 bias하지 않다.
 
 
 여기서 compatible한 funciton approximator의 조건은 다음과 같다.
-$$
-\text{i)}\quad Q^w(s,a) = \nabla_\theta log\pi_\theta(a|s)^\intercal w
-\\ \text{ii)} \quad \text{parameter } w\text{ are chosen to minimize the mean-squared error} 
-\\ \epsilon^2(w) = E_{s\sim \rho^\pi,a\sim\pi_\theta}[(Q^w(s,a)-Q^\pi(s,a))^2]
-$$
+
+<p align="center"><img src="../img/latex22.png"/></p>
+
+
 
 
 #### Off-Policy Actor-Critic
 
 별도의 behaviour policy로부터 trajectories를 sampling하는 **off-policy** 방식의 policy gradient algorithm은 종종 유용하게 사용된다.
-$$
-\beta(a|s) \neq \pi_\theta(a|s)
-$$
+
+<p align="center"><img src="../img/latex23.png"/></p>
+
 일반적인 off-policy 방법에서, **performance objective**는 아래의 식과 같이 
 
 behaviour policy의 state distribution에 대해 averaged된 target policy의 value function으로 수정된다.(???한국어로 어떻게 번역을해야할까)
 
 (참고: modified to be the value function of ther target policy, averaged over the state distribution of the behaviour policy)
-$$
-J_\beta(\pi_\theta) = \int_S\rho^\beta(s)V^\pi(s)ds
-\\ \qquad\qquad\qquad\qquad\quad = \int_S\int_A\rho^\beta(s)\pi_\theta(a|s)Q^\pi(s,a)dads
-$$
+
+<p align="center"><img src="../img/latex24.png"/></p>
+
 또, 이에 대해 미분된 performance objective는 **off-policy policy-gradient**로 근사된다.
-$$
-\nabla_\theta J_\beta(\pi_\theta) \approx \int_S\int_A\rho^\beta(s)\nabla_\theta\pi_\theta(a|s)Q^\pi(s,a)dads
-\\ \qquad\qquad\qquad = E_{s\sim\rho^\beta,a\sim\beta}[\frac{\pi_\theta(a|s)}{\beta_\theta(a|s)}\nabla_\theta log\pi_\theta(a|s)Q^\pi(s,a)]
-$$
+
+<p align="center"><img src="../img/latex25.png"/></p>
+
 위 식의 근사는 [(Degris 2012b)](https://arxiv.org/abs/1205.4839) 이 논문에 근거한 근사이며, action-value gradient과 연관된 term이 제거된 것이다.
 
 위 논문에 의하면 이러한 approximation이 gradient ascent가 수렴하는 방향으로 local optima가 형성되므로 충분히 좋은 근사라고 주장한다.
@@ -168,9 +163,9 @@ $$
 여기서 actor와 critic은 behaviour policy가 아닌 target policy를 사용했다는 것을 반영하기위해,
 
 **importance sampling ratio**를 사용한다.
-$$
-\text{importance sampling ratio : } \space\frac{\pi_\theta(a|s)}{\beta_\theta(a|s)}
-$$
+
+<p align="center"><img src="../img/latex26.png"/></p>
+
 
 
 ### [Gradients of Deterministics Policies]
@@ -202,17 +197,17 @@ model-free RL algorithm은 주로 일반화된 policy iteration 기법을 기반
 하지만 continuous action spaces에서는 이러한 방식의 policy improvement는 매 스텝 global maximization을 요구하기에 문제가 많았다.
 
 그 대신에 간단하고 계산적으로도 매우 좋아보이는 대안이 있는데, 바로 **Q-function의 gradient 방향으로 policy를 업데이트** 하는 것이다.
-$$
-\theta^{k+1} = \theta^k + \alpha E_{s\sim\rho^{\mu^k}}p[\nabla_\theta Q^{\mu^k}(s,\mu_\theta(s))]
-$$
+
+<p align="center"><img src="../img/latex27.png"/></p>
+
 이러한 방식은 매 state마다 다른 방향으로의 policy improvement가 진행되며, 이들은 state distribution에 대한 기대값으로 취해져 평균치를 이룰 것이다.
 
 
 
 또한, chain rule의 적용을 통해 위 식을 action에 대한 action-value function과 policy parameter에 대한 policy gradient로 나눌 수 있다.
-$$
-\theta^{k+1} = \theta^k + \alpha E_{s\sim\rho^{\mu^k}}[\nabla_\theta\mu_\theta(s)\nabla_a{Q^{\mu^k}(s,a)}|_{a=\mu_\theta(s)}]
-$$
+
+<p align="center"><img src="../img/latex28.png"/></p>
+
 하지만, policy의 변화에 의해 방문하게되는 states가 바뀌게 되고 결국  state distribution이 변할것이다. 
 
 이는 결국 distribution에 대한 변화를 모두 설명하지 못하고서는 improvement를 보장할 수 있다기에 불확실함을 가진다고 생각될 것이다. 
@@ -226,10 +221,9 @@ $$
 #### Deterministic Policy Gradient Theorem
 
 stochastic policy와 유사한 방법으로 performance objective를 표현하자면 다음의 식과 같다.
-$$
-J(\mu_\theta) = E[r^\gamma_1|\mu]=\int_S\rho^\mu(s)r(s,\mu_\theta(s))ds
-\\ = E_{s\sim\rho^\mu}[r(s,\mu_\theta(s))] \qquad\quad
-$$
+
+<p align="center"><img src="../img/latex29.png"/></p>
+
 또한, 해당 performance objective를 지난번에 리뷰한 Sutton의 논문과 유사한 방식으로 policy gradient를 유도해 낸다.
 
 해당 증명은 Appendix에 증명되어 있으며, 그 결과는 아래 식과 같다.
@@ -237,10 +231,9 @@ $$
 
 
 **Theorem 1** Deterministic Policy Gradient Theorem
-$$
-\nabla_\theta J(\mu_\theta) = \int_S \rho^\mu(s)\nabla_\theta\mu_\theta(s)\nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}ds
-\\\quad\quad = E_{s\sim\rho^\mu}[\nabla_\theta\mu_\theta(s)\nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}]
-$$
+
+<p align="center"><img src="../img/latex30.png"/></p>
+
 위 식에서도 나타나듯이, expectation값을 구할 때 모든 **state에 대해서만 고려해주면 되는 것이 해당 Theorem의 장점**이다.
 
 stochastic 방식은 state와 action에 대한 기댓값을 구해야 하기 때문에 deterministic방식이 더욱 효율적이라는 것이다.
@@ -262,10 +255,8 @@ deterministic policy로 파라미터화된 stochastic policy가 있다고 가정
 
 
 **Theorem 2** 
-$$
-\text{Consider a stochastic policy } \pi_{\mu_\theta,\sigma} \text{ such that }\pi_{\mu_\theta,\sigma}(a|s) = \nu_\sigma(\mu_\theta(s),a)
-\\\lim_{\sigma\to0}\nabla_\theta J(\pi_{\mu_\theta,\sigma}) = \nabla_\theta J(\mu_\theta)
-$$
+
+<p align="center"><img src="../img/latex31.png"/></p>
 
 이 사실을 통해 deterministic policy gradient가 stochastic policy gradient의 한 부분이므로,
 
@@ -308,11 +299,9 @@ critic은 action-value function을 추정하며, actor는 action-value function�
 특히, actor는 deterministic policy의 **파라미터를 stochastic gradient asent 방식으로 업데이트** 하게된다.
 
 또한, action-value function은 미분 가능한 근사함수로 대체되며 critic은 이를 근사/추정 한다.
-$$
-\delta_t = r_t \space+\space \gamma Q^w(s_{t+1},a_{t+1}) \space-\space Q^w(s_t,a_t)
-\\w_{t+1} =w_t\space +\space \alpha_w\delta_t\nabla_wQ^w(s_t,a_t)
-\\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)\nabla_aQ^w(s_t,a_t)|_{a=\mu_\theta(s)}
-$$
+
+<p align="center"><img src="../img/latex32.png"/></p>
+
 
 
 #### Off-Policy Deterministic Actor-Critic
@@ -326,29 +315,24 @@ off-policy deterministic actor-critic은 [off-policy stochastic actor-critic](#o
 
 
 또한, performance objective를 behavior policy의 state distribution에 대해 averaged된 target policy에 대한 value-function식으로 변형한다.
-$$
-J_\beta(\mu_\theta) = \int_s \rho^\beta(s)V^\mu(s)ds
-\\ \qquad\qquad\space\quad\space= \int_S \rho^\beta(s)Q^\mu(s,\mu_\theta(s))ds
-$$
+
+<p align="center"><img src="../img/latex33.png"/></p>
 
 
 아래 주어진 식이 바로 off-policy deterministic policy gradient이다.
 
 stochastic 방식과 마찬가지로 action-value gradient term이 제거해 근사한 것이다. [(Degris 2012b)](https://arxiv.org/abs/1205.4839)
-$$
-\nabla_\theta J_\beta(\mu_\theta) \approx \int_S\rho^\beta(s)\nabla_\theta\mu_\theta(a|s)Q^\mu(s,a)ds
-\\ \qquad\qquad\qquad= E_{s\sim\rho^\beta}[\nabla_\theta\mu_\theta(s)\nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}]
-$$
+
+<p align="center"><img src="../img/latex34.png"/></p>
+
 이제는 actor-critic 알고리즘을 전개할 차례이다. 즉, **policy를 off-policy deterministic policy gradient의 방향으로 업데이트** 하는 것이다.
 
 물론 이번에도 action-value function을 미분가능한 근사함수로 대체하며, **critic은 behavior policy에 의해 생성된 trajectories를 이용해 이를 추정**한다.
 
 해당 논문에서는 아래 주어진 <u>*off-policy deterministic actor-critic(OPDAC)*</u>와 같이 critic이 Q-learning update를 사용하였다.
-$$
-\delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1})) - Q^w(s_t,a_t)
-\\w_{t+1} = w_t + \alpha_w\delta_t\nabla_wQ^w(s_t,a_t)\
-\\ \theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)\nabla_aQ^w(s_t,a_t)|_{a=\mu_\theta(s)}
-$$
+
+<p align="center"><img src="../img/latex35.png"/></p>
+
 또한, 여기서 주목해야하는 사실은 위 식에서는 importance sampling이 보이지 않는다는 것인데,
 
 일반적인 off-policy 알고리즘과는 다르게, deterministic gradient에서는 **action에대한 적분항이 없기 때문에 actor에서 importance sampling이 필요없다**.
@@ -368,17 +352,13 @@ stochastic case와 비슷하게 compatible function approximator를 찾아 deter
 다음의 수식은 on-policy와 off-policy에 모두 적용되는 Theorem이다.
 
 **Thoerem 3.** 
-$$
-\text{A function approximator } Q^w(s,a) \text{ is compatible with a deterministic policy } \mu_\theta(s)
-\\\text{, that mean }\nabla_\theta J_\beta(\theta) = E[\nabla_\theta\mu_\theta(s)\nabla_aQ^w(s,a)|_{a=\mu_\theta(s)}] \text{, if below conditions satisfied.}\\
-$$
+
+<p align="center"><img src="../img/latex36.png"/></p>
 
 
-$$
-\\\text{condition }1.\space  \nabla_aQ^w(s,a)|_{a=\mu_\theta(s)} = \nabla_\theta\mu_\theta(s)^\intercal w \quad\text{ and}
-\\\text{condition }2.\space  w \text{ minimizes the mean-squared error}
-\\MSE(\theta,w) = E[\epsilon(s;\theta,w)^\intercal\epsilon(s;\theta,w)] \text{ where } \epsilon(s;\theta,w) = \nabla_aQ^w(s,a)|_{a=\mu_\theta(s)} - \nabla_aQ^\mu(s,a)|_{a=\mu_\theta(s)}
-$$
+
+<p align="center"><img src="../img/latex37.png"/></p>
+
 (증명은 논문에 간단히 정리되어있다.)
 
 
@@ -386,23 +366,21 @@ $$
 *[Basis for condition 1]*
 
 모든 deterministic policy는 다음과 같은 **compatible function approximator form**이 존재한다.
-$$
-Q^w(s,a) = (a - \mu_\theta(s))^\intercal w + V^v(s)
-$$
+
+<p align="center"><img src="../img/latex38.png"/></p>
+
 여기서 뒤에 붙은 term은 미분 가능한 baseline함수이며 action과 독립적으로 작용하는 **value-function**이다.
 
 예를 들면, 파라미터 v에 대해 아래 식과 같은 형태로 볼 수 있다.
-$$
-\text{linear combination of state features } \phi(s) \text{ and parameter }v
-\\V^v(s) = v^\intercal\phi(s)
-$$
+
+<p align="center"><img src="../img/latex39.png"/></p>
+
 반면, 첫번째 항은 특정 상태 s에서의 deterministic policy 액션 a를 취하는 **advantage-function**을 추정한 것이다.
 
 advantage function은 다음과 같은 형태의 linear function approximator로 볼 수 있다.
-$$
-A^w(s,a) = \phi(s,a)^\intercal w 
-\\\text{ with state-action features } \phi(s,a) \overset{\underset{\mathrm{def}}{}}{=} \nabla_\theta\mu_\theta(s)(a-\mu_\theta(s))
-$$
+
+<p align="center"><img src="../img/latex40.png"/></p>
+
 <u>이러한 형식의 function approximator는 Theorem 3의 condition 1을 만족한다.</u>
 
 
@@ -439,21 +417,16 @@ condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true g
 
 1. *critic은 linear function approximator로서 features로부터 action-value를 추정한다.*
 
-$$
-\text{features : }\phi(s,a) = a^\intercal \nabla_\theta\mu_\theta(s)
-$$
+   <p align="center"><img src="../img/latex41.png"/></p>
 
 ​		물론 이는 behavior policy의 sample을 이용해 off-policy로 학습(Q-learning 또는 gradient Q-learning 이용)된 것이다.
 
 2. *그 때 actor는 critic의 action-value gradient의 방향으로 파라미터를 업데이트 한다.*
 
 아래 식은 간단한 Q-learing critic을 사용한 COPDAC-Q 알고리즘을 나타낸다.
-$$
-\delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1}))-Q^w(s_t,a_t)
-\\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)(\nabla_\theta\mu_\theta(s_t)^\intercal w_t)
-\\w_{t+1} = w_t + \alpha_w\delta_t\phi(s_t,a_t)
-\\v_{t+1} = v_t + \alpha_v\delta_t\phi(s_t)
-$$
+
+<p align="center"><img src="../img/latex42.png"/></p>
+
 
 
 그런데 **off-policy Q-learning은 linear function approximator를 사용하였을 때에 발산**한다고 알려져있다.
@@ -471,15 +444,8 @@ $$
 
 
 아래 수식은 COPDAC 알고리즘에 gradient Q-learning critic을 적용한 **COPDAC-GQ algorithm**이라 부른다.
-$$
-\delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1}))-Q^w(s_t,a_t)
-\\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)(\nabla_\theta\mu_\theta(s_t)^\intercal w_t
-\\w_{t+1} = w_t + \alpha_w\delta_t\phi(s_t,a_t)\qquad\qquad\quad
-\\\qquad\qquad\qquad - \alpha_w\gamma\phi(s_{t+1},\mu_\theta(s_{t+1}))(\phi(s_t,a_t)^\intercal u_t)
-\\v_{t+1} = v_t + \alpha_v\delta_t\phi(s_t)\qquad\qquad\quad
-\\\qquad -\alpha_v\gamma\phi(s_{t+1})(\phi(s_t,a_t)^\intercal u_t)
-\\u_{t+1} = u_t + \alpha_u(\delta_t - \phi(s_t,a_t)^\intercal u_t)\phi(s_t,a_t)
-$$
+
+<p align="center"><img src="../img/latex43.png"/></p>
 
 * stochastic actor-critic과 마찬가지로, 모든 파라미터를 업데이트 하는데에 필요한 computational complexity는 O(mn) 정도이다.
 
@@ -492,9 +458,9 @@ natural gradient는 바로 Fisher Information metric에 대한 steepest ascent d
 이 metric은 policy가 reparameterization되어도 불변하는 특성을 지니고 있다.
 
 deterministic policy에 적용해보기 위해 <u>Fisher Information metric</u>을 아래와 같이 정의할 수 있으며,
-$$
-M_\mu(\theta) = E_{s\sim\rho^\mu}[\nabla_\theta\mu_\theta\nabla_\theta\mu_\theta(s)^\intercal]
-$$
+
+<p align="center"><img src="../img/latex44.png"/></p>
+
 
 
 이는 **policy의 분산이 0인 Fisher information metric**를 나타내는 등 특별한 케이스임을 보여준다.
@@ -502,17 +468,17 @@ $$
 
 
 deterministic policy gradient theorem과 compatible function approximation를 결합하여 아래오 같은 수식을 얻어낼 수 있으며,
-$$
-\nabla_\theta J(\mu_\theta) = E_{s\sim\rho^\mu}[\nabla_\theta\mu_\theta(s)\nabla_\theta\mu_\theta(s)^\intercal w]
-$$
+
+<p align="center"><img src="../img/latex45.png"/></p>
+
 steepest ascent diretion은 다음과 같이 간단히 나타낼 수 있다.
-$$
-M_\mu(\theta)^{-1}\nabla_\theta J_\beta(\mu_\theta) = w
-$$
+
+<p align="center"><img src="../img/latex46.png"/></p>
+
 또한 이를 이용해 actor를 업데이트 하고자 할 때에는 간단히 아래 수식을 사용해 업데이트가 가능하다.
-$$
-\theta_{t+1} = \theta_t + \alpha_\theta w_t
-$$
+
+<p align="center"><img src="../img/latex47.png"/></p>
+
 
 
 
