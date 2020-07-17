@@ -433,7 +433,21 @@ condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true g
 
 
 
+논문에서는 차례로 policy evaluation problem에 대해서 합리적인 대안을 보여준다.
 
+아래 소개된 ***compatible off-policy deterministic actor-critic***(COPDAC)에는 역시 두가지 요소로 구성되어있다.
+
+1. *critic은 linear function approximator로서 features로부터 action-value를 추정한다.*
+
+$$
+\text{features : }\phi(s,a) = a^\intercal \nabla_\theta\mu_\theta(s)
+$$
+
+​		물론 이는 behavior policy의 sample을 이용해 off-policy로 학습(Q-learning 또는 gradient Q-learning 이용)된 것이다.
+
+2. *그 때 actor는 critic의 action-value gradient의 방향으로 파라미터를 업데이트 한다.*
+
+아래 식은 간단한 Q-learing critic을 사용한 COPDAC-Q 알고리즘을 나타낸다.
 $$
 \delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1}))-Q^w(s_t,a_t)
 \\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)(\nabla_\theta\mu_\theta(s_t)^\intercal w_t)
@@ -442,11 +456,21 @@ $$
 $$
 
 
+그런데 **off-policy Q-learning은 linear function approximator를 사용하였을 때에 발산**한다고 알려져있다.
 
 
 
+최근에 더욱 자주 사용되는 방법은 <u>**gradient temporal-difference learning기반**</u>의 true gradient descent 알고리즘이며, 이는 수렴을 보장하는 특성이 있다.
+
+이러한 방법들의 기본 아이디어는 mean-sqaured projected Bellman error(MSPBE)를 stochastic gradient descent방법을 사용해 최소화하는 것이다.
+
+마찬가지로 이 논문에서도 gradient TD-learning을 이용하였으며, 그중에서도 **gradient Q-learning을 이용**하였다.
+
+또한,  actor보다 critic이 시간적으로 빠르게 수렴할 수 있도록 step-size, learning-rate 등을 적절히 맞추어 준다면 파라미터의 MSPBE는 최소화되도록 수렴할 것이다.
 
 
+
+아래 수식은 COPDAC 알고리즘에 gradient Q-learning critic을 적용한 **COPDAC-GQ algorithm**이라 부른다.
 $$
 \delta_t = r_t + \gamma Q^w(s_{t+1},\mu_\theta(s_{t+1}))-Q^w(s_t,a_t)
 \\\theta_{t+1} = \theta_t + \alpha_\theta\nabla_\theta\mu_\theta(s_t)(\nabla_\theta\mu_\theta(s_t)^\intercal w_t
@@ -456,3 +480,40 @@ $$
 \\\qquad -\alpha_v\gamma\phi(s_{t+1})(\phi(s_t,a_t)^\intercal u_t)
 \\u_{t+1} = u_t + \alpha_u(\delta_t - \phi(s_t,a_t)^\intercal u_t)\phi(s_t,a_t)
 $$
+
+* stochastic actor-critic과 마찬가지로, 모든 파라미터를 업데이트 하는데에 필요한 computational complexity는 O(mn) 정도이다.
+
+
+
+마지막으로, 이 논문에서는 natural policy gradient가 deterministic policy로 확장될 수 있음을 보인다.
+
+natural gradient는 바로 Fisher Information metric에 대한 steepest ascent direction이다.
+
+이 metric은 policy가 reparameterization되어도 불변하는 특성을 지니고 있다.
+
+deterministic policy에 적용해보기 위해 <u>Fisher Information metric</u>을 아래와 같이 정의할 수 있으며,
+$$
+M_\mu(\theta) = E_{s\sim\rho^\mu}[\nabla_\theta\mu_\theta\nabla_\theta\mu_\theta(s)^\intercal]
+$$
+
+
+이는 **policy의 분산이 0인 Fisher information metric**를 나타내는 등 특별한 케이스임을 보여준다.
+
+
+
+deterministic policy gradient theorem과 compatible function approximation를 결합하여 아래오 같은 수식을 얻어낼 수 있으며,
+$$
+\nabla_\theta J(\mu_\theta) = E_{s\sim\rho^\mu}[\nabla_\theta\mu_\theta(s)\nabla_\theta\mu_\theta(s)^\intercal w]
+$$
+steepest ascent diretion은 다음과 같이 간단히 나타낼 수 있다.
+$$
+M_\mu(\theta)^{-1}\nabla_\theta J_\beta(\mu_\theta) = w
+$$
+또한 이를 이용해 actor를 업데이트 하고자 할 때에는 간단히 아래 수식을 사용해 업데이트가 가능하다.
+$$
+\theta_{t+1} = \theta_t + \alpha_\theta w_t
+$$
+
+
+
+
