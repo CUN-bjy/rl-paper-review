@@ -9,7 +9,7 @@ reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/20
 > progress <
 
 - [x] [1. Sutton_PG](#1.-Sutton_PG)
-- [ ] [2. DPG](#2.-DPG)
+- [x] [2. DPG](#2.-DPG)
 - [ ] [3. DDPG](#3.-DDPG)
 - [ ] [4. NPG](#4.-NPG)
 - [ ] [5. TRPO](#5.-TRPO)
@@ -46,7 +46,9 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 
 [Continuous control with deep reinforcement learning]
 
+Timothy P. Lillicrap∗ , Jonathan J. Hunt∗ , Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver & Daan Wierstra (2016)
 
+[review_page](./reviews/DDPG.md)  |  [paper_link](https://arxiv.org/pdf/1509.02971.pdf)
 
 
 
