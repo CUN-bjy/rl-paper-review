@@ -24,11 +24,59 @@ Timothy P. Lillicrap∗ , Jonathan J. Hunt∗ , Alexander Pritzel, Nicolas Heess
 
 AI분야의 본래 목적 중 하나는 바로 **가공되지 않은 고차원의 센서 데이터를 이용해 복잡한 문제를 푸는 것**이라고 할 수 있다.
 
-결과적으로 DQN이 발표되면서 
+최근에는 센서데이터 처리를 위해 발전된 딥러닝 기술을 사용하기 시작했으며, 이것이 강화학습과 결합되어  Deep Q-Network가 탄생하게 되었다.
+
+주목할 점은 **action-value function을 추정하기 위해 deep neural network function approximator를  사용한다**는 것이다.
+
+<br/>
+
+그러나 DQN은 high-dimensional observation spaces를 이용해 문제를 풀지만, **discrete하고 low-dimensional action spaces만을 다룰 수 있었다**.
+
+DQN은 action-value function을 최대화 하는 action을 찾는 방식에 의존하기 때문에 **continuous domain에는 바로 적용할 수 없다**.
+
+continuous valued case에서는 action-value function의 최대화 과정에서 매 스텝마다 최적화 프로세스를 요구하기 때문이다.
+
+<br/>
+
+때문에 DQN에서는 continuous domain문제에 적용하기 위한 방법으로 action space를 discrete한 action으로 쪼개어 적용하였다.
+
+그러나 이러한 방법은 많은 **한계점(limitations)**을 지닌다. 바로 **차원의 저주(the curse of dimensionality)** 때문이다.
+
+이와 같이 고차원의 action spaces는 효과적으로 모델을 탐험(경험)시키기에 어려움을 준다.
+
+<br/>
+
+이 논문에서는 <u>deep function approximator를 이용한 model-free, off-policy actor-critic algorithm</u>을 제안한다. 
+
+DQN과 다르게 위 deep function approximator는 **high-dimensional, continuous action spaces를 가지는 policy를 학습**시킬 수 있다.
+
+<br/>
+
+해당 논문에서는 deterministic policy gradient(DPG) 개념이 바탕이 되었는데,
+
+고전적인 actor-critic방식에 neural function approximator를 결합하는 방식으로는 어려운 문제에 대해 상당히 불안정했다고 한다.
+
+그래서 이번에는 **DQN에 적용되었던 Insights들을 actor-critic 방식에 적용**해 그 문제를 해결하였다.
+
+<br/>
+
+DQN의 이전에는 large, non-linear function approximator가 어렵고 불안정하다는 사실이 일반적이었다.
+
+하지만 DQN은 **두 가지 innovation**을 통해 stable하고 robust한 방법으로 이러한 function approximator를 이용하 value function을 학습시킬 수 있었다.
+
+​	첫번째는, **replay buffer**를 이용해 관련성이 적은 sample들만을 off-policy 방법으로 network를 학습시킨다.
+
+​	두번째로, **target Q network**를 이용해  TD backup(update)을 하는 동안에 target에 대한 일관성을 유지시켜준다.
+
+또한, 위 두가지 아이디어와 함께 **batch normalization** 개념이 함께 적용되었으며 
+
+이것이 바로 논문의 결과물인  **Deep DPG(DDPG)** model-free approach이다.
 
 <br/>
 
 ### [Background]
+
+
 
 <br/>
 

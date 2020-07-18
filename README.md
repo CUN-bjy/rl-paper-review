@@ -8,8 +8,6 @@ reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/20
 
 > progress <
 
-<br/>
-
 - [x] [1. Sutton_PG](#1.-Sutton_PG)
 - [x] [2. DPG](#2.-DPG)
 - [ ] [3. DDPG](#3.-DDPG)
