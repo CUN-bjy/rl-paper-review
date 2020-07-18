@@ -62,15 +62,59 @@ DQN의 이전에는 large, non-linear function approximator가 어렵고 불안�
 
 ### [Background]
 
-***Notations***
+#### **Notation**
 
 <p align="left"><img src="../img/img1.png"/></p>
 
+<br/>
 
+action-value function은 많은 강화학습 알고리즘에서 사용된다. 
+
+이는 아래의 식과 같이 policy를 따라 방문하게되는 action, state에서 얻게 될 모든 return의 기댓값이다.
+$$
+Q^\pi(s_t,a_t) = \mathbb{E}_{r_{i\geq t},s_{i>t}\sim E,a_{i>t}\sim\pi}[R_t|s_t,a_t]
+$$
+위 식은 일반적으로 **Bellman Equation**이라 알려져있는 recursive relationship 방식으로 표현되곤 한다.
+$$
+Q^\pi(s_t,a_t) = \mathbb{E}_{r_t,s_{t+1}\sim E}[r(s_t,a_t) + \gamma\mathbb{E}_{a_{t+1}\sim\pi}[Q^\pi(s_{t+1},a_{t+1})]]
+$$
+만약 target policy가 deterministic하다면 action-value function 식 내부의 기댓값을 없앨 수 있으며 policy 역시 다음과 같이 표현된다.
+$$
+\text{policy: } \mu:S\gets A
+\\Q^\mu(s_t,a_t) = \mathbb{E}_{r_t,s_{t+1},\sim E}[r(s_t,a_t) + \gamma Q^\mu(s_{t+1},\mu(s_{t+1}))]
+$$
+기댓값은 오직 환경(state,reward)에만 의존적이다.
+
+이는 또다른 stochastic behavior policy로부터 생성된 sample을 이용해 off-policy방식으로 위 함수를 학습할 수 있음을 의미한다.
+
+<br/>
+
+우리는 위 action-value function을 근사할 **function approximator를 파라미터화** 하여 생각해 볼 수 있을 것이다.
+
+또한 근사함수를 최적화 하기위해 아래 식을 이용해 loss를 구하고 이를 최소화 해야만 한다.
+$$
+L(\theta^Q) = \mathbb{E}_{s_t\sim\rho^\beta,a_t\sim\beta,r_t\sim E}[(Q(s_t,a_t|\theta^Q)-y_t)^2]
+\\\text{where } y_t = r(s_t,a_t) + \gamma Q(s_{t+1},\mu(s_{t+1})|\theta^Q)
+$$
+<br/>
+
+value function이나 action-value function을 학습하기 위해 large, non-linear function approximator를 사용하는것은 예전부터 기피의 대상이었다.
+
+가능성을 보장할 수 없을 뿐더러 실제로 불안정한 경향이 있었기 때문이다.
+
+하지만 근래에 large neural network를 function approximator로서 효과적으로 사용한 DQN이 등장했으며,
+
+그를 성공시킬 수 있었던 주요 아이디어로 ***replay buffer*와 *target network***가 소개되었다.
+
+<br/>
+
+이 논문에서는 DDPG에 이러한 개념들을 적용하였으며 상세한 내용은 다음 섹션에서 소개된다.
 
 <br/>
 
 ### [Algorithm]
+
+
 
 <br/>
 
