@@ -32,7 +32,7 @@ AI분야의 본래 목적 중 하나는 바로 **가공되지 않은 고차원�
 
 때문에 DQN에서는 continuous domain문제에 적용하기 위한 방법으로 action space를 discrete한 action으로 쪼개어 적용하였다.
 
-그러나 이러한 방법은 많은 **한계점(limitations)**을 지닌다. 바로 **차원의 저주(the curse of dimensionality)** 때문이다.
+그러나 이러한 방법은 많은 **한계점(limitations)** 을 지닌다. 바로 **차원의 저주(the curse of dimensionality)** 때문이다.
 
 <br/>
 
@@ -146,9 +146,41 @@ Q-learning과 함께 non-linear function approximator를 사용한다는 것은 
 
 이 논문의 contribution은 <u>DQN이 성공할 수 있었던 요인들을 착안하여 DPG를 조금 개선한 것</u>이다.
 
-이것을 이 논문에서는 **Deep DPG(DDPG)**라 부른다.
+이것을 이 논문에서는 **Deep DPG(DDPG) **라 부른다.
 
 <p align="center"><img src="../img/img2.png"/></p>
+
+<br/>
+
+#### replay buffer
+
+neural network와 강화학습을 접목시킬 때 마주치는 **첫번째 관문**은 바로,
+
+대부분의 최적화 문제가 <u>sample들이 독립적이며 뚜렷하게 분포되어있다고 가정해버린다는 것</u>이다.
+
+확실한 것은 환경을 꾸준히 탐험할 때에 생성되는 sample들을 더이상 이러한 가정 하에 두지 않게 된다는 것이며,
+
+hardware 최적화를 효과적으로 사용하기 위해 online보다는 mini-batch를 사용해 학습시키는 것이 필수적이라는 것이다.
+
+<br/>
+
+DQN에서는 이러한 문제들을 **replay buffer**를 이용해 해결했다.
+
+replay buffer는 특정 사이즈의 cache이며, exploration policy를 따라 생성되는 sample을 차곡차곡 쌓는다.
+
+replay buffer가 가득 차있을 때에는 지난 sample들을 버린다.
+
+매 timestep마다 actor와 critic은 buffer로부터 minibatch형태로 sample들을 받아 업데이트 한다.
+
+DDPG는 off-policy algorithm이기 떄문에 replay buffer가 충분히 커도 된다.
+
+replay buffer가 크면 관련이 없는 sample set을 모으기가 더욱 쉬워지는 장점이 있다.
+
+<br/>
+
+#### soft-target-network
+
+
 
 <br/>
 
