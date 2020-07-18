@@ -8,7 +8,7 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
 [paper link](http://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf)
 
-
+<br/>
 
 #### [intro]
 
@@ -19,6 +19,8 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 **첫번째**는 optimal policy는 주로 확률적(stochastic)으로 몇가지 액션을 고르는 것인 경우가 많은데, deterministic policy를 찾는것에만 편향되어있다는 것이다.
 
 **두번째**는 임의의 어떤 액션에 대한 보상기대값이 아주 근소한 차이만 나더라도, 해당 액션이 선택되고 안되고를 결정할 수 있다는 것이다. 이러한 불연속적인 차이는 'value-function approach'를 따르는 알고리즘의 수렴성을 입증하는데에 주요 문제점으로 꼽히고 있다. (**policy의 variance가 크다**)
+
+<br/>
 
 이 논문은 이러한 문제점을 해결할 수 있는 대안적인 방법을 소개한다.
 
@@ -38,7 +40,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
 (value-based에서는  parameter가 value를 이루므로 value가 조금만 변해도 policy의 차이가 많이 나는 문제가 있었음) 
 
-
+<br/>
 
 #### [main]
 
@@ -50,7 +52,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    **average-reward formulation**과 **start-state formulation** 두가지 방법이 있다.
 
-   
+   <br/>
 
    ***Theorem 1 (Policy Gradient)***
 
@@ -58,7 +60,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    이 수식은 결국 위 두 가지 approximation 방법 모두에 적용이 가능하며 appendix에 각 각 증명이 되어있다.
 
-   
+   <br/>
 
    <p align="center"><img src="../img/latex2.png"/></p>
 
@@ -76,7 +78,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    또, 위 식에서 Q-function의 경우 계산값을 도출하기 어려워, 해당 policy를 따라 수집된 Reward를 이용해 근사되어야 할 것이다.
 
-    
+    <br/>
 
 2. **Policy Gradient with Approximation**
 
@@ -100,7 +102,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    ​	(2) 이를 Expectation 값으로 표현해주기 위해서 모든 state와 action을 고려해 앞의 distribution of states와 policy에 대한 항을 붙여준 것이다.
 
-   
+   <br/>
 
    ***Theorem 2 (Policy Gradient with Function Approximation)***
    
@@ -130,13 +132,13 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    ​		(위 식은 자연스레 Theorem 2의 첫번째 수식으로 간단히 귀결된다.)
 
-​    
+​    <br/>
 
    결론적으로 Theorem 2을 통해 저자가 전달하고자 하는 것은 근사함수 f가 Q-function를 충분히 근사할 수 있다면,
 
    **Q-function을 쓰지않고 Approximation-function만으로 Policy Gradient를 구해낼 수 있다**라는 것이다.
 
-   
+   <br/>
 
 3. **Application to Deriving Algorithm and Advantages**
 
@@ -166,7 +168,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    ​	non-linear한 policy parameterization을 가지는 policy에 대해서도 **compatibility condition을 만족**할 것이다.
 
-   
+   <br/>
 
    위 내용은 이 논문에서 설명하고자 하난 policy convergence를 설명하기위한 필요조건으로서, 
 
@@ -174,7 +176,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    이는 **상태간의 variation이 존재하지않도록** 근사하는것을 의미한다.
 
-   
+   <br/>
 
    이는 advantage function을 나타내는 다음 식과 같이 유추될 수 있으며,
 
@@ -183,7 +185,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    따라서, 근사함수 f를 advantage function과 같이 생각해도 좋다는 결론이 나온다.
 
-   
+   <br/>
 
    하지만 위 식은 policy가 softmax의 형태와 같을 경우 근사함수 f가 advantage function과 같은 특성을 지닌다는 의미이며,
 
@@ -198,7 +200,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    해당함수는  policy와 근사함수 f의 업데이트에 영향을 주지 않음이 밝혀졌다고한다.
 
-   
+   <br/>
 
 4. **Convergence of Policy Iteration with Function Approximation**
 
@@ -206,7 +208,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
 
    function approximation과 결합된 policy iteration의 형태가 locally optimal한 policy로 수렴함을 증명해냈다.
 
-   
+   <br/>
 
    **Theorem 3 (Policy Iteration with Function Approximation)**
 
@@ -220,7 +222,7 @@ performance(reward)가 극대화 하는 지점에서 local optimal policy로 수
    ​	(3) 아래와 같은 방법으로 각 parameter(w,theta)를 업데이트 한다면, 
    <p align="center"><img src="../img/latex17.png"/></p>
    
-   
+   <br/>
    
    ​	Policy Gradient가 0으로 수렴할 것이며, 이는 **policy가 local optimum로 수렴되어 최적의 정책을 구할 수 있음**을 의미한다.
    

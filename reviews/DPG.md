@@ -8,7 +8,7 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 
 [paper_link](http://proceedings.mlr.press/v32/silver14.pdf)
 
-
+<br/>
 
 ### [Abstract]
 
@@ -19,7 +19,7 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 
 - 마지막으로, **high-demensional action spaces**에서 stochastic 방식보다 **deterministic PG가 훨씬 뛰어남을 증명**한다.
 
-
+<br/>
 
 ### [Introduction]
 
@@ -33,7 +33,7 @@ deterministic policy gradient는 간단한 model-free의 형태로 존재하는�
 
 또한, 이 논문에서는  deterministic policy gradient가 stochastic policy gradient의 특별한 케이스(policy의 varience가 0에 수렴)임을 보일 것이다.
 
-
+<br/>
 
 stochastic 과 determisitic policy 사이에 결정적인 차이가 존재하는데,
 
@@ -41,7 +41,7 @@ stochastic의 경우에는  policy gradient가 **state와 action spaces 모두�
 
 그 결과, stochastic policy gradient를 구하기 위해서는 보다 더 많은 states 샘플을 요구하게 될 것이다. 특히 high-demensional action spaces의 경우에서 말이다.
 
-
+<br/>
 
 모든 state와 action을 탐험하기 위해서는, stochastic policy방법이 필수적이다.
 
@@ -49,7 +49,7 @@ stochastic의 경우에는  policy gradient가 **state와 action spaces 모두�
 
 이 알고리즘의 기본적인 아이디어는 **stochastic behaviour policy에 따라 action을 선택**하되, **deterministic target policy를 이용해 학습**을 한다는 것이다.
 
-
+<br/>
 
 이 논문에서는 **off-policy actor-critic algorithm**을 유도하기위해 deterministic policy gradient를 사용한다. 
 
@@ -57,13 +57,13 @@ stochastic의 경우에는  policy gradient가 **state와 action spaces 모두�
 
 근사된 action-value gradient의 방향으로 policy parameter를 업데이트 한다. 
 
-
+<br/>
 
 또한, deterministic policy gradient를 근사하기위해 SPG와 마찬가지로(내용은 다르겠지만) **compatible function**을 소개한다.
 
 이는 policy gradient가 biased-estimated 되지 않았음을 보이기 위함이다.
 
-
+<br/>
 
 ### [Background]
 
@@ -75,7 +75,7 @@ expectation의 형태로 나타낼 수 있다. (변수설명은 논문 참조)
 
 <p align="center"><img src="../img/latex19.png"/></p>
 
-
+<br/>
 
 #### Stochastic Policy Gradient Theorem
 
@@ -95,13 +95,13 @@ state distribution은 정책파라미터에 연관성이 있는데도 불구하�
 
 이러한 알고리즘들을 다루기 위해서는 **action-value funciton을 어떻게 추정할 것인가**에 대한 문제로 귀결되었다.
 
-
+<br/>
 
 #### Stochastic Actor-Critic Algorithms
 
 **actor-critic** 알고리즘은 policy gradient기반의 구조에서 가장 널리 쓰이며, actor와 critic 두가지 요소로 이루어져있다.
 
-
+<br/>
 
 **actor**는 performance gradient의 stochastic gradient ascent를 이용해 stochastic policy를 조절하며, 
 
@@ -115,13 +115,13 @@ state distribution은 정책파라미터에 연관성이 있는데도 불구하�
 
 function approximator가 **compatible** 하다면 bias하지 않다.
 
-
+<br/>
 
 여기서 compatible한 funciton approximator의 조건은 다음과 같다.
 
 <p align="center"><img src="../img/latex22.png"/></p>
 
-
+<br/>
 
 
 #### Off-Policy Actor-Critic
@@ -146,7 +146,7 @@ behaviour policy의 state distribution에 대해 averaged된 target policy의 va
 
 위 논문에 의하면 이러한 approximation이 gradient ascent가 수렴하는 방향으로 local optima가 형성되므로 충분히 좋은 근사라고 주장한다.
 
-
+<br/>
 
 위 논문에서 소개된, **Off-Policy Actor-Critic(OffPAC)**은 behaviour policy를 사용해 trajectories sample을 생성한다.
 
@@ -158,7 +158,7 @@ behaviour policy의 state distribution에 대해 averaged된 target policy의 va
 
 이때는 stochastic gradient ascent를 이용해 업데이트한다.
 
-
+<br/>
 
 여기서 actor와 critic은 behaviour policy가 아닌 target policy를 사용했다는 것을 반영하기위해,
 
@@ -166,7 +166,7 @@ behaviour policy의 state distribution에 대해 averaged된 target policy의 va
 
 <p align="center"><img src="../img/latex26.png"/></p>
 
-
+<br/>
 
 ### [Gradients of Deterministics Policies]
 
@@ -176,7 +176,7 @@ behaviour policy의 state distribution에 대해 averaged된 target policy의 va
 
 마지막으로, deterministic policy gradient theorem이 사실은 stochastic policy gradient theorem의 특수 케이스임을 보인다.
 
-
+<br/>
 
 #### Action-Value Gradients
 
@@ -184,7 +184,7 @@ model-free RL algorithm은 주로 일반화된 policy iteration 기법을 기반
 
 이는 **policy evaluation** 과  **policy improvement**로 이루어져있다.
 
-
+<br/>
 
 **policy evalution** 방법은 Monte-Carlo evaluation 이나 temporal-difference learning 방법 등으로 action-value function을 추정한다.
 
@@ -192,7 +192,7 @@ model-free RL algorithm은 주로 일반화된 policy iteration 기법을 기반
 
 주로 action-value function의 greedy maximization방법으로 업데이트한다.
 
-
+<br/>
 
 하지만 continuous action spaces에서는 이러한 방식의 policy improvement는 매 스텝 global maximization을 요구하기에 문제가 많았다.
 
@@ -202,7 +202,7 @@ model-free RL algorithm은 주로 일반화된 policy iteration 기법을 기반
 
 이러한 방식은 매 state마다 다른 방향으로의 policy improvement가 진행되며, 이들은 state distribution에 대한 기대값으로 취해져 평균치를 이룰 것이다.
 
-
+<br/>
 
 또한, chain rule의 적용을 통해 위 식을 action에 대한 action-value function과 policy parameter에 대한 policy gradient로 나눌 수 있다.
 
@@ -216,7 +216,7 @@ model-free RL algorithm은 주로 일반화된 policy iteration 기법을 기반
 
 따라서, 위 식에서 보여진 직관적인(?) 업데이트방식은 분명 performance objective의 gradient를 따르니 걱정하지 말도록하자.
 
-
+<br/>
 
 #### Deterministic Policy Gradient Theorem
 
@@ -228,7 +228,7 @@ stochastic policy와 유사한 방법으로 performance objective를 표현하�
 
 해당 증명은 Appendix에 증명되어 있으며, 그 결과는 아래 식과 같다.
 
-
+<br/>
 
 **Theorem 1** Deterministic Policy Gradient Theorem
 
@@ -238,13 +238,13 @@ stochastic policy와 유사한 방법으로 performance objective를 표현하�
 
 stochastic 방식은 state와 action에 대한 기댓값을 구해야 하기 때문에 deterministic방식이 더욱 효율적이라는 것이다.
 
-
+<br/>
 
 #### Limit of the Stochastic Policy Gradient 
 
 이 논문에서는 deterministic policy gradient가 사실은 stochastic policy gradient의 스페셜케이스이라는 사실을 보인다.(Appendix C 참고)
 
-
+<br/>
 
 deterministic policy로 파라미터화된 stochastic policy가 있다고 가정하자.
 
@@ -252,7 +252,7 @@ deterministic policy로 파라미터화된 stochastic policy가 있다고 가정
 
 이때 stochastic policy gradient와 deterministic policy gradient 역시 동일하게 수렴한다.
 
-
+<br/>
 
 **Theorem 2** 
 
@@ -262,7 +262,7 @@ deterministic policy로 파라미터화된 stochastic policy가 있다고 가정
 
 그동안 policy gradient에 적용되었던 모든 이론적 내용들이 **deterministic policy에도 호환 가능**하다는 사실을 나타낸다. 
 
-
+<br/>
 
 ### [Deterministic Actor-Critic Algorithms]
 
@@ -272,7 +272,7 @@ deterministic policy로 파라미터화된 stochastic policy가 있다고 가정
 
 다음으로, **Q-learning critic을 사용해 off-policy 업데이트**를 진행해 이 논문의 메인 아이디어를 전달한다.
 
-
+<br/>
 
 이러한 알고리즘들은 결국 실질적인 문제점들을 마주치게 된다.
 
@@ -280,7 +280,7 @@ deterministic policy로 파라미터화된 stochastic policy가 있다고 가정
 
 때문에 보다 이론적인 접근으로 **compatible function approximation**과 **gradient temporal-difference learning**을 소개한다.
 
-
+<br/>
 
 #### On-Policy Deterministic Actor-Critic
 
@@ -290,7 +290,7 @@ deterministic policy로 파라미터화된 stochastic policy가 있다고 가정
 
 하지만, **충분한 노이즈가 있는 환경**에서의 학습시킨다면 deterministic policy를 이용하더라도 충분히 탐험하는 효과가 있을 것이니 유용한 방법일 수 있다.
 
-
+<br/>
 
 stochastic actor-critic에서와 마찬가지로 deterministic actor-critic에도 **actor와 critic** 두가지 요소를 가지고 있다.
 
@@ -302,7 +302,7 @@ critic은 action-value function을 추정하며, actor는 action-value function�
 
 <p align="center"><img src="../img/latex32.png"/></p>
 
-
+<br/>
 
 #### Off-Policy Deterministic Actor-Critic
 
@@ -312,7 +312,7 @@ off-policy deterministic actor-critic은 [off-policy stochastic actor-critic](#o
 
 **임의의 stochastic behavior policy에 의해 생성된 trajectories를 통해 deterministic target policy를 학습**한다.
 
-
+<br/>
 
 또한, performance objective를 behavior policy의 state distribution에 대해 averaged된 target policy에 대한 value-function식으로 변형한다.
 
@@ -339,7 +339,7 @@ stochastic 방식과 마찬가지로 action-value gradient term이 제거해 근
 
 게다가 **Q-learning방식의 update를 사용하는 critic역시 importance sampling term을 제거할 수 있다**.
 
-
+<br/>
 
 #### Compatible Function Approximation
 
@@ -347,9 +347,7 @@ stochastic case와 비슷하게 compatible function approximator를 찾아 deter
 
 즉, **deterministic policy gradient에 영향을 주지 않으면서 근사함수의 gradient로 action-value gradient를 대체할 수 있는 critic**을 찾아야함을 의미한다.
 
-
-
-다음의 수식은 on-policy와 off-policy에 모두 적용되는 Theorem이다.
+<br/>다음의 수식은 on-policy와 off-policy에 모두 적용되는 Theorem이다.
 
 **Thoerem 3.** 
 
@@ -361,7 +359,7 @@ stochastic case와 비슷하게 compatible function approximator를 찾아 deter
 
 (증명은 논문에 간단히 정리되어있다.)
 
-
+<br/>
 
 *[Basis for condition 1]*
 
@@ -383,7 +381,7 @@ advantage function은 다음과 같은 형태의 linear function approximator로
 
 <u>이러한 형식의 function approximator는 Theorem 3의 condition 1을 만족한다.</u>
 
-
+<br/>
 
 linear function approximator는 global하게는 action-value를 예측하는데에 그리 효과적이지는 않다.
 
@@ -393,7 +391,7 @@ linear function approximator는 global하게는 action-value를 예측하는데�
 
 결과적으로 **linear function approximator는 actor가 policy parameter를 학습시키기 위한 방향을 고르기에 충분**하다.
 
-
+<br/>
 
 [*Basis for condition 2*]
 
@@ -401,7 +399,7 @@ condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true g
 
 이 문제는 features(trajectories)와 targets(true gradient)사이의 linear regression 문제라고 볼 수 있다.
 
-
+<br/>
 
 하지만, true gradient의 unbiased sample을 얻는것은 만만치 않은 문제이다.
 
@@ -409,7 +407,7 @@ condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true g
 
 **일반적인 policy evaluation방법(Q-learning, SARSA)을 사용해 parameter w를 학습시켰을 때에는 condition 2 를 만족시키지 못했다.** 
 
-
+<br/>
 
 논문에서는 차례로 policy evaluation problem에 대해서 합리적인 대안을 보여준다.
 
@@ -431,7 +429,7 @@ condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true g
 
 그런데 **off-policy Q-learning은 linear function approximator를 사용하였을 때에 발산**한다고 알려져있다.
 
-
+<br/>
 
 최근에 더욱 자주 사용되는 방법은 <u>**gradient temporal-difference learning기반**</u>의 true gradient descent 알고리즘이며, 이는 수렴을 보장하는 특성이 있다.
 
@@ -441,7 +439,7 @@ condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true g
 
 또한,  actor보다 critic이 시간적으로 빠르게 수렴할 수 있도록 step-size, learning-rate 등을 적절히 맞추어 준다면 파라미터의 MSPBE는 최소화되도록 수렴할 것이다.
 
-
+<br/>
 
 아래 수식은 COPDAC 알고리즘에 gradient Q-learning critic을 적용한 **COPDAC-GQ algorithm**이라 부른다.
 
@@ -449,7 +447,7 @@ condition 2를 만족시키기 위해서는 **근사함수의 gradient와 true g
 
 * stochastic actor-critic과 마찬가지로, 모든 파라미터를 업데이트 하는데에 필요한 computational complexity는 O(mn) 정도이다.
 
-
+<br/>
 
 마지막으로, 이 논문에서는 natural policy gradient가 deterministic policy로 확장될 수 있음을 보인다.
 
@@ -461,11 +459,11 @@ deterministic policy에 적용해보기 위해 <u>Fisher Information metric</u>�
 
 <p align="center"><img src="../img/latex44.png"/></p>
 
-
+<br/>
 
 이는 **policy의 분산이 0인 Fisher information metric**를 나타내는 등 특별한 케이스임을 보여준다.
 
-
+<br/>
 
 deterministic policy gradient theorem과 compatible function approximation를 결합하여 아래오 같은 수식을 얻어낼 수 있으며,
 
