@@ -114,7 +114,41 @@ value function이나 action-value function을 학습하기 위해 large, non-lin
 
 ### [Algorithm]
 
+<u>Q-learning을 continuous action spaces로 그대로 적용하기는 불가능했다</u>.
 
+greedy policy로 continuous spaces를 탐색하기에는 매 스탭마다 모든 action에 대해 optimization을 진행해야했고,
+
+이 과정이 large, unconstructed function approximator에 적용하기에는 **매우 느렸기 때문**이다. 
+
+<br/>
+
+그 대신에 이 논문에서는 DPG algorithm의 기반이 되는 **actor-critic 방식**을 이용했다.
+
+DPG에서는 actor function을 파라미터화하여 관리하였고, actor의 policy에서는 state와 특정 action을 직접적으로 연결해주었다.
+
+critic은 bellman equation을 이용한 Q-learning 방식으로 학습되었고, actor는 policy performance의 gradient 방향으로 update 되었다..
+$$
+\nabla_{\theta^\mu}J \approx \mathbb{E}_{s_t\sim\rho^\beta}[\nabla_{\theta^\mu}Q(s,a|\theta^Q)|_{s=s_t,a=\mu(s_t|\theta^\mu)}]
+\\ = \mathbb{E}_{s_t\sim\rho^\beta}[\nabla_a Q(s,a|\theta^Q)|_{s=s_t,a=\mu(s_t)}\nabla_{\theta^\mu}\mu(s|\theta^\mu)|_{s=s_t}]
+\\\text{<gradient of the policy's performance>}
+$$
+<br/>
+
+Q-learning과 함께 non-linear function approximator를 사용한다는 것은 '수렴을 보장하지않는다' 라는 것을 의미한다.
+
+그러나 **large state spaces에 대해 일반화를 하고 학습을 시키기 위해서는 이러한 approximator가 필수적**이다.
+
+*NFQCA(Hafner & Riedmiller, 2011)* 에서는 DPG와 같은 update rule을 사용하였지만 neural function approximator를 사용하였다.
+
+안정화를 위해 batch learning을 사용했지만 large network에서는 사용하기가 어려웠다.
+
+<br/>
+
+이 논문의 contribution은 <u>DQN이 성공할 수 있었던 요인들을 착안하여 DPG를 조금 개선한 것</u>이다.
+
+이것을 이 논문에서는 **Deep DPG(DDPG)**라 부른다.
+
+<p align="center"><img src="../img/img2.png"/></p>
 
 <br/>
 
