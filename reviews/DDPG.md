@@ -146,7 +146,7 @@ Q-learning과 함께 non-linear function approximator를 사용한다는 것은 
 
 이 논문의 contribution은 <u>DQN이 성공할 수 있었던 요인들을 착안하여 DPG를 조금 개선한 것</u>이다.
 
-이것을 이 논문에서는 **Deep DPG(DDPG) **라 부른다.
+이것을 이 논문에서는 **Deep DPG(DDPG)** 라 부른다.
 
 <p align="center"><img src="../img/img2.png"/></p>
 
@@ -174,13 +174,23 @@ replay buffer가 가득 차있을 때에는 지난 sample들을 버린다.
 
 DDPG는 off-policy algorithm이기 떄문에 replay buffer가 충분히 커도 된다.
 
-replay buffer가 크면 관련이 없는 sample set을 모으기가 더욱 쉬워지는 장점이 있다.
+replay buffer가 크면 관련이 없는(다양한) sample set을 모으기가 더욱 쉬워지는 장점이 있다.
 
 <br/>
 
 #### soft-target-network
 
+neural network를 사용한 Q-learning은 다양한 실험환경에서 unstable함이 증명되었다. 
 
+<u>Q-network가 업데이트 되는 동안에 target value를 계산하는데에 사용되기 떄문에 Q update가 발산한다</u>는 것이다.
+
+이 논문에서 말하는 해답은 DQN의 target network와 비슷하다, 하지만 actor-critic에 적합하도록 개선된 **'soft' target updates**를 사용한다.
+
+<br/>
+
+구체적으로는 actor와 critic에 해당하는 network를 각각 복사하여 target network로 삼는다.
+
+이들은 target value를 계산하는 데에 사용될 것이다. 또한 target network의 weight는 학습된 network를 천천히 따라서 업데이트 하는 방식이 된다.
 
 <br/>
 
