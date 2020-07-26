@@ -191,6 +191,10 @@ neural network를 사용한 Q-learning은 다양한 실험환경에서 unstable�
 구체적으로는 actor와 critic에 해당하는 network를 각각 복사하여 target network로 삼는다.
 
 이들은 target value를 계산하는 데에 사용될 것이다. 또한 target network의 weight는 학습된 network를 천천히 따라서 업데이트 하는 방식이 된다.
+$$
+\theta^\prime \gets \tau\theta + (1-\tau)\theta^\prime \text{ with } \tau \ll 1
+$$
+이는 target values의 변화의 속도를 천천히 제한하여, 학습의 안정성을 높여준다.
 
 <br/>
 
