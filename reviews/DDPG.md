@@ -212,19 +212,62 @@ low-dimensional observation으로부터 학습할때 observation의 구성요소
 
 이는 network를 효율적으로 학습시키기거나 hyper-parameter를 결정하기 어렵게 만들곤 한다.
 
+<br/>
 
+이 문제를 해결하기 위해서는 환경이나 물리적 요소의 특성에 상관없이 **모두 같은 범위의 값으로 scale을 맞춰주어야**하는데,
+
+해당 논문에서는 **batch-normalization**이라 불리는 deep learning기법을 적용하여 문제를 해결하였다.
+
+이 기법은 mini-batch sample들의 지니는 mean, variance를 normalize하는 기법이며 학습중에 생기는 covariance shift를 최소화하는데에 쓰인다.
+
+결과적으로 이 기법을 이용하여 observation unit의 타입이 전혀 다른 다양한 task에도 효과적으로 학습시킬 수 있다.
+
+<br/>
+
+#### Noise process
+
+continuous action spaces에서의 학습의 가장 큰 도전과제는 바로 **충분한 탐험/경험(exploration)**이다.
+
+DDPG와 같은 off-policy 알고리즘의 장점은 <u>학습알고리즘과 별개로</u> 탐험문제를 다룰 수 있다는 것에 있다.
+
+이 논문에서는 exploration policy에 noise process를 추가한 sample을 이용하였다고 한다.
+$$
+\mu^\prime(s_t) = \mu(s_t|\theta_t^\mu) + \mathcal{N}
+$$
+해당 논문에서 사용된 noise process는  *Ornstein-Uhlenbeck process(1930)* 이며, temporally correlated noise를 발생시킨다.
+
+따라서, physical control problem과 같은 관성이 있는 환경에서 exploration 효율을 높일 수 있다.
 
 <br/>
 
 ### [Results]
 
-<br/>
+<p align="center"><img src="../img/img3.png"/></p>
 
-### [Related Work]
+- 위 그래프에서 **target network**가 결정적인 역할을 하고있음을 알 수 있다.
 
 <br/>
 
 ### [Conclusion]
 
+이 논문은 최신 딥러닝 및 강화학습으로부터의 경향을 적절히 잘 결합해 내었다.
 
+결과적으로 <u>continuous action spaces를 가진 다양한 도메인에서의 어려운 과제들을 robust하게 풀어내는 알고리즘</u>을 도출해내었다.
 
+대부분의 강화학습 알고리즘에서 non-linear function approximator를 사용한다는 것은 convergence에 대해 전혀 보장할 수 없었지만,
+
+이 논문의 결과를 통해 안정적인 학습이 가능함을 보였다.
+
+<br/>
+
+흥미롭게도, DQN에서의 Artari domain 솔루션보다도 DDPG에서 찾아낸 솔루션이 지속적으로 짧은 시간내에 수렴 되었으며,
+
+충분한 시간이 주어진다면 DDPG가 훨씬 더 어려운 문제들도 풀어낼 수 있을 것이라고 생각된다.
+
+<br/>
+
+DDPG와 같은 접근방식에는 몇가지 **한계점**이 존재한다.
+
+대부분의 model-free reinforcement approaches와 같이 DDPG는 솔루션을 찾기 위해 <u>수많은 학습시간</u>을 요구한다.
+
+그러나 robust model-free approach가 이러한 한계점들을 이겨낼 정도로 더 큰 문제를 해결하기 위해서는 중요하게 작용할 것임을 믿어 의심치 않는다.
