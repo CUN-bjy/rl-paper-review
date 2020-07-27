@@ -71,18 +71,16 @@ DQN의 이전에는 large, non-linear function approximator가 어렵고 불안�
 action-value function은 많은 강화학습 알고리즘에서 사용된다. 
 
 이는 아래의 식과 같이 policy를 따라 방문하게되는 action, state에서 얻게 될 모든 return의 기댓값이다.
-$$
-Q^\pi(s_t,a_t) = \mathbb{E}_{r_{i\geq t},s_{i>t}\sim E,a_{i>t}\sim\pi}[R_t|s_t,a_t]
-$$
+<p align="left"><img src="../img/latex48.png"/></p>
+
 위 식은 일반적으로 **Bellman Equation**이라 알려져있는 recursive relationship 방식으로 표현되곤 한다.
-$$
-Q^\pi(s_t,a_t) = \mathbb{E}_{r_t,s_{t+1}\sim E}[r(s_t,a_t) + \gamma\mathbb{E}_{a_{t+1}\sim\pi}[Q^\pi(s_{t+1},a_{t+1})]]
-$$
+
+<p align="left"><img src="../img/latex49.png"/></p>
+
 만약 target policy가 deterministic하다면 action-value function 식 내부의 기댓값을 없앨 수 있으며 policy 역시 다음과 같이 표현된다.
-$$
-\text{policy: } \mu:S\gets A
-\\Q^\mu(s_t,a_t) = \mathbb{E}_{r_t,s_{t+1},\sim E}[r(s_t,a_t) + \gamma Q^\mu(s_{t+1},\mu(s_{t+1}))]
-$$
+
+<p align="left"><img src="../img/latex50.png"/></p>
+
 기댓값은 오직 환경(state,reward)에만 의존적이다.
 
 이는 또다른 stochastic behavior policy로부터 생성된 sample을 이용해 off-policy방식으로 위 함수를 학습할 수 있음을 의미한다.
@@ -92,10 +90,9 @@ $$
 우리는 위 action-value function을 근사할 **function approximator를 파라미터화** 하여 생각해 볼 수 있을 것이다.
 
 또한 근사함수를 최적화 하기위해 아래 식을 이용해 loss를 구하고 이를 최소화 해야만 한다.
-$$
-L(\theta^Q) = \mathbb{E}_{s_t\sim\rho^\beta,a_t\sim\beta,r_t\sim E}[(Q(s_t,a_t|\theta^Q)-y_t)^2]
-\\\text{where } y_t = r(s_t,a_t) + \gamma Q(s_{t+1},\mu(s_{t+1})|\theta^Q)
-$$
+
+<p align="left"><img src="../img/latex51.png"/></p>
+
 <br/>
 
 value function이나 action-value function을 학습하기 위해 large, non-linear function approximator를 사용하는것은 예전부터 기피의 대상이었다.
@@ -126,12 +123,10 @@ greedy policy로 continuous spaces를 탐색하기에는 매 스탭마다 모든
 
 DPG에서는 actor function을 파라미터화하여 관리하였고, actor의 policy에서는 state와 특정 action을 직접적으로 연결해주었다.
 
-critic은 bellman equation을 이용한 Q-learning 방식으로 학습되었고, actor는 policy performance의 gradient 방향으로 update 되었다..
-$$
-\nabla_{\theta^\mu}J \approx \mathbb{E}_{s_t\sim\rho^\beta}[\nabla_{\theta^\mu}Q(s,a|\theta^Q)|_{s=s_t,a=\mu(s_t|\theta^\mu)}]
-\\ = \mathbb{E}_{s_t\sim\rho^\beta}[\nabla_a Q(s,a|\theta^Q)|_{s=s_t,a=\mu(s_t)}\nabla_{\theta^\mu}\mu(s|\theta^\mu)|_{s=s_t}]
-\\\text{<gradient of the policy's performance>}
-$$
+critic은 bellman equation을 이용한 Q-learning 방식으로 학습되었고, actor는 policy performance의 gradient 방향으로 update 되었다.
+
+<p align="left"><img src="../img/latex52.png"/></p>
+
 <br/>
 
 Q-learning과 함께 non-linear function approximator를 사용한다는 것은 '수렴을 보장하지않는다' 라는 것을 의미한다.
@@ -191,9 +186,9 @@ neural network를 사용한 Q-learning은 다양한 실험환경에서 unstable�
 구체적으로는 actor와 critic에 해당하는 network를 각각 복사하여 target network로 삼는다.
 
 이들은 target value를 계산하는 데에 사용될 것이다. 또한 target network의 weight는 학습된 network를 천천히 따라서 업데이트 하는 방식이 된다.
-$$
-\theta^\prime \gets \tau\theta + (1-\tau)\theta^\prime \text{ with } \tau \ll 1
-$$
+
+<p align="left"><img src="../img/latex53.png"/></p>
+
 이는 target values의 변화의 속도를 천천히 제한하여, 학습의 안정성을 높여준다.
 
 
@@ -231,9 +226,9 @@ continuous action spaces에서의 학습의 가장 큰 도전과제는 바로 **
 DDPG와 같은 off-policy 알고리즘의 장점은 <u>학습알고리즘과 별개로</u> 탐험문제를 다룰 수 있다는 것에 있다.
 
 이 논문에서는 exploration policy에 noise process를 추가한 sample을 이용하였다고 한다.
-$$
-\mu^\prime(s_t) = \mu(s_t|\theta_t^\mu) + \mathcal{N}
-$$
+
+<p align="left"><img src="../img/latex54.png"/></p>
+
 해당 논문에서 사용된 noise process는  *Ornstein-Uhlenbeck process(1930)* 이며, temporally correlated noise를 발생시킨다.
 
 따라서, physical control problem과 같은 관성이 있는 환경에서 exploration 효율을 높일 수 있다.

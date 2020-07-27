@@ -4,13 +4,13 @@
 
 reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
 
-<img align=left src="https://progress-bar.dev/29/"/>
+<img align=left src="https://progress-bar.dev/43/"/>
 
 > progress <
 
 - [x] [1. Sutton_PG](#1.-Sutton_PG)
 - [x] [2. DPG](#2.-DPG)
-- [ ] [3. DDPG](#3.-DDPG)
+- [x] [3. DDPG](#3.-DDPG)
 - [ ] [4. NPG](#4.-NPG)
 - [ ] [5. TRPO](#5.-TRPO)
 - [ ] [6. GAE](#6.-GAE)
