@@ -56,6 +56,10 @@ Timothy P. Lillicrap∗ , Jonathan J. Hunt∗ , Alexander Pritzel, Nicolas Heess
 
 [A natural policy gradient]
 
+Sham Kakade(2002)
+
+[review_page](./reviews/NPG.md)  |  [paper_link](https://papers.nips.cc/paper/2073-a-natural-policy-gradient.pdf)
+
 <br/>
 
 ### 5. TRPO
