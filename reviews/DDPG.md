@@ -196,6 +196,24 @@ $$
 $$
 이는 target values의 변화의 속도를 천천히 제한하여, 학습의 안정성을 높여준다.
 
+
+
+이러한 방식은 target network의  value estimation전파속도를 늦추므로 **느린 학습**에 속한다. 
+
+하지만, 실제로 학습의 안정성을 위해서는 매우 중요한 요소임을 발견해내었다.
+
+<br/>
+
+#### batch normalization
+
+low-dimensional observation으로부터 학습할때 observation의 구성요소는 매우 다른 물리적 요소로 구성되어있다.(e.g. position vs velocity etc.)
+
+또한 이들 값의 범위는 환경에 따라 다양하게 걸쳐있다.
+
+이는 network를 효율적으로 학습시키기거나 hyper-parameter를 결정하기 어렵게 만들곤 한다.
+
+
+
 <br/>
 
 ### [Results]
