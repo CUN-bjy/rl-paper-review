@@ -10,3 +10,34 @@ Sham Kakade(2002)
 
 
 
+### [Abstract]
+
+
+
+### [Introduction]
+
+
+
+### [A Natural Gradient]
+
+
+
+### [The Natural Gradient and Policy Iteration]
+
+#### Compatible Function Approximation
+
+
+
+#### Greedy Policy Improvement
+
+
+
+### [Metrics and Curvatures]
+
+
+
+### [Experiments]
+
+
+
+### [Discussion]
