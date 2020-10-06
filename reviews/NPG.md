@@ -44,8 +44,18 @@ $$
 
 ### [A Natural Gradient]
 
+논문에서는 기본적인 설명을 위한 기본 정의 및 표현들을 열거하며 전개해나간다.
+$$
+\text{finite MDP : } (S,s_0,A,R,P)
+\\S : \text{finite set of states}, \\s_0 : \text{start state},\\A : \text{finite set of actions}, \\R : S \times A \to [0,R_{max}] \text{, reward function}, \\P : \text{transition model}\\ policy \to\pi(a;s), \text{stochastic policy}
+$$
+모든 policy는 확률적으로 고르게 분포되어있다 가정하며, 즉, 잘 정의된 stationary distribution을 가지고 있다.
 
-
+이러한 가정 속에서 또한 다음의 식을 만족한다.
+$$
+\text{average reward}: \eta(\pi) \equiv \sum_{s,a}\rho^\pi(s)\pi(a;s)R(s,a)
+\\\text{state-action value}: Q^\pi(s,a) \equiv E_{\pi}[\sum_{t=0}^\infty R(s_t,a_t)-\eta(\pi)|s_0=s,a_0=a]\\\text{value function}:J^\pi(s)\equiv E_{\pi(a^\prime;s)}[Q^\pi(s,a^\prime)]
+$$
 
 
 
