@@ -57,6 +57,17 @@ $$
 \\\text{state-action value}: Q^\pi(s,a) \equiv E_{\pi}[\sum_{t=0}^\infty R(s_t,a_t)-\eta(\pi)|s_0=s,a_0=a]\\\text{value function}:J^\pi(s)\equiv E_{\pi(a^\prime;s)}[Q^\pi(s,a^\prime)]
 $$
 
+이어서 이 논문의 목표인 average reward를 최대화해주기위한 policy를 찾기위해  parameterized policy를 다음과 같이 표현할 수 있으며, 
+$$
+\Pi = [\pi_\theta:\theta \in \mathfrak{R}^m],
+\\
+$$
+이를 이용한 average reward의 gradient를 구하는 식은 다음과 같다.
+$$
+\nabla\eta(\theta) = \sum_{s,a}\rho^\pi(s)\nabla\pi(a;s,\theta)Q^\pi(s,a)
+$$
+
+
 
 
 
