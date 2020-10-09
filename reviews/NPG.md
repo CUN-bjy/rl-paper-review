@@ -67,6 +67,19 @@ $$
 \nabla\eta(\theta) = \sum_{s,a}\rho^\pi(s)\nabla\pi(a;s,\theta)Q^\pi(s,a)
 $$
 
+</br>
+
+일반적으로 average reward의 steepest descent direction는 아래와 같이 정의된다.
+$$
+\text{steepest descent direction : }d\theta \text{ that minimizes }\eta(\theta + d\theta)
+\\ \text{under the constraint}(|d\theta|^2 \to \text{a small constant})
+$$
+이 때, squared length는 일종의 **positive-definite matrix**와 함께 정의된다.
+$$
+|d\theta|^2 \equiv \sum_{ij}G_{ij}(\theta)d\theta_id\theta_j = d\theta^T G(\theta)d\theta\text{(using vector notation)}
+$$
+
+
 
 
 
