@@ -10,15 +10,15 @@ Sham Kakade(2002)
 
 </br>
 
-### [Abstract]
+### [0. Abstract]
 
 - 이 논문에서는 **natural gradient method**를 제안하며, 이는 학습할 parameter의 steepest descent direction을 구할 수 있게 해준다.
 - gradient method가 parameter에 큰 변화를 줄 수는 없지만, natural gradient method가 조금 더 나은 action을 선택하기보다는 **greedy-optimal action**을 선택하는 방향으로 나아감을 보인다.
-- 이러한 greedy-optimal action은 Sutton이 제안한 compatible value function을 근사하는 과정에서 선택되는 거소가 같으며, 이때 간단한 MDP와 복잡한 MDP(e.g. Tetris)에서 drastic performance improvements을 나타냄을 보인다.
+- 이러한 greedy-optimal action은 Sutton이 제안한 compatible value function을 근사하는 과정에서 선택되는 것과 같으며, 이때 간단한 MDP와 복잡한 MDP(e.g. Tetris)에서 drastic performance improvements을 나타냄을 보인다.
 
 </br>
 
-### [Introduction]
+### [1. Introduction]
 
 direct-policy-gradient 방법으로 복잡한 MDP문제를 해결하기위한 관심들은 계속 증가되어왔다.
 
@@ -42,7 +42,7 @@ $$
 
 </br>
 
-### [A Natural Gradient]
+### [2. A Natural Gradient]
 
 논문에서는 기본적인 설명을 위한 기본 정의 및 표현들을 열거하며 전개해나간다.
 $$
@@ -119,27 +119,62 @@ positive-definite함수 G를 대체할 수 있는 함수 Fisher Information matr
 
 아래와 같이 steepest descent direction을 나타낼 수 있다.
 $$
-\nabla\eta(\theta) \equiv F(\theta)^{-1}\nabla\eta(\theta)
+\overset{\sim}\nabla\eta(\theta) \equiv F(\theta)^{-1}\nabla\eta(\theta)
 $$
 </br>
 
 
-### [The Natural Gradient and Policy Iteration]
+### [3. The Natural Gradient and Policy Iteration]
 
-#### Compatible Function Approximation
+이번 장에서는 natural gradient를 사용한 policy improvement와 일반적인 policy iteration을 비교할 것이다.
+
+보다 적절한 비교를 위해, action-value funtion Q를 parameter w로 이루어진 *compatible* function approximator로 근사할 것이다.
+
+#### 3.1 Compatible Function Approximation
+
+$$
+\text{For vectors }\theta, w \in \R^m,
+\\ \psi(s,a)^\pi = \nabla log\pi(a;s,\theta),\quad f^\pi(s,a;w) = w^T\psi^\pi(s,a)
+\\ \text{where} [\nabla log\pi(a;s,\theta)]_i = \partial log\pi(a;s,\theta)/\nabla\theta_i
+$$
+
+compatible value function f가 위와같이 parameter w에 의해 정의될 때.
+
+squared error는 다음과 같으며,
+$$
+\epsilon(w,\pi) \equiv \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)(f^\pi(s,a;w)-Q^\pi(s,a))^2
+$$
+이때 function approximator는 compatible function f를 true value 대신 사용했을 때 gradient를 계산할 수 있다는 점에서 <u>policy와 compatible</u>하다고 할 수 있다.
 
 
 
-#### Greedy Policy Improvement
+***Theorem 1.***
+
+squared error가 최소화되었을 때의 파라미터 w는  steepest descent direction과 같다.
+$$
+\overset{\sim}w = \overset{\sim}\nabla\eta(\theta)
+$$
+*Proof.*(자세한건 논문참조)
+$$
+\text{when }\overset{\sim}w \text{ minimizes the squared error, }\partial\epsilon/\partial w_i = 0,
+\\ \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)(\psi^\pi(s,a)^T\overset{\sim}w-Q^\pi(s,a)) = 0 ,
+\\ (\sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)\psi^\pi(s,a)^T)\overset{\sim}w = \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)Q^\pi(s,a)
+\\ F(\theta)\overset{\sim}w = \nabla\eta(\theta), \text{by definition of }\psi^\pi
+$$
 
 
 
-### [Metrics and Curvatures]
+
+#### 3.2 Greedy Policy Improvement
 
 
 
-### [Experiments]
+### [4. Metrics and Curvatures]
 
 
 
-### [Discussion]
+### [5. Experiments]
+
+
+
+### [6. Discussion]
