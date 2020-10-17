@@ -74,14 +74,54 @@ $$
 \text{steepest descent direction : }d\theta \text{ that minimizes }\eta(\theta + d\theta)
 \\ \text{under the constraint}(|d\theta|^2 \to \text{a small constant})
 $$
-이 때, squared length는 일종의 **positive-definite matrix**와 함께 정의된다.
+이 때, squared length는 일종의 **positive-definite matrix**와 함께 표현되며,
 $$
 |d\theta|^2 \equiv \sum_{ij}G_{ij}(\theta)d\theta_id\theta_j = d\theta^T G(\theta)d\theta\text{(using vector notation)}
 $$
 
+위 정의에 따라 계산해보면, steepest descent direction을 아래와 같이 간단히 나타낼 수 있다.
+$$
+\text{steepest descent direction : }G^{-1}\nabla\eta(\theta)
+$$
+일반적인 gradient descent는 위 수식의 함수 **G**를 identity matrix **I**로 가정한 
 
+특수 케이스의 steepest descent direction을 따르 것인데,
 
+coordinates기반의 metric이 아닌 <u>manifold기반의 metric</u>으로 일반화 한 것이 바로 위의 결과이다.
 
+그리고 이러한 metric을 바로 **Natural Gradient**라고 부른다.
+
+</br>
+
+이 정책 파라미터의 **Fisher information matrix**는 다음과 같이 정의될 수 있는데.
+$$
+F_s(\theta) \equiv E_{\pi(a;s,\theta)}[\frac{\partial log\pi(a;s,\theta)}{\partial \theta_i}\frac{\partial log\pi(a;s,\theta)}{\partial \theta_j}]
+$$
+이는 분명 **positive-definite**하다.
+
+ 또한 모든 coordinates에 대해 *same distance*를 지닌다는 이유에서 **invariant** 하다.
+
+</br>
+
+Fisher information은 probability manifold에서 그에 해당하는 state s에서의 <u>distance</u>를 측정해주는 도구이다.
+
+average reward가 정책 파라미터로부터 정의되었다는 점에서
+
+정책 파라미터의 straightforward를 측정하는 도구를 다음과 같이 나타낼 수 있다. 
+$$
+F(\theta) = E_{\rho^\pi(s)}[(\frac{\partial}{\partial\theta}log\pi(a;s,\theta))^2]=E_{\rho^\pi(s)}[\frac{\partial log\pi(a;s,\theta)}{\partial \theta_i}\frac{\partial log\pi(a;s,\theta)}{\partial \theta_j}] = E_{\rho^\pi(s)}[F_s(\theta)]
+$$
+직관적으는, 매 state의 거리 평균을 계산해 정책의 진행방향(straightforward)을 수치적으로 계산한다고 할 수 있겠다.
+
+이처럼, 모든 coordinates에 대해 **invariant**하며 **straightforward metric**으로서 
+
+positive-definite함수 G를 대체할 수 있는 함수 Fisher Information matrix를 이용한다면,
+
+아래와 같이 steepest descent direction을 나타낼 수 있다.
+$$
+\nabla\eta(\theta) \equiv F(\theta)^{-1}\nabla\eta(\theta)
+$$
+</br>
 
 
 ### [The Natural Gradient and Policy Iteration]
