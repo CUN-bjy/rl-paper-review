@@ -144,9 +144,9 @@ squared error는 다음과 같으며,
 $$
 \epsilon(w,\pi) \equiv \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)(f^\pi(s,a;w)-Q^\pi(s,a))^2
 $$
-이때 function approximator는 compatible function f를 true value 대신 사용했을 때 gradient를 계산할 수 있다는 점에서 <u>policy와 compatible</u>하다고 할 수 있다.
+이때 compatible function f를 true value 대신 사용했을 때 gradient를 계산할 수 있다는 점에서 function approximator가 <u>policy와 compatible</u>하다고 할 수 있다.
 
-
+</br>
 
 ***Theorem 1.***
 
@@ -160,12 +160,21 @@ $$
 \\ \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)(\psi^\pi(s,a)^T\overset{\sim}w-Q^\pi(s,a)) = 0 ,
 \\ (\sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)\psi^\pi(s,a)^T)\overset{\sim}w = \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)Q^\pi(s,a)
 \\ F(\theta)\overset{\sim}w = \nabla\eta(\theta), \text{by definition of }\psi^\pi
+\\\therefore \overset{\sim}w = F^{-1}(\theta)\nabla\eta(\theta) = \overset{\sim}\nabla\eta(\theta) \quad \Box.
 $$
 
+즉, actor-critic framework는 function approximator의 weight를 natural gradient로서 사용하고 있었던 것.
 
+</br>
 
 
 #### 3.2 Greedy Policy Improvement
+
+greedy policy improvement단계는 approximator를 이용해 각 state에서 높은 value를 가지는 action을 선택하는 것이다. 이번 절에서는 natural gradient가 단지 좋은 action이 아니라 *best action*으로 향하도록 한다는 것을 보일 것이다.
+
+
+
+
 
 
 
