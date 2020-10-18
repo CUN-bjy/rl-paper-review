@@ -172,9 +172,15 @@ $$
 
 greedy policy improvement단계는 approximator를 이용해 각 state에서 높은 value를 가지는 action을 선택하는 것이다. 이번 절에서는 natural gradient가 단지 좋은 action이 아니라 *best action*으로 향하도록 한다는 것을 보일 것이다.
 
+</br>
 
+우선, exponential 함수의 형태의 정책을 고려해보자.
+$$
+\pi(a;s,\theta) \propto exp(\theta^T\phi_{sa}), \text{where } \phi_{sa} \text{is some feature vector in }\R^m
+$$
+exponential 함수를 먼저 고려한 이유는 바로 ***affine geometric***한 성질을 지니고 있기 때문이다.
 
-
+이는 접선벡터에의 한 점이 변환되더라도 manifold의 한 점으로 남아있을 수 있도록 한다.
 
 
 
