@@ -180,9 +180,23 @@ $$
 $$
 exponential 함수를 먼저 고려한 이유는 바로 ***affine geometric***한 성질을 지니고 있기 때문이다.
 
-이는 접선벡터에의 한 점이 변환되더라도 manifold의 한 점으로 남아있을 수 있도록 한다.
+이는 접선벡터(tangent vector)에의 한 점이 변환되더라도 manifold의 한 점으로 남아있을 수 있도록 한다.
 
+</br>
 
+일반적으로 정책 파라미터의 probability manifold는 curve형태이며, 
+
+법선벡터에 의해 한 점이 변환된다면 그 점이 manifold공간(예컨데 sphere 공간)에서 유지되리란 보장이 없다.
+
+후에는 일반적인 형태(non-exponential)에 대해서 고려해보아야겠지만, 지금은 exponential case를 먼저 보도록하자.
+
+</br>
+
+exponential 함수형태의 정책은 natural gradient 방향으로의 충분히 큰 스텝으로 학습하더라도 greedy policy improvement step에 의해 발견된 policy와 동일하다.
+
+***Theorem 2.***
+
+ 
 
 ### [4. Metrics and Curvatures]
 
