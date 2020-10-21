@@ -192,11 +192,23 @@ exponential 함수를 먼저 고려한 이유는 바로 ***affine geometric***�
 
 </br>
 
-exponential 함수형태의 정책은 natural gradient 방향으로의 충분히 큰 스텝으로 학습하더라도 greedy policy improvement step에 의해 발견된 policy와 동일하다.
+이번에는 exponential 함수형태의 정책이 natural gradient 방향으로의 충분히 큰 스텝(learning rate를 아주 크게)으로 학습한다면 greedy policy improvement step를 통해 도달할 수 있는 정책과 동일함을 보이려 한다.
 
 ***Theorem 2.***
+$$
+\text{For }\pi(a;s,\theta) \propto exp(\theta^T\phi_{sa}),
+\\\text{ assume } \overset{\sim}\nabla\eta(\theta) : \text{non-zero, and } 
+\overset{\sim}w \text{ minimizes approximation error.}
+\\Let \quad\pi_\infin(a;s) = lim_{a\to\infin}\pi(a;s,\theta+\alpha\overset{\sim}\nabla\eta(\theta)).
+\\Then \quad\pi_\infin(a;s) \ne \text{if and only if }a \in argmax_{a^\prime}f^\pi(s,a\prime,\overset{\sim}w) 
+$$
+*Proof.*(자세한건 논문참조)
 
- 
+
+
+
+
+
 
 ### [4. Metrics and Curvatures]
 
