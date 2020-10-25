@@ -204,8 +204,14 @@ $$
 $$
 *Proof.*(자세한건 논문참조)
 
-
-
+compatible function approximator에 theorem의 결과를 적용하면,
+$$
+f^\pi(s,a;\overset{\sim}w) = \overset{\sim}\nabla\eta(\theta)^T\psi^\pi(s,a)
+$$
+또한, 
+$$
+\text{by definition of } \pi(a,s;\theta), \space \psi^\pi(s,a) = \phi_{sa} - E_{\pi(a^\prime;s,\theta)}(\phi_{sa^\prime})
+$$
 
 
 
