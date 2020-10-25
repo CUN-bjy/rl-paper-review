@@ -200,7 +200,7 @@ $$
 \\\text{ assume } \overset{\sim}\nabla\eta(\theta) : \text{non-zero, and } 
 \overset{\sim}w \text{ minimizes approximation error.}
 \\Let \quad\pi_\infin(a;s) = lim_{a\to\infin}\pi(a;s,\theta+\alpha\overset{\sim}\nabla\eta(\theta)).
-\\Then \quad\pi_\infin(a;s) \ne \text{if and only if }a \in argmax_{a^\prime}f^\pi(s,a\prime,\overset{\sim}w) 
+\\Then \quad\pi_\infin(a;s) \ne \text{if and only if }a \in argmax_{a^\prime}f^\pi(s,a\prime,\overset{\sim}w)
 $$
 *Proof.*(자세한건 논문참조)
 
@@ -208,10 +208,21 @@ compatible function approximator에 theorem의 결과를 적용하면,
 $$
 f^\pi(s,a;\overset{\sim}w) = \overset{\sim}\nabla\eta(\theta)^T\psi^\pi(s,a)
 $$
-또한, 
+또한,  정책함수의 정의에 따라,
 $$
-\text{by definition of } \pi(a,s;\theta), \space \psi^\pi(s,a) = \phi_{sa} - E_{\pi(a^\prime;s,\theta)}(\phi_{sa^\prime})
+\pi(a;s,\theta) \propto exp(\theta^T\phi_{sa}),\\
+\psi^\pi(s,a) = \nabla log\pi(a;s,\theta) =\phi_{sa} - E_{\pi(a^\prime;s,\theta)}(\phi_{sa^\prime})
 $$
+
+이를 합쳐보면,
+$$
+f^\pi(s,a;\overset{\sim}w) = \overset{\sim}\nabla\eta(\theta)^T[\phi_{sa}-E_{\pi(a^\prime;s,\theta)}\phi_{sa^\prime}]
+$$
+여기서 Expectation term은 a에 대한 함수가 아니므로 다음을 따른다.(?)
+$$
+argmax_{a^\prime}f^\pi(s,a^\prime;\overset{\sim}w) = argmax_{a^\prime}\overset{\sim}\nabla\eta(\theta)^T\phi_{sa^\prime}
+$$
+
 
 
 
