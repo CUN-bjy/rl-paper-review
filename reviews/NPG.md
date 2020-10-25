@@ -10,6 +10,12 @@ Sham Kakade(2002)
 
 </br>
 
+같이 읽으면 도움이 되는 글들
+
+- https://www.slideshare.net/SooyoungMoon3/natural-policy-gradient
+
+</br>
+
 ### [0. Abstract]
 
 - 이 논문에서는 **natural gradient method**를 제안하며, 이는 학습할 parameter의 steepest descent direction을 구할 수 있게 해준다.
