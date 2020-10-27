@@ -15,6 +15,8 @@ reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/20
 - [ ] [5. TRPO](#5.-TRPO)
 - [ ] [6. GAE](#6.-GAE)
 - [ ] [7. PPO](#7.-PPO)
+- [ ] [8. TD3](#8.-TD3)
+- [ ] [9. SAC](#9.-SAC)
 
 <br/>
 
