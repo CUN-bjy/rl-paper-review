@@ -79,5 +79,7 @@ Sham Kakade(2002)
 [Proximal policy optimization algorithms]
 
 ### 8. TD3
+[Addressing Function Approximation Error in Actor-Critic Methods]
 
 ### 9. SAC
+[Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
