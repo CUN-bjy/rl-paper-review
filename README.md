@@ -77,3 +77,7 @@ Sham Kakade(2002)
 ### 7. PPO
 
 [Proximal policy optimization algorithms]
+
+### 8. TD3
+
+### 9. SAC
