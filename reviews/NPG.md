@@ -206,9 +206,9 @@ $$
 \\\text{ assume } \overset{\sim}\nabla\eta(\theta) : \text{non-zero, and } 
 \overset{\sim}w \text{ minimizes approximation error.}
 \\Let \quad\pi_\infin(a;s) = lim_{a\to\infin}\pi(a;s,\theta+\alpha\overset{\sim}\nabla\eta(\theta)).
-\\Then \quad\pi_\infin(a;s) \ne \text{if and only if }a \in argmax_{a^\prime}f^\pi(s,a\prime,\overset{\sim}w)
+\\Then \quad\pi_\infin(a;s) \ne 0 \text{ if and only if }a \in argmax_{a^\prime}f^\pi(s,a\prime,\overset{\sim}w)
 $$
-*Proof.*(자세한건 논문참조)
+*Proof.*
 
 compatible function approximator에 theorem의 결과를 적용하면,
 $$
@@ -229,6 +229,46 @@ $$
 argmax_{a^\prime}f^\pi(s,a^\prime;\overset{\sim}w) = argmax_{a^\prime}\overset{\sim}\nabla\eta(\theta)^T\phi_{sa^\prime}
 $$
 
+gradient step을 반영하면 다음 식과 같은데,
+$$
+\pi(a;s,\theta + \alpha\overset{\sim}\nabla\eta(\theta)) \propto exp(\theta^T\phi_{sa} + \alpha\overset{\sim}\nabla\eta(\theta)^T\phi_{sa})
+\\ \text{Since } \overset{\sim}\nabla\eta(\theta) \ne 0,  \text{the term } \overset{\sim}\nabla\eta(\theta)^T\phi_{sa} \text{ is dominate} \text{ as } \alpha\to\infin
+$$
+위와같이 learning rate가 무한히 커질 때 아래 식이 성립된다.
+$$
+\pi_{\infin}(a,s) = 0 \text{ if and only if } a \notin argmax_{a^\prime}\overset{\sim}\nabla\eta(\theta)^T\phi_{sa^\prime}
+\\ \text{that means } \pi_\infin(a;s) \ne 0 \text{ if and only if } a \in argmax_{a^\prime}f^\pi(s,a^\prime;\overset{\sim}w)
+$$
+즉,natural gradient 방향성분으로 무한히 학습한다면 
+
+해당성분이 정책을 결정하는 action의 대부분을 차지하게 될 것이며,
+
+이에 따라 natural gradient 방향 성분이 argmax가 아니라면 정책값은 0.
+
+argmax라면 natural gradient에 따라 결정된  action이 정책값이 된다(?)고 해석할 수 있다.
+
+</br>
+
+이는 <u>natural gradient를 따라 이동하면 결국 best action을 고르게 된다</u>는 의미이다!
+
+하지만 이는 learing rate를 무한히 크게 설정했을 때에의 경우이며 
+
+이제부터 general parameterized policy에 대해 고려해보도록 하자.
+
+</br>
+
+다음은 natural gradient가 local linear approximator for Q에 의해 locally best action을 향해 이동함을 증명해낸다.
+
+***Theorem 3.***
+$$
+\pi(a;s,\theta^\prime) = \pi(a;s,\theta)(1 + f^\pi(s,a;\overset{\sim}w))+O(\alpha^2)
+$$
+*proof.*
+$$
+\pi(a;s,\theta) = \pi(a;s,\theta)+\frac{\partial\pi(a;s,\theta)^T}{\partial\theta}\Delta\theta+O(\Delta\theta^2)\\= \pi(a;s,\theta)(1+\psi(s,a)^T\Delta\theta)+O(\Delta\theta^2)
+\\= \pi(a;s,\theta)(1+\alpha\psi(s,a)^T\overset{\sim}w)+O(\alpha^2)
+\\= \pi(a;s,\theta)(1+\alpha f^\pi(s,a;\overset{\sim}w))+O(\alpha^2)
+$$
 
 
 
