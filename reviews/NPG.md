@@ -13,6 +13,7 @@ Sham Kakade(2002)
 같이 읽으면 도움이 되는 글들
 
 - https://www.slideshare.net/SooyoungMoon3/natural-policy-gradient
+- https://darkpgmr.tistory.com/59
 
 </br>
 
@@ -264,16 +265,28 @@ $$
 \pi(a;s,\theta^\prime) = \pi(a;s,\theta)(1 + f^\pi(s,a;\overset{\sim}w))+O(\alpha^2)
 $$
 *proof.*
+
+natural gradient 방향으로 learning step을 진행한 정책에 대해, 테일러 급수(1차)로 근사하면 아래의 식과 같다.
+
+여기서 O함수는 일반적으로 극소량으로 0으로 취급하는 경우가 많은 것 같다.
+
+그 외에는 위 theorem들의 적용으로 쉽게 공식이 전개된다.
 $$
 \pi(a;s,\theta) = \pi(a;s,\theta)+\frac{\partial\pi(a;s,\theta)^T}{\partial\theta}\Delta\theta+O(\Delta\theta^2)\\= \pi(a;s,\theta)(1+\psi(s,a)^T\Delta\theta)+O(\Delta\theta^2)
 \\= \pi(a;s,\theta)(1+\alpha\psi(s,a)^T\overset{\sim}w)+O(\alpha^2)
 \\= \pi(a;s,\theta)(1+\alpha f^\pi(s,a;\overset{\sim}w))+O(\alpha^2)
 $$
 
+해당 이론의 증명으로 인해, 일반적으로 optimal 하다고 알려지지 않은 greedy choice이지만,
 
+natural gradient를 이용한 Greedy action은 궁극적으로 optimal 선택을 만들어낸다는 점이 흥미롭다.
+
+</br>
 
 
 ### [4. Metrics and Curvatures]
+
+
 
 
 
