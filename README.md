@@ -2,8 +2,6 @@
 
 ### Paper Review List
 
-reference link: [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
-
 <img align=left src="https://progress-bar.dev/43/"/>
 
 > progress <
@@ -85,3 +83,7 @@ Sham Kakade(2002)
 
 ### 9. SAC
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
+
+
+### Reference
+[PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
