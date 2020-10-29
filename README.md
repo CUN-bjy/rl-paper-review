@@ -2,19 +2,15 @@
 
 ### Paper Review List
 
-- [x] [1. Sutton_PG](#1.-Sutton_PG)
-- [x] [2. DPG](#2.-DPG)
-- [x] [3. DDPG](#3.-DDPG)
-- [ ] [4. NPG](#4.-NPG)
-- [ ] [5. TRPO](#5.-TRPO)
-- [ ] [6. GAE](#6.-GAE)
-- [ ] [7. PPO](#7.-PPO)
-- [ ] [8. TD3](#8.-TD3)
-- [ ] [9. SAC](#9.-SAC)
-
-<br/>
-
-> paper review를 하며 가능한 key idea라고 생각하는 부분들만 추렸으니 자세한 내용은 참조링크와 논문을 참조하세요.
+- [x] [1. Sutton_PG](#1-sutton_pg)
+- [x] [2. DPG](#2-dpg)
+- [x] [3. DDPG](#3-ddpg)
+- [ ] [4. NPG](#4-npg)
+- [ ] [5. TRPO](#5-trpo)
+- [ ] [6. GAE](#6-gae)
+- [ ] [7. PPO](#7-ppo)
+- [ ] [8. TD3](#8-td3)
+- [ ] [9. SAC](#9-sac)
 
 <br/>
 
@@ -74,13 +70,19 @@ Sham Kakade(2002)
 
 [Proximal policy optimization algorithms]
 
+<br/>
+
 ### 8. TD3
 [Addressing Function Approximation Error in Actor-Critic Methods]
+
+<br/>
 
 ### 9. SAC
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
 
 </br>
+
+---
 
 ### Reference
 [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
