@@ -2,10 +2,6 @@
 
 ### Paper Review List
 
-<img align=left src="https://progress-bar.dev/43/"/>
-
-> progress <
-
 - [x] [1. Sutton_PG](#1.-Sutton_PG)
 - [x] [2. DPG](#2.-DPG)
 - [x] [3. DDPG](#3.-DDPG)
@@ -84,6 +80,6 @@ Sham Kakade(2002)
 ### 9. SAC
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
 
-
+</br>
 ### Reference
 [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
