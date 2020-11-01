@@ -319,11 +319,33 @@ $$
 $$
 유감스럽게도 Hessian 식의 모든 term이 data-dependent하다. state-action value(Q)와 연관되어있기 때문이다.
 
-Fisher Information, F가 뒤에있는 두 term으로부터 어떤 정보도 얻을 수 없다는 것은 확실해보인다.(그것들은 모두 gradient of Q에 종속적이다.)
+두/세번째 떰은 모두 gradient of Q에 종속적으로 F와 관련된 어떤 정보도 얻을 수 없어 보이며,
 
-반면 첫번째 텀은 Hessian of policy factor를 가지고 있기 때문에 약간의 관계성이 있다고 볼 수 있다.
+그나마 첫번째 텀은 curvature of policy factor를 가지고 있어 F와 약간의 관계성이 있다고 볼 수 있어 보인다.
 
+그러나 Q-value가 curvature of policy에  weighted된 문제로 원하던 방법과는 상이하다.
 
+</br>
+
+blind source separation case와 같이, 이 논문에서의 metric은 Hessian으로 항상 수렴하지 않으며
+
+또 그렇기에 항상 asymptotically efficient하지 않다.
+
+하지만, 일반적으로 Hessian은 positive-definite하지 않을 것이며
+
+파라미터가 local minima에 도달할 때 까지 얻게 된 curvature를 거의 사용할 수 없을 것이다.
+
+오히려 local maximum에서는 Conjugate method를 이용하는 것이 더욱 효율적일 것이다.
+
+</br>
+
+약간 설명이 횡설수설하는듯 하지만 
+
+> ''이 논문에서 채택한 FIM은 metric으로서 사용하기에 매력적이고 실제로 작동도 잘 했지만,
+>
+> 이론적으로 항상 Hessian으로 수렴하지 않으며, 항상 asymptotically efficient하지 않는 단점이 있다.''
+
+라고 말하는것으로 보인다.
 
 
 
@@ -332,3 +354,6 @@ Fisher Information, F가 뒤에있는 두 term으로부터 어떤 정보도 얻�
 
 
 ### [6. Discussion]
+
+
+
