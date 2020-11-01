@@ -5,7 +5,7 @@
 - [x] [1. Sutton_PG](#1-sutton_pg)
 - [x] [2. DPG](#2-dpg)
 - [x] [3. DDPG](#3-ddpg)
-- [ ] [4. NPG](#4-npg)
+- [x] [4. NPG](#4-npg)
 - [ ] [5. TRPO](#5-trpo)
 - [ ] [6. GAE](#6-gae)
 - [ ] [7. PPO](#7-ppo)
@@ -57,6 +57,10 @@ Sham Kakade(2002)
 ### 5. TRPO
 
 [Trust region policy optimization]
+
+John Schulman, Sergey Levine, Philipp Moritz, Michael Jordan, Pieter Abbeel (2015)
+
+[review_page](./reviews/TRPO.md)| [paper_link](https://arxiv.org/pdf/1502.05477.pdf)
 
 <br/>
 
