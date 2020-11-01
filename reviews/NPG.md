@@ -343,17 +343,62 @@ blind source separation case와 같이, 이 논문에서의 metric은 Hessian으
 
 > ''이 논문에서 채택한 FIM은 metric으로서 사용하기에 매력적이고 실제로 작동도 잘 했지만,
 >
-> 이론적으로 항상 Hessian으로 수렴하지 않으며, 항상 asymptotically efficient하지 않는 단점이 있다.''
+> 이론적으로 항상 Hessian으로 수렴하지 않으며, 항상 asymptotically efficient하지 않는 단점이 있다.
+>
+> local maximum에서는 conjugate method를 쓰는 것이 더 좋다.''
 
-라고 말하는것으로 보인다.
+라고 말하는것으로 보인다.(결론에 답이 있다)
 
 
 
 ### [5. Experiments]
 
+해당 논문에서는 natural policy gradient에 대한 실험을 위해 simple MDP 와 조금은 복잡한 tetris 실험을 진행했다.
+
+다음은 natural gradient의 인자인 FIM 함수의 업데이트 식이다.
+$$
+f \gets f + \nabla log\pi(a_t;s_t,\theta)\nabla log\pi(a_t;s_t,\theta)^T
+$$
+논문에는 크게 다음의 내용에 대해 실험한 내용들이 기록되어있다.
+
+- 1-dimensional linear quadratic regulator
+
+- simple 2-state MDP
+- game of Tetris for high dimensional problem
+
+(상세내용 논문 참고)
+
+</br>
+
+<u>**결과적으로 기존의 gradient 방법들보다 훨씬 빨리 학습한다.**</u>
+
 
 
 ### [6. Discussion]
+
+greedy policy iteration에 비하면 이러한 방법이 크게 policy를 변화시키지는 않는다.
+
+3장에서 언급했듯이 natural gradient method가 policy improvement iteration의 방향으로 답을 찾아내기 때문이다.
+
+이는 greedy한 action을 선택하더라도 best/optimal한 방향으로의 action을 찾아준다는 것을 guarantee해준다.
+
+</br>
+
+Fisher Information Matrix, F는 Hessian에 asymptotically converge하지 못한다.
+
+그래서 conjugate gradient method가 asymptotically함이 뚜렷하다.
+
+**(중요)** 
+
+하지만, 수렴하는 점에서 아주 멀 경우 Hessian은 별로 도움이 되지 못한다.
+
+오히려 natural gradient방법이 효율적이다(Tetris 실험에서 증명되었듯이).
+
+이는 직관적으로 보자면 maximum에서 아주 멀 때에는 아주 큰 performance의 changes가 발생하고,
+
+maximum에 가까워질수록 performance의 changes의 크기가 작아지기 때문이다. 
+
+이러한 이유로 conjugate method가 maximum에 가까울 때 더욱 빠르게 수렴한다.
 
 
 
