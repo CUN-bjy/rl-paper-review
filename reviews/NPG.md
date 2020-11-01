@@ -12,8 +12,9 @@ Sham Kakade(2002)
 
 같이 읽으면 도움이 되는 글들
 
-- https://www.slideshare.net/SooyoungMoon3/natural-policy-gradient
-- https://darkpgmr.tistory.com/59
+- Natural Policy Gradient, https://www.slideshare.net/SooyoungMoon3/natural-policy-gradient
+- About Taylor Series, https://darkpgmr.tistory.com/59
+- Hessian, https://darkpgmr.tistory.com/132
 
 </br>
 
@@ -279,12 +280,48 @@ $$
 
 해당 이론의 증명으로 인해, 일반적으로 optimal 하다고 알려지지 않은 greedy choice이지만,
 
-natural gradient를 이용한 Greedy action은 궁극적으로 optimal 선택을 만들어낸다는 점이 흥미롭다.
+natural gradient를 이용한 Greedy action은 궁극적으로 optimal 선택을 만들어낸다는 점이 흥미롭다고 저자는 전한다.
 
 </br>
 
 
 ### [4. Metrics and Curvatures]
+
+해당 논문에서는 Natural Gradient를 근사하기 위해서 Fisher Information Matrix, F를 사용하였다.
+
+이 부분에서 Fisher Information Matrix가 아닌 다른 더 좋은 metric은 없을까 하는 의구심이 들 수 있을 것이다.
+
+</br>
+
+다른 parameter estimation 문제들에서는 보통 Fisher information이 *[Hessian](https://darkpgmr.tistory.com/132)으로 수렴*한다.
+
+이는 asymptotically efficient 하며 즉, [Cramer-Rao Bound](https://en.wikipedia.org/wiki/Cram%C3%A9r%E2%80%93Rao_bound)를 얻을 수 있다.
+
+하지만 이 논문에서 다루는 상황은 blind source separation case에 가까우며, 
+
+이는 반드시 asymptotically efficient하지는 않다. 즉, second order convergence를 보장할 수 없다.
+
+</br>
+
+Mackay[7]의 논문에서  Hessian에서 blind source separation case를 풀기위해 제시한 방법은 바로
+
+data-independent term을 끄집어 내 metric으로 사용하는 것이다. 
+
+</br>
+
+동일한 방법을 통해 Fisher Information, F가 Hessian과 어떤 관계가 있는지 한 번 알아보도록 하자.
+
+아래 식은 average reward(performance)를 두 번 미분해 얻은 Hessian 식이다.
+
+
+$$
+\nabla^2\eta(\theta) = \sum_{sa}\rho^\pi(s)(\nabla^2\pi(a;s)Q^\pi(s,a)+\nabla\pi(a;s)\nabla Q^\pi(s,a)^T+\nabla Q^\pi(s,a)\nabla\pi(a;s)^T)
+$$
+유감스럽게도 Hessian 식의 모든 term이 data-dependent하다. state-action value(Q)와 연관되어있기 때문이다.
+
+Fisher Information, F가 뒤에있는 두 term으로부터 어떤 정보도 얻을 수 없다는 것은 확실해보인다.(그것들은 모두 gradient of Q에 종속적이다.)
+
+반면 첫번째 텀은 Hessian of policy factor를 가지고 있기 때문에 약간의 관계성이 있다고 볼 수 있다.
 
 
 
