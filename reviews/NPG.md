@@ -37,9 +37,9 @@ direct-policy-gradient 방법으로 복잡한 MDP문제를 해결하기위한 �
 안타깝게도, 전형적인 gradient descent rule은 **non-covariant**하다.
 
 그 말은 즉, 아래 식에서 <u>좌변에는 theta, 우변에는 1/theta를 각각 가지기 때문에 inconsistent하다</u>는 것이다.(?)
-$$
-\Delta\theta_i=\alpha\frac{\partial f}{\partial \theta_i}
-$$
+
+<p align="center"><img src="../img/npg1.png"/></p>
+
 </br>
 
 이 논문에서는 그에대한 대안으로  **natural gradient**라는 이름의 covariant gradient를 제시한다.
@@ -53,44 +53,42 @@ $$
 ### [2. A Natural Gradient]
 
 논문에서는 기본적인 설명을 위한 기본 정의 및 표현들을 열거하며 전개해나간다.
-$$
-\text{finite MDP : } (S,s_0,A,R,P)
-\\S : \text{finite set of states}, \\s_0 : \text{start state},\\A : \text{finite set of actions}, \\R : S \times A \to [0,R_{max}] \text{, reward function}, \\P : \text{transition model}\\ policy \to\pi(a;s), \text{stochastic policy}
-$$
+
+<p align="center"><img src="../img/npg2.png"/></p>
+
 모든 policy는 확률적으로 고르게 분포되어있다 가정하며, 즉, 잘 정의된 stationary distribution을 가지고 있다.
 
 이러한 가정 속에서 또한 다음의 식을 만족한다.
+
+<p align="center"><img src="../img/npg3.png"/></p>
+
 $$
 \text{average reward}: \eta(\pi) \equiv \sum_{s,a}\rho^\pi(s)\pi(a;s)R(s,a)
 \\\text{state-action value}: Q^\pi(s,a) \equiv E_{\pi}[\sum_{t=0}^\infty R(s_t,a_t)-\eta(\pi)|s_0=s,a_0=a]\\\text{value function}:J^\pi(s)\equiv E_{\pi(a^\prime;s)}[Q^\pi(s,a^\prime)]
 $$
 
 이어서 이 논문의 목표인 average reward를 최대화해주기위한 policy를 찾기위해  parameterized policy를 다음과 같이 표현할 수 있으며, 
-$$
-\Pi = [\pi_\theta:\theta \in \mathfrak{R}^m],
-\\
-$$
+
+<p align="center"><img src="../img/npg4.png"/></p>
+
 이를 이용한 average reward의 gradient를 구하는 식은 다음과 같다.
-$$
-\nabla\eta(\theta) = \sum_{s,a}\rho^\pi(s)\nabla\pi(a;s,\theta)Q^\pi(s,a)
-$$
+
+<p align="center"><img src="../img/npg5.png"/></p>
 
 </br>
 
 일반적으로 average reward의 steepest descent direction는 아래와 같이 정의된다.
-$$
-\text{steepest descent direction : }d\theta \text{ that minimizes }\eta(\theta + d\theta)
-\\ \text{under the constraint}(|d\theta|^2 \to \text{a small constant})
-$$
+
+<p align="center"><img src="../img/npg27.png"/></p>
+
 이 때, squared length는 일종의 **positive-definite matrix**와 함께 표현되며,
-$$
-|d\theta|^2 \equiv \sum_{ij}G_{ij}(\theta)d\theta_id\theta_j = d\theta^T G(\theta)d\theta\text{(using vector notation)}
-$$
+
+<p align="center"><img src="../img/npg6.png"/></p>
 
 위 정의에 따라 계산해보면, steepest descent direction을 아래와 같이 간단히 나타낼 수 있다.
-$$
-\text{steepest descent direction : }G^{-1}\nabla\eta(\theta)
-$$
+
+<p align="center"><img src="../img/npg7.png"/></p>
+
 일반적인 gradient descent는 위 수식의 함수 **G**를 identity matrix **I**로 가정한 
 
 특수 케이스의 steepest descent direction을 따르 것인데,
@@ -102,9 +100,9 @@ coordinates기반의 metric이 아닌 <u>manifold기반의 metric</u>으로 일�
 </br>
 
 이 정책 파라미터의 **Fisher information matrix**는 다음과 같이 정의될 수 있는데.
-$$
-F_s(\theta) \equiv E_{\pi(a;s,\theta)}[\frac{\partial log\pi(a;s,\theta)}{\partial \theta_i}\frac{\partial log\pi(a;s,\theta)}{\partial \theta_j}]
-$$
+
+<p align="center"><img src="../img/npg8.png"/></p>
+
 이는 분명 **positive-definite**하다.
 
  또한 모든 coordinates에 대해 *same distance*를 지닌다는 이유에서 **invariant** 하다.
@@ -116,9 +114,9 @@ Fisher information은 probability manifold에서 그에 해당하는 state s에�
 average reward가 정책 파라미터로부터 정의되었다는 점에서
 
 정책 파라미터의 straightforward를 측정하는 도구를 다음과 같이 나타낼 수 있다. 
-$$
-F(\theta) = E_{\rho^\pi(s)}[(\frac{\partial}{\partial\theta}log\pi(a;s,\theta))^2]=E_{\rho^\pi(s)}[\frac{\partial log\pi(a;s,\theta)}{\partial \theta_i}\frac{\partial log\pi(a;s,\theta)}{\partial \theta_j}] = E_{\rho^\pi(s)}[F_s(\theta)]
-$$
+
+<p align="center"><img src="../img/npg9.png"/></p>
+
 직관적으는, 매 state의 거리 평균을 계산해 정책의 진행방향(straightforward)을 수치적으로 계산한다고 할 수 있겠다.
 
 이처럼, 모든 coordinates에 대해 **invariant**하며 **straightforward metric**으로서 
@@ -126,9 +124,9 @@ $$
 positive-definite함수 G를 대체할 수 있는 함수 Fisher Information matrix를 이용한다면,
 
 아래와 같이 steepest descent direction을 나타낼 수 있다.
-$$
-\overset{\sim}\nabla\eta(\theta) \equiv F(\theta)^{-1}\nabla\eta(\theta)
-$$
+
+<p align="center"><img src="../img/npg10.png"/></p>
+
 </br>
 
 
@@ -140,18 +138,14 @@ $$
 
 #### 3.1 Compatible Function Approximation
 
-$$
-\text{For vectors }\theta, w \in \R^m,
-\\ \psi(s,a)^\pi = \nabla log\pi(a;s,\theta),\quad f^\pi(s,a;w) = w^T\psi^\pi(s,a)
-\\ \text{where} [\nabla log\pi(a;s,\theta)]_i = \partial log\pi(a;s,\theta)/\nabla\theta_i
-$$
+<p align="center"><img src="../img/npg11.png"/></p>
 
 compatible value function f가 위와같이 parameter w에 의해 정의될 때.
 
 squared error는 다음과 같으며,
-$$
-\epsilon(w,\pi) \equiv \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)(f^\pi(s,a;w)-Q^\pi(s,a))^2
-$$
+
+<p align="center"><img src="../img/npg12.png"/></p>
+
 이때 compatible function f를 true value 대신 사용했을 때 gradient를 계산할 수 있다는 점에서 function approximator가 <u>policy와 compatible</u>하다고 할 수 있다.
 
 </br>
@@ -159,17 +153,12 @@ $$
 ***Theorem 1.***
 
 squared error가 최소화되었을 때의 파라미터 w는  steepest descent direction과 같다.
-$$
-\overset{\sim}w = \overset{\sim}\nabla\eta(\theta)
-$$
+
+<p align="center"><img src="../img/npg13.png"/></p>
+
 *Proof.*(자세한건 논문참조)
-$$
-\text{when }\overset{\sim}w \text{ minimizes the squared error, }\partial\epsilon/\partial w_i = 0,
-\\ \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)(\psi^\pi(s,a)^T\overset{\sim}w-Q^\pi(s,a)) = 0 ,
-\\ (\sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)\psi^\pi(s,a)^T)\overset{\sim}w = \sum_{s,a}\rho^\pi(s)\pi(a;s,\theta)\psi^\pi(s,a)Q^\pi(s,a)
-\\ F(\theta)\overset{\sim}w = \nabla\eta(\theta), \text{by definition of }\psi^\pi
-\\\therefore \overset{\sim}w = F^{-1}(\theta)\nabla\eta(\theta) = \overset{\sim}\nabla\eta(\theta) \quad \Box.
-$$
+
+<p align="center"><img src="../img/npg14.png"/></p>
 
 즉, actor-critic framework는 function approximator의 weight를 natural gradient로서 사용하고 있었던 것.
 
@@ -183,9 +172,9 @@ greedy policy improvement단계는 approximator를 이용해 각 state에서 높
 </br>
 
 우선, exponential 함수의 형태의 정책을 고려해보자.
-$$
-\pi(a;s,\theta) \propto exp(\theta^T\phi_{sa}), \text{where } \phi_{sa} \text{is some feature vector in }\R^m
-$$
+
+<p align="center"><img src="../img/npg15.png"/></p>
+
 exponential 함수를 먼저 고려한 이유는 바로 ***affine geometric***한 성질을 지니고 있기 때문이다.
 
 이는 접선벡터(tangent vector)에의 한 점이 변환되더라도 manifold의 한 점으로 남아있을 수 있도록 한다.
@@ -203,44 +192,35 @@ exponential 함수를 먼저 고려한 이유는 바로 ***affine geometric***�
 이번에는 exponential 함수형태의 정책이 natural gradient 방향으로의 충분히 큰 스텝(learning rate를 아주 크게)으로 학습한다면 greedy policy improvement step를 통해 도달할 수 있는 정책과 동일함을 보이려 한다.
 
 ***Theorem 2.***
-$$
-\text{For }\pi(a;s,\theta) \propto exp(\theta^T\phi_{sa}),
-\\\text{ assume } \overset{\sim}\nabla\eta(\theta) : \text{non-zero, and } 
-\overset{\sim}w \text{ minimizes approximation error.}
-\\Let \quad\pi_\infin(a;s) = lim_{a\to\infin}\pi(a;s,\theta+\alpha\overset{\sim}\nabla\eta(\theta)).
-\\Then \quad\pi_\infin(a;s) \ne 0 \text{ if and only if }a \in argmax_{a^\prime}f^\pi(s,a\prime,\overset{\sim}w)
-$$
+
+<p align="center"><img src="../img/npg16.png"/></p>
+
 *Proof.*
 
 compatible function approximator에 theorem의 결과를 적용하면,
-$$
-f^\pi(s,a;\overset{\sim}w) = \overset{\sim}\nabla\eta(\theta)^T\psi^\pi(s,a)
-$$
+
+<p align="center"><img src="../img/npg17.png"/></p>
+
 또한,  정책함수의 정의에 따라,
-$$
-\pi(a;s,\theta) \propto exp(\theta^T\phi_{sa}),\\
-\psi^\pi(s,a) = \nabla log\pi(a;s,\theta) =\phi_{sa} - E_{\pi(a^\prime;s,\theta)}(\phi_{sa^\prime})
-$$
+
+<p align="center"><img src="../img/npg18.png"/></p>
 
 이를 합쳐보면,
-$$
-f^\pi(s,a;\overset{\sim}w) = \overset{\sim}\nabla\eta(\theta)^T[\phi_{sa}-E_{\pi(a^\prime;s,\theta)}\phi_{sa^\prime}]
-$$
+
+<p align="center"><img src="../img/npg19.png"/></p>
+
 여기서 Expectation term은 a에 대한 함수가 아니므로 다음을 따른다.(?)
-$$
-argmax_{a^\prime}f^\pi(s,a^\prime;\overset{\sim}w) = argmax_{a^\prime}\overset{\sim}\nabla\eta(\theta)^T\phi_{sa^\prime}
-$$
+
+<p align="center"><img src="../img/npg20.png"/></p>
 
 gradient step을 반영하면 다음 식과 같은데,
-$$
-\pi(a;s,\theta + \alpha\overset{\sim}\nabla\eta(\theta)) \propto exp(\theta^T\phi_{sa} + \alpha\overset{\sim}\nabla\eta(\theta)^T\phi_{sa})
-\\ \text{Since } \overset{\sim}\nabla\eta(\theta) \ne 0,  \text{the term } \overset{\sim}\nabla\eta(\theta)^T\phi_{sa} \text{ is dominate} \text{ as } \alpha\to\infin
-$$
+
+<p align="center"><img src="../img/npg21.png"/></p>
+
 위와같이 learning rate가 무한히 커질 때 아래 식이 성립된다.
-$$
-\pi_{\infin}(a,s) = 0 \text{ if and only if } a \notin argmax_{a^\prime}\overset{\sim}\nabla\eta(\theta)^T\phi_{sa^\prime}
-\\ \text{that means } \pi_\infin(a;s) \ne 0 \text{ if and only if } a \in argmax_{a^\prime}f^\pi(s,a^\prime;\overset{\sim}w)
-$$
+
+<p align="center"><img src="../img/npg22.png"/></p>
+
 즉,natural gradient 방향성분으로 무한히 학습한다면 
 
 해당성분이 정책을 결정하는 action의 대부분을 차지하게 될 것이며,
@@ -262,9 +242,9 @@ argmax라면 natural gradient에 따라 결정된  action이 정책값이 된다
 다음은 natural gradient가 local linear approximator for Q에 의해 locally best action을 향해 이동함을 증명해낸다.
 
 ***Theorem 3.***
-$$
-\pi(a;s,\theta^\prime) = \pi(a;s,\theta)(1 + f^\pi(s,a;\overset{\sim}w))+O(\alpha^2)
-$$
+
+<p align="center"><img src="../img/npg23.png"/></p>
+
 *proof.*
 
 natural gradient 방향으로 learning step을 진행한 정책에 대해, 테일러 급수(1차)로 근사하면 아래의 식과 같다.
@@ -272,11 +252,8 @@ natural gradient 방향으로 learning step을 진행한 정책에 대해, 테�
 여기서 O함수는 일반적으로 극소량으로 0으로 취급하는 경우가 많은 것 같다.
 
 그 외에는 위 theorem들의 적용으로 쉽게 공식이 전개된다.
-$$
-\pi(a;s,\theta) = \pi(a;s,\theta)+\frac{\partial\pi(a;s,\theta)^T}{\partial\theta}\Delta\theta+O(\Delta\theta^2)\\= \pi(a;s,\theta)(1+\psi(s,a)^T\Delta\theta)+O(\Delta\theta^2)
-\\= \pi(a;s,\theta)(1+\alpha\psi(s,a)^T\overset{\sim}w)+O(\alpha^2)
-\\= \pi(a;s,\theta)(1+\alpha f^\pi(s,a;\overset{\sim}w))+O(\alpha^2)
-$$
+
+<p align="center"><img src="../img/npg24.png"/></p>
 
 해당 이론의 증명으로 인해, 일반적으로 optimal 하다고 알려지지 않은 greedy choice이지만,
 
@@ -313,10 +290,8 @@ data-independent term을 끄집어 내 metric으로 사용하는 것이다.
 
 아래 식은 average reward(performance)를 두 번 미분해 얻은 Hessian 식이다.
 
+<p align="center"><img src="../img/npg25.png"/></p>
 
-$$
-\nabla^2\eta(\theta) = \sum_{sa}\rho^\pi(s)(\nabla^2\pi(a;s)Q^\pi(s,a)+\nabla\pi(a;s)\nabla Q^\pi(s,a)^T+\nabla Q^\pi(s,a)\nabla\pi(a;s)^T)
-$$
 유감스럽게도 Hessian 식의 모든 term이 data-dependent하다. state-action value(Q)와 연관되어있기 때문이다.
 
 두/세번째 떰은 모두 gradient of Q에 종속적으로 F와 관련된 어떤 정보도 얻을 수 없어 보이며,
@@ -356,9 +331,9 @@ blind source separation case와 같이, 이 논문에서의 metric은 Hessian으
 해당 논문에서는 natural policy gradient에 대한 실험을 위해 simple MDP 와 조금은 복잡한 tetris 실험을 진행했다.
 
 다음은 natural gradient의 인자인 FIM 함수의 업데이트 식이다.
-$$
-f \gets f + \nabla log\pi(a_t;s_t,\theta)\nabla log\pi(a_t;s_t,\theta)^T
-$$
+
+<p align="center"><img src="../img/npg26.png"/></p>
+
 논문에는 크게 다음의 내용에 대해 실험한 내용들이 기록되어있다.
 
 - 1-dimensional linear quadratic regulator
