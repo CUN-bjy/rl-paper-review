@@ -68,6 +68,10 @@ John Schulman, Sergey Levine, Philipp Moritz, Michael Jordan, Pieter Abbeel (201
 
 [High-Dimensional Continuous Control Using Generalized Advantage Estimation]
 
+John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbeel(2016)
+
+[review_page](./reviews/GAE.md)| [paper_link](https://arxiv.org/pdf/1506.02438.pdf)
+
 <br/>
 
 ### 7. PPO
