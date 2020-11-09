@@ -78,6 +78,10 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee
 
 [Proximal policy optimization algorithms]
 
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov
+
+[review_page](./reviews/GAE.md)| [paper_link](https://arxiv.org/pdf/1707.06347.pdf)
+
 <br/>
 
 ### 8. TD3
