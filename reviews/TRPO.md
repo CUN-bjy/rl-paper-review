@@ -14,9 +14,11 @@ John Schulman, Sergey Levine, Philipp Moritz, Michael Jordan, Pieter Abbeel (201
 
 ### [Scheme]
 
-이번 논문에서 다루는 trpo는 기본적으로 stochastic policy에 대한 policy optimization 기법이다.
+이번 논문에서 다루는 trpo는 기본적으로 stochastic policy기반의 policy optimization 기법이다.
 
-Schulman이 제안한 trust region은 기본적으로 perfomance가 상승하는 방향으로의 update를 보장하는 optimization 기법에 대한 이야기이다. 이를 위해 그 전에는 어떤 문제점이 있었고 해결하기 위해 구체적으로 어떤 접근법을 사용하였는지가 이 논문을 보는 묘미가 될 것이다.
+trust region이란 perfomance가 상승하는 방향으로의 update를 보장할수 있는 구간을 의미하며, 
+
+TRPO는 이를 이용해 performance가 더 나은 policy로 업데이트 하기위한 optimization 기법에 대한 방법론이다.
 
 </br>
 
@@ -27,6 +29,14 @@ Schulman이 제안한 trust region은 기본적으로 perfomance가 상승하는
 stochastic policy에 대한 expected discounted reward의 표현은 다음과 같다.
 
 <img src="../img/trpo1.png"/>
+
+또, kakade&langford(2002)와 해당 논문의 appendix A에 따라, 
+
+다른 policy <img src="../img/adv_pi.png"/>의 expected reward를 구하기 쉬운 policy <img src="../img/pi.png"/>를 이용해 구할 수 있는 다음의 식이 유도되었으며,
+
+시간에 따른 표현법을 state에 따른 표현법으로 변환한 식이 다음과 같이 표현될 수 있다.
+
+<img src="../img/trpo2.png"/>
 
 또한, policy <img src="../img/pi.png"/>에 대해 advantage를 취한 policy를 <img src="../img/adv_pi.png"/>라 할 때, 시간에 따라 축적된 expected return은 다음과 같다.
 
@@ -40,11 +50,13 @@ stochastic policy에 대한 expected discounted reward의 표현은 다음과 �
 
 <img src="../img/trpo3.png"/>
 
-또한, policy가 parameterized policy이며 미분가능하다면 performance <img src="../img/eta.png"/>의 1차 미분식과 일치한다.
+이 local approximation 식이 제대로 performance에 대해 나타낼 수 있을 지에 대한 의문은 다음 식으로부터 해소된다.
+
+policy가 parameterized policy이며 미분가능하다면 performance <img src="../img/eta.png"/>의 1차 미분식과 일치한다는 것이다.
 
 <img src="../img/trpo4.png"/>
 
-위 식은 충분히 작은 step으로 approximation이 증가하는 방향으로 움직이면, performance <img src="../img/eta.png"/>역시 증가한다는 것을 나타낸다. 하지만 얼만큼의 big step까지 이를 보장하는지에 대한 guidance가 없다는 한계가 있다.
+위 식은 충분히 작은 step으로 approximation이 증가하는 방향으로 움직이면, performance <img src="../img/eta.png"/>역시 증가한다는 것을 나타낸다. 하지만 <u>얼만큼의 big step까지 이를 보장하는지에 대한 guidance가 없다</u>는 한계가 있다.
 
 </br>
 
@@ -73,6 +85,8 @@ stochastic policy에 대한 expected discounted reward의 표현은 다음과 �
 <img src="../img/trpo6.png"/>
 
 다음으로 total variation divergence 와 **KL divergence** 사이에는 아래와 같은 관계식이 성립한다.
+
+굳이 갑자기 KL divergence로 변환하려는 이유는 모르겠지만, 추후에 advantage function을 estimation하는 과정에서 KL divergence의 Hessian을 구하는 부분이 있는데 이 부분과 관련이 있지 않을까 생각한다.
 
 <img src="../img/trpo7.png"/>
 
