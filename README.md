@@ -6,7 +6,7 @@
 - [x] [2. DPG](#2-dpg)
 - [x] [3. DDPG](#3-ddpg)
 - [x] [4. NPG](#4-npg)
-- [ ] [5. TRPO](#5-trpo)
+- [x] [5. TRPO](#5-trpo)
 - [ ] [6. GAE](#6-gae)
 - [ ] [7. PPO](#7-ppo)
 - [ ] [8. TD3](#8-td3)
