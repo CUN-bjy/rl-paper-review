@@ -12,8 +12,7 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee
 
 - 참고할만한 링크:
   - https://m.blog.naver.com/PostView.nhn?blogId=kwonpub&logNo=221298006981&proxyReferer=https:%2F%2Fwww.google.com%2F
-
-
+  - https://daeson.tistory.com/334
 
 
 
@@ -68,4 +67,35 @@ actor-critic method라 불리는 방법은 empirical returns가 아닌 value fun
 
 </br>
 
-이 논문에서는 또 하나의 policy gradient estimator를 제시하려고 하며, 이는  variance를 확실히 줄여주고, 용인 가능한 수준의 bias를 가지게 된다.
+이러한 문제를 해결하기 위한 또 하나의 policy gradient estimator를 제시하려고 하며, 이는  variance를 확실히 줄여주고, 용인 가능한 수준의 bias를 가지게 된다. 이를 **generalized advantage estimator(GAE)**라 부르기로 하자.
+
+</br>
+
+이 논문에서의 기여는 다음과 같이 요약될 수 있다.
+
+1. Generalized Advantage Estimator(GAE)라는 이름의 policy gradients를 위한 효과적인 variance reduction scheme을 분석하여 이에 대한 타당함과 이해를 제공한다. 
+
+2. value function을 위한 trust region optimization을 사용해 보다 robust하고 효과적인 방법으로 neural network으로 근사된 value function을 찾아낸다.
+3. 위의 두가지 방법과 함께, 어려운 control tasks를 해결하기 위한 neural network policy를 효과적으로 학습할 수 있는 알고리즘을 얻었다.
+
+### [Preliminaries]
+
+policy optimization problem에서 undiscounted formulation에 대해 생각해보자.
+
+<img src="../img/gae1.png"/>
+
+위 문제의 목적식은 expected total reward를 최대화 하는것이다.
+
+</br>
+
+policy gradient methods는 gradients를 반복적으로 추정하여 expected total reward를 최대화할 수 있도록 해준다.
+
+여기에는 policy gradient를 표현하는 여러가지 방법들이 있다.
+
+<img src="../img/gae2.png"/>
+
+위 다양한 표현 중에서 5번, advantage function을 선택하는 것은 확률적으로 가장 적은 variance를 안겨다준다.
+
+이 advantage function은 알려진 값이 아니며 반드시 추정되어야만 하는 값이다.
+
+그리고 advantage function은 그 정의에 따라, 해당 action이 policy의 일반행동보다 더 좋은지 나쁜지를 측정한다.
