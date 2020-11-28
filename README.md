@@ -94,6 +94,8 @@ Tom Schaul, John Quan, Ioannis Antonoglou and David Silver, Google DeepMind(2015
 
 review_page | [paper_link](https://arxiv.org/pdf/1511.05952.pdf) 
 
+</br>
+
 ### (2) HER
 
 [Hindsight Experience Replay, Marcin Andrychowicz]
@@ -102,15 +104,22 @@ Marcin Andrychowicz∗ , Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, P
 
 review_page | [paper_link](https://arxiv.org/pdf/1707.01495.pdf)
 
+</br>
+
 ## Advanced RL
 
 ### Hierarchical RL
 
+</br>
+
 ### Multi-Task/Meta Learning
 
-
+</br>
 
 ---
 
 ### Reference
+
+[Key Papers in Deep RL](https://spinningup.openai.com/en/latest/spinningup/keypapers.html#id106)
+
 [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
