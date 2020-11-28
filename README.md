@@ -1,20 +1,10 @@
 # rl-paper-review
 
-### Paper Review List
 
-- [x] [1. Sutton_PG](#1-sutton_pg)
-- [x] [2. DPG](#2-dpg)
-- [x] [3. DDPG](#3-ddpg)
-- [x] [4. NPG](#4-npg)
-- [x] [5. TRPO](#5-trpo)
-- [ ] [6. GAE](#6-gae)
-- [ ] [7. PPO](#7-ppo)
-- [ ] [8. TD3](#8-td3)
-- [ ] [9. SAC](#9-sac)
 
-<br/>
+## Policy Gradient
 
-### 1. Sutton_PG
+### (1) Sutton_PG
 
 [Policy gradient methods for reinforcement learning with function approximation]
 
@@ -24,7 +14,7 @@ Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
 <br/>
 
-### 2. DPG
+### (2) DPG
 
 [Deterministic policy gradient algorithms]
 
@@ -34,7 +24,7 @@ Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (20
 
 <br/>
 
-### 3. DDPG
+### (3) DDPG
 
 [Continuous control with deep reinforcement learning]
 
@@ -44,7 +34,7 @@ Timothy P. Lillicrap∗ , Jonathan J. Hunt∗ , Alexander Pritzel, Nicolas Heess
 
 <br/>
 
-### 4. NPG
+### (4) NPG
 
 [A natural policy gradient]
 
@@ -54,7 +44,7 @@ Sham Kakade(2002)
 
 <br/>
 
-### 5. TRPO
+### (5) TRPO
 
 [Trust region policy optimization]
 
@@ -64,7 +54,7 @@ John Schulman, Sergey Levine, Philipp Moritz, Michael Jordan, Pieter Abbeel (201
 
 <br/>
 
-### 6. GAE
+### (6) GAE
 
 [High-Dimensional Continuous Control Using Generalized Advantage Estimation]
 
@@ -74,7 +64,7 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee
 
 <br/>
 
-### 7. PPO
+### (7) PPO
 
 [Proximal policy optimization algorithms]
 
@@ -84,15 +74,41 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov
 
 <br/>
 
-### 8. TD3
+### (8) TD3
 [Addressing Function Approximation Error in Actor-Critic Methods]
 
 <br/>
 
-### 9. SAC
+### (9) SAC
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
 
 </br>
+
+## Exploration
+
+### (1) PER
+
+[Prioritized Experience Replay]
+
+Tom Schaul, John Quan, Ioannis Antonoglou and David Silver, Google DeepMind(2015)
+
+review_page | [paper_link](https://arxiv.org/pdf/1511.05952.pdf) 
+
+### (2) HER
+
+[Hindsight Experience Replay, Marcin Andrychowicz]
+
+Marcin Andrychowicz∗ , Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, Peter Welinder, Bob McGrew, Josh Tobin, Pieter Abbeel , Wojciech Zaremba ,OpenAI(2018)
+
+review_page | [paper_link](https://arxiv.org/pdf/1707.01495.pdf)
+
+## Advanced RL
+
+### Hierarchical RL
+
+### Multi-Task/Meta Learning
+
+
 
 ---
 
