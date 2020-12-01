@@ -94,8 +94,14 @@ policy gradient methods는 gradients를 반복적으로 추정하여 expected to
 
 <img src="../img/gae2.png"/>
 
-위 다양한 표현 중에서 5번, advantage function을 선택하는 것은 확률적으로 가장 적은 variance를 안겨다준다.
+위 다양한 표현 중에서 5번, advantage function은 확률적으로 가장 적은 variance를 안겨다준다.
 
-이 advantage function은 알려진 값이 아니며 반드시 추정되어야만 하는 값이다.
+또한, 이 advantage function은 알려진 값이 아니며 반드시 추정되어야만 하는 값이다.
 
 그리고 advantage function은 그 정의에 따라, 해당 action이 policy의 일반행동보다 더 좋은지 나쁜지를 측정한다.
+
+이에 따라 이 논문에서는 reward를 표현하기 위해 advantage function을 사용하는데,
+
+<u>policy gradient estimator</u>와 <u>baseline을 사용함으로서의 효과</u>를 보다 엄격하게 분석하기 위함이다.
+
+</br>
