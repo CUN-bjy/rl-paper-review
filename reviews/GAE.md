@@ -47,7 +47,7 @@ policy gradient method은 RL에서 아주 매력적인 접근법이다.
 
 </br>
 
-### [Introduction]
+### [1. Introduction]
 
 reinforcement learning에서의 목적은 policy의 expected total reward를 maximize하는 것이다.
 
@@ -78,7 +78,7 @@ actor-critic method라 불리는 방법은 empirical returns가 아닌 value fun
 2. value function을 위한 trust region optimization을 사용해 보다 robust하고 효과적인 방법으로 neural network으로 근사된 value function을 찾아낸다.
 3. 위의 두가지 방법과 함께, 어려운 control tasks를 해결하기 위한 neural network policy를 효과적으로 학습할 수 있는 알고리즘을 얻었다.
 
-### [Preliminaries]
+### [2. Preliminaries]
 
 policy optimization problem에서 undiscounted formulation에 대해 생각해보자.
 
@@ -105,3 +105,90 @@ policy gradient methods는 gradients를 반복적으로 추정하여 expected to
 <u>policy gradient estimator</u>와 <u>baseline을 사용함으로서의 효과</u>를 보다 엄격하게 분석하기 위함이다.
 
 </br>
+
+해당 논문에서는 parameter <img src="../img/gamma.png"/>를 소개한다.
+
+이는 delayed effect에 해당하는 downweighting rewards를 이용함으로써 약간의 **bias를 가져오는 대신 variance를 줄일 수 있도록** 만들어준다.
+
+이 파라미터는 discounted MDP에서의 discount factor와 동일하지만, 이 논문에서는 undiscounted MDP에서의 variance reduction parameter로서 사용된다.
+
+</br>
+
+아래는 parameter <img src="../img/gamma.png"/>가 적용된 discounted value function들과 그로부터 계산되는 gradient 식을 표현한 것이다.
+
+<img src="../img/gae3.png"/>
+
+</br>
+
+이어서 advantage function의 <img src="../img/gamma.png"/>-just estimator라는 표현이 등장하는데, 
+
+이는 위 gradient식에서 <u>discounted advantage function 역할</u>을 하되, 그리고 <u>bias가 없는</u> estimator를 의미한다.
+
+<img src="../img/gamma.png"/>-just estimator의 정의와 전제에 대해서는 논문에 상세히 나오니 참고하도록 하자.
+
+</br>
+
+그러한 특성을 만족할 수 있는 <img src="../img/gamma.png"/>-just estimator는 다음과 같다.
+
+<img src="../img/gae7.png"/>
+
+</br>
+
+### [3. Advantage Function Estimation]
+
+approximate value function을 **V**라 하자.
+
+그리고 discount <img src="../img/gamma.png"/>를 지니는 V의 **TD-residual** 을 <img src="../img/gae30.png"/> 이라 하자.
+
+이 때, <img src="../img/gae31.png"/>를 만족하는 correct value function을 근사해낸다면, <img src="../img/gamma.png"/>-just advantage estimator라고 할 수 있다.
+
+그리고 사실 이것이 아래와 같이 unbiased advantage estimator 이다.
+
+<img src="../img/gae9.png"/>
+
+하지만 오직 <img src="../img/gae31.png"/>를 만족하는 경우에만 <img src="../img/gamma.png"/>-just하며, 그 외에는 bias를 지닌 policy gradient를 추정하게 된다.
+
+</br>
+
+TD error의 항들을 k번째까지 더한 것을 다음과 같이 표현하기로 하자.
+
+<img src="../img/gae10.png"/>
+
+k-step까지의 모두 더한 식을 보면 returns의 k-step estimator에서 baseline V를 빼준 것과 같은 형태를 보인다.(이는 <img src="../img/gamma.png"/>-just를 만족하는 조건과 같아보인다.)
+
+1-step advantage estimator에서와 마찬가지로 k-step advantage estimator 역시<img src="../img/gae31.png"/> 에서만 <img src="../img/gamma.png"/>-just하다.
+
+하지만 k-step을 무한대로 늘려준다면, bias가 상대적으로 작아지고(discount factor가 강하게 작용), minus baseline term이 bias에는 영향을 주지 않기 때문이다. 
+
+<img src="../img/gae11.png"/>
+
+이를 정리하면 위 식과 같이 실험적으로 얻은 returns에서 value function baseline을 빼준 형태로 식이 도출된다.
+
+</br>
+
+이번에는 k-step estimator를 exponentially-weighted average를 적용해 **generalized advantage estimator GAE(<img src="../img/gamma.png"/>, <img src="../img/lambda.png"/>)** 로 개념을 확장한다.
+
+<img src="../img/gae12.png"/>
+
+위와 같은 식 전개가 아주 당황스러울 수 있겠지만 **TD(<img src="../img/lambda.png"/>)** 개념을 이미 숙지하고 있다면, 유사한 형태임을 알 수 있다. [참고](https://daeson.tistory.com/334)
+
+advantage estimator의 형태에 대해 generalized weight를 취해준 것이며 결과적으로 TD-residual에 parameter <img src="../img/gamma.png"/>,<img src="../img/lambda.png"/>를 곱한 형태이다.
+
+</br>
+
+아래 식은 GAE의 <img src="../img/lambda.png"/>항을 각각 0과 1로 특정해주었을 때의 특징들이다.
+
+<img src="../img/lambda.png"/>= 1일 때, estimator는 V의 정확성에 관계없이 <img src="../img/gamma.png"/>-just하지만, high-variance하다.
+
+<img src="../img/lambda.png"/>= 0일 때, estimator가 <img src="../img/gae31.png"/>일때만 <img src="../img/gamma.png"/>-just하며, 일반적으로 매우적은 variance를 지닌다.
+
+<img src="../img/gae16.png"/>
+
+즉, GAE에서는 <img src="../img/lambda.png"/>를 0~1사이로 조절하며 bias와 variance간의 타협점을 찾아낼 수 있을 것이다.
+
+이와 같이 <img src="../img/gamma.png"/>, <img src="../img/lambda.png"/>의 두 파라미터를 조절하며 **bias-variance tradeoff** 를 잘 찾아내는 것이 GAE의 중심 아이디어라고 할 수 있겠다.
+
+
+
+### [4. Interpretation as Reward Shaping]
+
