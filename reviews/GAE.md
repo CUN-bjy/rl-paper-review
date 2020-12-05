@@ -192,3 +192,5 @@ advantage estimator의 형태에 대해 generalized weight를 취해준 것이�
 
 ### [4. Interpretation as Reward Shaping]
 
+해당 section은 GAE를 Reward Shaping이라는 개념으로도 해석이 될 수 있음을 보여준다.
+
