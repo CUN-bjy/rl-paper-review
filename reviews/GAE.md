@@ -1,6 +1,6 @@
 [HOME](../README.md)
 
-### 6. GAE
+### GAE
 
 [High-Dimensional Continuous Control Using Generalized Advantage Estimation]
 

@@ -1,6 +1,6 @@
 [HOME](../README.md)
 
-### 4. NPG
+### NPG
 
 [A natural policy gradient]
 

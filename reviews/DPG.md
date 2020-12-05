@@ -1,6 +1,6 @@
 [HOME](../README.md)
 
-### 2. DPG
+### DPG
 
 [Deterministic policy gradient algorithms]
 

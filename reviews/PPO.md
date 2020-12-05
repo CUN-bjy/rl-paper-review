@@ -1,6 +1,6 @@
 [HOME](../README.md)
 
-### 7. PPO
+### PPO
 
 [Proximal policy optimization algorithms]
 

@@ -70,7 +70,7 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee
 
 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov
 
-[review_page](./reviews/GAE.md)| [paper_link](https://arxiv.org/pdf/1707.06347.pdf) | [implementation](https://github.com/CUN-bjy/gym-ppo-keras)
+[review_page](./reviews/PPO.md)| [paper_link](https://arxiv.org/pdf/1707.06347.pdf) | [implementation](https://github.com/CUN-bjy/gym-ppo-keras)
 
 <br/>
 
@@ -92,7 +92,7 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov
 
 Tom Schaul, John Quan, Ioannis Antonoglou and David Silver, Google DeepMind(2015)
 
-review_page | [paper_link](https://arxiv.org/pdf/1511.05952.pdf) 
+[review_page](./reviews/PER.md) | [paper_link](https://arxiv.org/pdf/1511.05952.pdf) 
 
 </br>
 

@@ -1,6 +1,6 @@
 [HOME](../README.md)
 
-### 3. DDPG
+### DDPG
 
 [Continuous control with deep reinforcement learning]
 

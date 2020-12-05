@@ -1,6 +1,6 @@
 [HOME](../README.md)
 
-### 5. TRPO
+### TRPO
 
 [Trust region policy optimization]
 
