@@ -188,9 +188,79 @@ advantage estimator의 형태에 대해 generalized weight를 취해준 것이�
 
 이와 같이 <img src="../img/gamma.png"/>, <img src="../img/lambda.png"/>의 두 파라미터를 조절하며 **bias-variance tradeoff** 를 잘 찾아내는 것이 GAE의 중심 아이디어라고 할 수 있겠다.
 
-
+</br>
 
 ### [4. Interpretation as Reward Shaping]
 
 해당 section은 GAE를 Reward Shaping이라는 개념으로도 해석이 될 수 있음을 보여준다.
 
+Reward Shaping이란 아래와 같이 MDP의 reward function을 transformation을 취해줌으로서 transformed MDP를 새로 정의한다.
+
+<img src="../img/gae17.png"/>
+
+transformed MDP에서의 shaped reward형태를 분석해보면 이전 section에서 정의되었던 1-step advantage의 형태와 유사하며,
+
+GAE에서 적용되었던 parameter  <img src="../img/gamma.png"/><img src="../img/lambda.png"/> 는 "steeper" discount <img src="../img/gamma.png"/><img src="../img/lambda.png"/>로서 정의될 수 있음을 아래와 같이 보였다.
+
+<img src="../img/gae19.png"/>
+
+</br>
+
+### [5. Value Function Estimation]
+
+지난 section에서 GAE를 제안함으로서 reduction과 bias 사이를 조절할 수 있는 문제를 풀었다.
+
+이 논문에서 GAE이외의 기여로서 또 하나의 중요한 점은 바로 value function과 policy를 optimize하기 위해 trust-region방법을 사용했다는 것이다.
+
+여느 value function approximator를 구하는 방법과 같이 nonlinear regression 문제로 접근하여 target value function과의 MSE를 구해 업데이트한다.
+
+다만 차이가 있다면 trust-region을 구해 constrained optimization problem을 위한 문제를 해결했다는 것이다.
+
+TRPO의 policy optimization방식에서 사용하였던 KL divergence와 동등한 metric으로서 아래와 같은 constraint를 부여하였다.
+
+<img src="../img/gae21.png"/>
+
+또한, TRPO에서와 마찬가지로, 위 optimization problem의 approximate solution으로서 conjugate gradient algorithm을 적용하였다.
+
+<img src="../img/gae23.png"/>
+
+해당 논문에서는 policy에도 동일한 방법을 적용해 optimization한다.(논문에서는 section 6 내용 참고)
+
+<img src="../img/gae24.png"/>
+
+결과적으로 해당 논문에서 제안하는 전체 알고리즘의 흐름은 다음과 같다.
+
+<img src="../img/gae25.png"/>
+
+여기서 저자가 유의할 점으로 당부했던 내용이 있는데, 
+
+잘못된 편향치가 계속 들어올 수 있기 때문에 절대로 value function을 먼저 업데이트 하지 말라고 한다.
+
+</br>
+
+### [6. Experiments]
+
+1. **Cart-pole**
+
+<img src="../img/gae27.png"/>
+
+​	오른쪽 figure에서는 하얀색이 좋은 퍼포먼스를 나타내는 것이라고 한다. 
+
+​	논문에서 언급했듯이 각 파라미터를 이용해 trade-off를 할 수 있는 range가 있다고 생각될 수 있어보인다.
+
+</br>
+
+2. **3D BiPed & 3D Quadruped**
+
+<img src="../img/gae28.png"/>
+
+3. **3D Standing up**
+
+<img src="../img/gae29.png"/>
+
+### [7. Discussion]
+
+1. high sample complexity -> variance reduction을 위한 key로서 **GAE를 제시**해 좋은 퍼포먼스의 advantage function의 estimator를 제시한다.
+
+2. 파라미터를 **adaptive or automatic한 방법**으로 조절할 수 있는 방법을 찾는 것이 future work.
+3. policy gradient estimation error와 value function estimation error간의 관계를 알 수 있으면 많은 것들을 할 수 있다. 도전해보라..(future work)
