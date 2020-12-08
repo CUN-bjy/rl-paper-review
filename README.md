@@ -72,15 +72,22 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov
 
 [review_page](./reviews/PPO.md)| [paper_link](https://arxiv.org/pdf/1707.06347.pdf) | [implementation](https://github.com/CUN-bjy/gym-ppo-keras)
 
-<br/>
+</br>
 
-### (8) TD3
-[Addressing Function Approximation Error in Actor-Critic Methods]
+### (8) ACKTR
+
+[Scalable trust-region method for deep reinforcement learning using Kronecker-factored approximation]
 
 <br/>
 
 ### (9) SAC
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
+
+</br>
+
+### (10) TD3
+
+[Addressing Function Approximation Error in Actor-Critic Methods]
 
 </br>
 
@@ -106,13 +113,35 @@ review_page | [paper_link](https://arxiv.org/pdf/1707.01495.pdf)
 
 </br>
 
-## Advanced RL
+## Distributed RL
 
-### Hierarchical RL
+### (1) Ape-X
+
+[Distributed Prioritized Experience Replay]
 
 </br>
 
-### Multi-Task/Meta Learning
+### (2) IMPALA
+
+[IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-learner Architectures]
+
+</br>
+
+## Hierarchical RL
+
+### (1) Option-Critic
+
+[The Option-Critic Architecture]
+
+</br>
+
+### (2) MLSH
+
+[Meta Learning Shared Hierarchies]
+
+</br>
+
+## Meta RL / Multi-task RL
 
 </br>
 
