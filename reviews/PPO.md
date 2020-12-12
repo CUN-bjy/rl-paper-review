@@ -64,11 +64,45 @@ constraint방법이 아니라 아래와 같이 **penalty 방법**(coefficient<im
 
 ### [Clipped Surrogate Objective]
 
+probability ratio를 다음과 같이 정의해보자.
 
+<img src="../img/ppo3.png"/>
+
+그리고 이를  기존의 "surrogate" objective함수에 적용하면 다음과 같이 표현해 볼 수 있을 것이다.
+
+<img src="../img/ppo4.png"/>
+
+여기서 **CPI**는 conservative policy iteration의 약자이며 TRPO에서 언급된 바 있다.
+
+constraint 없이 위 objective를 maximization하게되면 policy update이 큰 스텝으로 진행될 가능성이 있다. 이는 monotonuous improvement를 보장할 수 없다.
+
+</br>
+
+그럼 objective를 어떻게 수정해야할까? 바로, probability ratio를 숫자 1에서부터 멀리 떨어져있는(**기존 policy와 많이 다른) policy에 penalty를 주는 것**이다.
+
+아래는 이 논문에서 제시한 새로운 surrogate objective funtion이다. 
+
+<img src="../img/ppo5.png"/>
+
+여기서 <img src="../img/epsilon.png"/>은 hyperparameter이다.(default:0.2)
+
+위 식에서 첫번째 term은 기존의 objective이며, 두번째 term은 clipped probability ratio를 적용한 것이다.
+
+결과적으로 이 둘을 비교해 더 작은값을 취함으로써 **lower bound**를 형성하는 데에 의미가 있다.
+
+아래 도표를 참고한다면 직관적으로 이해에 도움을 줄 수 있을 것이다.
+
+<img src="../img/ppo6.png"/>
+
+
+
+<img src="../img/ppo7.png"/>
 
 </br>
 
 ### [Adaptive KL Penalty Coefficient]
+
+
 
 </br>
 
