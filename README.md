@@ -4,7 +4,7 @@
 
 ## Policy Gradient
 
-### (1) Sutton_PG
+### (1) Vanila PG(Sutton)
 
 [Policy gradient methods for reinforcement learning with function approximation]
 
@@ -80,20 +80,30 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov(2017)
 
 </br>
 
-### (8) ACKTR
+### (9) ACKTR
 
 [Scalable trust-region method for deep reinforcement learning using Kronecker-factored approximation]
 
 <br/>
 
-### (9) SAC
+### (10) SAC
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
 
 </br>
 
-### (10) TD3
+### (11) TD3
 
 [Addressing Function Approximation Error in Actor-Critic Methods]
+
+review_page | [paper_link](https://arxiv.org/pdf/1802.09477.pdf)
+
+</br>
+
+### (12) C51(distributional aspect)
+
+[A Distributional Perspective on Reinforcement Learning]
+
+review_page | [paper_link](https://arxiv.org/pdf/1707.06887.pdf)
 
 </br>
 

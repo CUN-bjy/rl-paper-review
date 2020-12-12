@@ -1,6 +1,6 @@
 [HOME](../README.md)
 
-###  Sutton_PG
+###  Sutton PG
 
 [Policy gradient methods for reinforcement learning with function approximation]
 
