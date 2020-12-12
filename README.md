@@ -68,9 +68,15 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee
 
 [Proximal policy optimization algorithms]
 
-John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov(2017)
 
 [review_page](./reviews/PPO.md)| [paper_link](https://arxiv.org/pdf/1707.06347.pdf) | [implementation](https://github.com/CUN-bjy/gym-ppo-keras)
+
+</br>
+
+### (8) ACER
+
+[ACER: Sample Efficient Actor-Critic With Experience Replay]
 
 </br>
 
