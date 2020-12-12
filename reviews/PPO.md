@@ -50,13 +50,13 @@ constraint방법이 아니라 아래와 같이 **penalty 방법**(coefficient<im
 
 <img src="../img/ppo2.png"/>
 
-그럼에도 constraint 방법을 사용한 이유는 task에 따라 policy의 scale이 달라질 수 있어 <img src="../img/beta.png"/>를 결정하기 어렵기 때문이다.
+그럼에도 constraint 방법을 사용한 이유는 학습하는 도중에도 특성의 변화가 많아 고정된 <img src="../img/beta.png"/>를 결정하기 어렵기 때문이다.
 
 </br>
 
 따라서 이 논문의 목적인 **`TRPO와 같이 성능보장이 가능한 policy optimization을 first-order algoritm로 계산하자`**를 만족하려면,
 
-고정된 coefficient <img src="../img/beta.png"/>를 선택하는 문제와 SGD를 이용한 penalized objective의 최적화가 가능해져야만 한다.
+고정된 coefficient <img src="../img/beta.png"/>를 선택해야하는 것과 SGD를 이용한 penalized objective의 최적화하는것이 그렇게 만만하지 않다는 것이다. 
 
 <u>추가적인 개선이 필요하다!</u>
 
@@ -102,10 +102,22 @@ constraint 없이 위 objective를 maximization하게되면 policy update이 큰
 
 ### [Adaptive KL Penalty Coefficient]
 
+저자에 따르면 해당 내용은 이전 섹션에서 제안되었던 방법과 비교해 좋은 성능을 나타내지는 못하였지만 충분히 중요하기에 설명했다고 한다.
 
+해당 섹션에서 다루는 내용은 기존의 penalty방법에서 <img src="../img/beta.png"/>를 adaptive하게 변화시켜주는 것이다.
+
+<img src="../img/ppo9.png"/>
+
+<img src="../img/ppo8.png"/>
+
+다만, 드물게 KL divergence와 d target이 현저하게 차이나는 경우가 존재한다고 한다. 
+
+하지만 <img src="../img/beta.png"/>가 빠르게 조정이 되니 크게 문제가 되지 않는다고 하며, default <img src="../img/beta.png"/>와 heuristic하게 정한 값들은 크게 sensitive하지 않다고 한다.
 
 </br>
 
 ### [Proximal Policy Optimization]
+
+
 
 </br>
