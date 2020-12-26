@@ -92,14 +92,14 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov(2017)
 
 [Scalable trust-region method for deep reinforcement learning using Kronecker-factored approximation]
 
-`REVIEW` 	|	`PAPER`
+`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1708.05144.pdf)
 
 <br/>
 
 ### (10) SAC
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
 
-`REVIEW` 	|	`PAPER`
+`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1801.01290.pdf)
 
 </br>
 
@@ -147,7 +147,7 @@ Marcin Andrychowicz∗ , Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, P
 
 [Distributed Prioritized Experience Replay]
 
-`REVIEW` 	|	`PAPER`
+`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1803.00933.pdf)
 
 </br>
 
@@ -155,7 +155,7 @@ Marcin Andrychowicz∗ , Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, P
 
 [IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-learner Architectures]
 
-`REVIEW` 	|	`PAPER`
+`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1802.01561.pdf)
 
 </br>
 
