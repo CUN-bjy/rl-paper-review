@@ -6,7 +6,7 @@
 
 Richard S. Sutton, David McAllester, Satinder Singh, Yishay Mansour,1994
 
-[paper link](http://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf)
+[`PAPER`](http://papers.nips.cc/paper/1713-policy-gradient-methods-for-reinforcement-learning-with-function-approximation.pdf)
 
 <br/>
 

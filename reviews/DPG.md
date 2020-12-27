@@ -6,7 +6,7 @@
 
 Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., & Riedmiller, M. (2014).
 
-[paper_link](http://proceedings.mlr.press/v32/silver14.pdf)
+[`PAPER`](http://proceedings.mlr.press/v32/silver14.pdf)
 
 <br/>
 

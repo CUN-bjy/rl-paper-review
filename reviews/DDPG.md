@@ -6,7 +6,7 @@
 
 Timothy P. Lillicrap∗ , Jonathan J. Hunt∗ , Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver & Daan Wierstra (2016)
 
-[paper_link](https://arxiv.org/pdf/1509.02971.pdf)
+​	[`PAPER`](https://arxiv.org/pdf/1509.02971.pdf)	|	[`CODE`](https://github.com/CUN-bjy/walkyto-ddpg)
 
 <br/>
 

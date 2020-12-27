@@ -6,7 +6,7 @@
 
 John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbeel(2016)
 
-[paper_link](https://arxiv.org/pdf/1506.02438.pdf)
+[`PAPER`](https://arxiv.org/pdf/1506.02438.pdf)
 
 </br>
 
