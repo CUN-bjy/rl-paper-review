@@ -26,7 +26,24 @@ Tom Schaul, John Quan, Ioannis Antonoglou and David Silver, Google DeepMind(2015
 
 </br>
 
-이러한 방법을  **Prioritized Experience Replay(PER)**라고 부르며 당시의 DQN보다 훨씬 좋은 성능을 자랑하는 SOTA가 되었다.
+이러한 방법을  **Prioritized Experience Replay(PER) ** 라고 부르며 당시의 DQN보다 훨씬 좋은 성능을 자랑하는 SOTA로 자리매김 하였으며,
+
+기존의 다른 model-free learning방식에 적용해 exploration 성능을 높이는데 매우 효과적으로 사용되고 있다.
+
+</br>
+
+### [Prioritized Replay]
+
+#### 3.1 A Motivating Example
 
 
 
+#### 3.2 Prioritizing with TD-error
+
+
+
+#### 3.3 Stohastic Prioritization
+
+
+
+#### 3.4 Annealing the Bias
