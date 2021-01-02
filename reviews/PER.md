@@ -34,16 +34,48 @@ Tom Schaul, John Quan, Ioannis Antonoglou and David Silver, Google DeepMind(2015
 
 ### [Prioritized Replay]
 
-#### 3.1 A Motivating Example
+#### 3.1 Prioritizing with TD-error
+
+prioritized replay에서 가장 중요한 요소는 바로 **각 transition의 중요한 정도를 측정할 수 있는 평가지표**이다.
+
+가장 이상적으로는 RL agent가 해당 transition으로 부터 얼마나 배울 수 있을 지에 대한 것이겠지만, 이는 쉽게 얻을 수 있는 지표는 아니다.
+
+-
+
+보다 현실적인 접근으로는 transition의 **magnitude of TD error**를 측정 하는 것이라고 할 수 있는데,
+
+이는 해당 transition이 <u>얼마나 surprising 한지,  얼마나 예상 외의 것인지</u>를 의미한다.
+
+</br>
+
+TD error를 이용한 prioritized replay의 효과를 확인하기 위해 아래 그래프와 같이 *Blind Cliffwalk* 환경에서 
+
+uniform과 oracle baseline, 그리고 '***greedy TD-error prioritization***' algorithm을 비교하였다.
+
+-
+
+이 알고리즘의 원리는 다음과 같다.
+
+1. 매 transition을 따라 TD error를 계산해 replay memory에 저장한다. 
+
+2. TD error의 크기가 가장 큰 transition은 memory로부터  replay된다.
+
+3. 각 transition에는 q-learning update가 진행되며, 이는 TD error에 비례하도록 업데이트된다.
+
+4. 알려진 TD error가 없는 new transition에 대해서는 maximal priority를 적용해 memory에 넣어준다.
+
+   (모든 경험에 대해 적어도 1번 이상은 replay되도록 보장하기 위함이다)
+
+<img src="../img/per1.png"/>
 
 
 
-#### 3.2 Prioritizing with TD-error
 
 
 
-#### 3.3 Stohastic Prioritization
+
+#### 3.2 Stochastic Prioritization
 
 
 
-#### 3.4 Annealing the Bias
+#### 3.3 Annealing the Bias
