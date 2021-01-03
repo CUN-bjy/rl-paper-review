@@ -34,13 +34,11 @@ Tom Schaul, John Quan, Ioannis Antonoglou and David Silver, Google DeepMind(2015
 
 ### [Prioritized Replay]
 
-#### 3.1 Prioritizing with TD-error
+#### (1) Prioritizing with TD-error
 
 prioritized replay에서 가장 중요한 요소는 바로 **각 transition의 중요한 정도를 측정할 수 있는 평가지표**이다.
 
 가장 이상적으로는 RL agent가 해당 transition으로 부터 얼마나 배울 수 있을 지에 대한 것이겠지만, 이는 쉽게 얻을 수 있는 지표는 아니다.
-
--
 
 보다 현실적인 접근으로는 transition의 **magnitude of TD error**를 측정 하는 것이라고 할 수 있는데,
 
@@ -52,7 +50,7 @@ TD error를 이용한 prioritized replay의 효과를 확인하기 위해 아래
 
 uniform과 oracle baseline, 그리고 '***greedy TD-error prioritization***' algorithm을 비교하였다.
 
--
+</br>
 
 이 알고리즘의 원리는 다음과 같다.
 
@@ -68,14 +66,20 @@ uniform과 oracle baseline, 그리고 '***greedy TD-error prioritization***' alg
 
 <img src="../img/per1.png"/>
 
+</br>
+
+#### (2) Stochastic Prioritization
 
 
 
+</br>
+
+#### (3) Annealing the Bias
 
 
 
-#### 3.2 Stochastic Prioritization
+</br>
 
+#### (4) Algorithm(PER)
 
-
-#### 3.3 Annealing the Bias
+<img src="../img/per2.png"/>
