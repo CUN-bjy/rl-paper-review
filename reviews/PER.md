@@ -80,9 +80,19 @@ uniform과 oracle baseline, 그리고 '***greedy TD-error prioritization***' alg
 
 </br>
 
-이러한 이슈를 극복하기 위해 이 논문에서는 ***stochastic sampling method***를 제안한다.
+이어서 해당 논문에서는 이슈들를 극복하기 위해 greedy prioritization 방법과 uniform random sampling방법을 섞어
 
+서로의 장단점을 보완한 ***stochastic sampling method***를 제안한다.
 
+즉, replay memory 내의 transition의 priority는 유지하되, 
+
+모든 transition에 대해서 non-zero 확률의 방문율을 가지도록 보장할 수 있도록 한다.
+
+아래 수식은 각 transition의 sampling 확률을 나타내며, <img src="../img/alpha.png"/>는 얼마나 prioritization에 의한 sample을 많이 할 것인가를 결정한다.
+
+<img src="../img/alpha.png"/>=0일 때, uniform case이며 ,<img src="../img/alpha.png"/>=1일 때, greedy prioritization이다.
+
+<img src="../img/per4.png"/>
 
 <img src="../img/per3.png"/>
 
