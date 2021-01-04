@@ -70,7 +70,21 @@ uniform과 oracle baseline, 그리고 '***greedy TD-error prioritization***' alg
 
 #### (2) Stochastic Prioritization
 
+그러나 *greedy TD-error prioritization*에는 몇가지 문제점이 존재한다.
 
+1. TD에러가 replay된 transition에 대해서만 업데이트 된다.(모든 memory에 대해 계산하기에 computation이 크기때문)
+   - 이로인해 **처음에 TD-error가 낮게 평가된 transition에 대해 다시는 방문할 기회가 없게된다**!
+2. **noise에 취약**하다.(rewards 가 stochastic한 경우!)
+3. greedy prioritization은 experience memory의 극히 일부분에 집중하도록 만든다.
+   - 이는 **다양한 경험을 충분히 전달하지 못하며 over-fitting에 빠질수** 있도록 만든다.
+
+</br>
+
+이러한 이슈를 극복하기 위해 이 논문에서는 ***stochastic sampling method***를 제안한다.
+
+
+
+<img src="../img/per3.png"/>
 
 </br>
 
