@@ -88,11 +88,21 @@ uniform과 oracle baseline, 그리고 '***greedy TD-error prioritization***' alg
 
 모든 transition에 대해서 non-zero 확률의 방문율을 가지도록 보장할 수 있도록 한다.
 
-아래 수식은 각 transition의 sampling 확률을 나타내며, <img src="../img/alpha.png"/>는 얼마나 prioritization에 의한 sample을 많이 할 것인가를 결정한다.
+아래 수식은 k개의 transition 중 i번째의 transition의 sampling 확률을 나타내며, <img src="../img/alpha.png"/>는 얼마나 prioritization에 의한 sample을 많이 할 것인가를 결정한다.
 
 <img src="../img/alpha.png"/>=0일 때, uniform case이며 ,<img src="../img/alpha.png"/>=1일 때, greedy prioritization이다.
 
 <img src="../img/per4.png"/>
+
+여기서 Pi 항은 두가지 방법으로 계산해 낼 수 있는데, 
+
+직접적인 방법으로는 **proportional prioritization**방식으로 TD에러에 비례하지만 작은 constant값을 포함시켜줌으로써 모든 transition의 방문확률을 0이 아니도록 만들어주는 효과가 있다. 
+
+<img src="../img/per5.png"/>
+
+그 다음으로 간접적인 방법인 **rank-based prioritization**가 있다. 이는 TD에 따라 replay memory 내의 transition에 TD error에 따라 rank를 매기는 것이다.
+
+<img src="../img/per6.png"/>
 
 <img src="../img/per3.png"/>
 
@@ -100,10 +110,46 @@ uniform과 oracle baseline, 그리고 '***greedy TD-error prioritization***' alg
 
 #### (3) Annealing the Bias
 
+**Prioritized Replay는 보통 편향치를 가져오는데**, 주로 expectation에 대한 distribution이 정형화되지 않은 상태로 update마다 바뀌기 때문이다.
 
+해당 논문에서는 **importance-sampling(IS) weights**를 이용해 bias를 잡을 수 있었다.
+
+<img src="../img/per7.png"/>
+
+이는 (Mahmood et al., 2014)와 같이 *weighted* IS 방식으로 Q-learning에서 TD error 대신 weighted IS를 곱한 것을 이용해 업데이트하는데에 사용된다.
+
+</br>
+
+일반적인 RL 시나리오에서, <u>unbiased updates</u>는 training의 막바지에서 수렴하도록 하는데에 가장 중요한 역할은 한다.
+
+해당 논문에서는 importance-sampling correction의 정도를 점진적으로 상승(*annealing*)시켜 training의 막바지에는 최대로 correction이 되도록 유도한다.
+
+여기서 correction의 정도를 조절하는 Parameter는 <img src="../img/beta.png"/> 이며 선형적으로 상승해 training의 마지막에 1이 되도록 한다.
+
+특히 prioritization에 대한 조절계수인 <img src="../img/alpha.png"/>와 함께 올려주면 더욱 확실하게 correcting이 된다고 한다.
+
+</br>
+
+neural network과 같은 비선형 근사함수와 prioritized replay를 함께 사용했을 때에 Importance Sampling의 **또 다른 이점**이 있다. 
+
+gradient의 first-order approximation의 경우 일반적으로 local하게만 신뢰할 수 있기 때문에 large step으로의 학습은 성능이 좋지 않다.
+
+그런데 prioritization의 과정에서 transition의 high-error가 learning step을 넓게 만들어주기도 하는데, 
+
+이 과정에서 **IS correction이 gradient의 크기를 줄여줘 효과적으로 step의 크기를 줄여**준다는 것이다.
 
 </br>
 
 #### (4) Algorithm(PER)
 
 <img src="../img/per2.png"/>
+
+
+
+### [Experiments]
+
+<img src="../img/per8.png"/>
+
+### [Discussion]
+
+*논문참고.*
