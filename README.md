@@ -80,44 +80,21 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov(2017)
 
 </br>
 
-### (8) ACER
-
-[ACER: Sample Efficient Actor-Critic With Experience Replay]
-
-`PAPER`
-
-</br>
-
-### (9) ACKTR
-
-[Scalable trust-region method for deep reinforcement learning using Kronecker-factored approximation]
-
-`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1708.05144.pdf)
-
-<br/>
-
-### (10) SAC
-[Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
-
-`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1801.01290.pdf)
-
-</br>
-
-### (11) TD3
+### (8) TD3
 
 [Addressing Function Approximation Error in Actor-Critic Methods]
 
-`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1802.09477.pdf)
+Scott Fujimoto , Herke van Hoof , David Meger (2018)
+
+[`REVIEW`](./reviews/TD3.md)  	|	[`PAPER`](https://arxiv.org/pdf/1802.09477.pdf)
 
 </br>
 
-### (12) C51(distributional aspect)
+### (9) SAC
 
-[A Distributional Perspective on Reinforcement Learning]
+[Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
 
-`REVIEW`	|	[`PAPER`](https://arxiv.org/pdf/1707.06887.pdf)
-
-</br>
+`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1801.01290.pdf)
 
 ## Exploration
 
