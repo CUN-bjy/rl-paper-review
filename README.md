@@ -118,46 +118,6 @@ Marcin Andrychowicz∗ , Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, P
 
 </br>
 
-## Distributed RL
-
-### (1) Ape-X
-
-[Distributed Prioritized Experience Replay]
-
-`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1803.00933.pdf)
-
-</br>
-
-### (2) IMPALA
-
-[IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-learner Architectures]
-
-`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1802.01561.pdf)
-
-</br>
-
-## Hierarchical RL
-
-### (1) Option-Critic
-
-[The Option-Critic Architecture]
-
-`PAPER`
-
-</br>
-
-### (2) MLSH
-
-[Meta Learning Shared Hierarchies]
-
-`PAPER`
-
-</br>
-
-## Meta RL / Multi-task RL
-
-</br>
-
 ---
 
 ### Reference
