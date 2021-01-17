@@ -129,3 +129,5 @@ Marcin Andrychowicz∗ , Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong, P
 [PG Travel Guide](https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/)
 
 [utilForever/rl-paper-study](https://github.com/utilForever/rl-paper-study)
+
+[Khanrc's blog](http://khanrc.github.io/)
