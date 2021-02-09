@@ -53,3 +53,8 @@ $$
 R_t = \sum^T_{i=t}\gamma^{i-t}r(s_i,a_i) : \text{discounted sum of rewards(return)}
 $$
 
+강화학습에서의 **목표**는 반환값의 기대치를 최대화 해줄 수 있는 최적의 policy $\pi_\phi$(즉 이를 구성하는 파라미터 $\phi$)를 구하는 것이며, 이러한 parameterized policy는 **반환값의 기대치의 기울기값을 통해 업데이트** 해준다.
+$$
+\text{expected return : } J(\phi) = \mathbb{E}_{s_i\sim p_\pi,a_i\sim\pi}[R_0]
+\\\text{its gradient : } \nabla_\phi J(\phi) = \mathbb{E}_{s\sim p_\pi}[\nabla_aQ^\pi(s,a)|_{a=\pi(s)}\nabla_\phi\pi_\phi(s)].
+$$
