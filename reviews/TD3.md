@@ -94,7 +94,7 @@ $$
 
 #### Overestimation Bias in Actor-Critic
 
-먼저, 해당 section에서는 deterministic policy gradient를 사용해 policy를 업데이트한다는 가정 하에 overestimation이 발생한다는 것을 증명하려한다는 것을 알린다.
+먼저, 해당 section에서는 <u>deterministic policy gradient</u>를 사용해 policy를 업데이트한다는 가정 하에 overestimation이 발생한다는 것을 증명하려한다는 것을 알린다.
 
 주어진 policy parameter $\phi$에 대해 function approximation을 사용해 update를 진행한 policy $\phi_{\text{approx}}$와 optimal policy $\pi$의 true value function을 사용해 update를 진행한 $\phi__{\text{true}}$가 아래와 같이 존재한다고 가정하자.
 $$
@@ -127,14 +127,16 @@ $$
 
 이러한 overestimation은 다음과 같은 두가지 문제를 야기한다.
 
-1. 초기에 작은 overestimation bias였지만 지속적인 업데이트에 의해 bias가 심각하게 커질 수 있다.
-2. 부정확한 value estimation이 poor policy업데이트를 초래하며 suboptimal policy나 형편없는 policy를 만든다.
+1. 초기에 작은 overestimation bias였지만 **지속적인 업데이트에 의해 bias가 심각하게 커질 수 있다**.
+2. **부정확한 value estimation이 poor policy업데이트를 초래**하며 suboptimal policy나 형편없는 policy를 만든다.
 
 </br>
 
 **참고.**
 
-이론적인 overestimation의 증명이 과연 실제 SOTA 알고리즘에서도 일어날까?(아래 도표로 필자는 증명하였다.)
+이론적인 overestimation의 증명이 과연 실제 SOTA 알고리즘에서도 일어날까?
+
+(해당 논문에서는 아래 도표와 같이 실험을 통해 증명하였다.)
 
 ![](../img/td3_1.png)
 
@@ -142,6 +144,25 @@ $$
 
 #### Clipped Double Q-Learning for Actor-Critic
 
+위에서 보인 overestimation bias를 줄이기 위한 다양한 접근방법들이 그동안 제기되어왔지만, actor-critic에서는 대부분 효과적이지 않았다고 한다. 해당 논문에서는 **Double Q-learning에서 제시하였던 일부 이론을 응용해 novel clipped variant를 actor-critic 환경에서 적용가능**함을 보인다.
+
+</br>
+
+Double Q-learning에서는 서로 다른 **두 value estimator를 이용**해 value function이 편향되지 않도록 만들어주는데, 두 value estimator가 독립적이라면 반대측 estimator로부터 선택된 action이 unbiased estimation임을 이용할 수 있기 때문이다.
+
+마찬가지로 Double DQN에서는 target network를 사용하는 것을 제안하였고 target network가 아닌 current value network를 이용해 greedy maximization을 이용해 policy를 얻도록 하였고, actor-critic 셋팅에서는 비슷하게 target policy를 이용해 learning target을 생성할 수 있도록 만들어주었다.
+
+</br>
+
+하지만 실제로는 actor-critic에서 <u>너무도 천천히 변화하는 policy에 대해</u>서는 **current policy와 target policy의 network가 너무 유사해 독립적인 estimator로서 만들어지기 힘들다**는 것을 발견하였다.
+
+</br>
+
+따라서 기존의 Double Q-learning에서의 방식이 아닌 actor($\pi_{\phi_1}, $\pi_{\phi_2}$)와 critic($Q_{\theta_1}, $Q_{\theta_2}$)에 대해 짝을 만들어 다음과 같이 서로의 estimator를 이용해 업데이트 하도록 만들어주었다.
+$$
+y_1 = r + \gamma Q_{\theta'_2}(s',\pi_{\phi_1}(s))\\
+y_2 = r + \gamma Q_{\theta'_1}(s',\pi_{\phi_2}(s))
+$$
 
 
 </br>
