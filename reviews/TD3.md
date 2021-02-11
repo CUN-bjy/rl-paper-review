@@ -134,7 +134,7 @@ $$
 
 **참고.**
 
-이론적인 overestimation의 증명이 과연 실제 SOTA 알고리즘에서도 일어날까?
+이론적인 overestimation의 증명이 과연 실제 SOTA 알고리즘에서도 일어날까? :arrow_right:  **yes**
 
 (해당 논문에서는 아래 도표와 같이 실험을 통해 증명하였다.)
 
@@ -154,18 +154,44 @@ Double Q-learning에서는 서로 다른 **두 value estimator를 이용**해 va
 
 </br>
 
-하지만 실제로는 actor-critic에서 <u>너무도 천천히 변화하는 policy에 대해</u>서는 **current policy와 target policy의 network가 너무 유사해 독립적인 estimator로서 만들어지기 힘들다**는 것을 발견하였다.
+하지만 실제로는 actor-critic에서 <u>너무도 천천히 변화하는 policy에 대해</u>서는 **current policy와 target policy의 network가 너무 유사해 독립적인 estimator로서 만들어지기 힘들며** overestimation의 개선이 미미하다는 것을 발견하였다.
 
-</br>
-
-따라서 기존의 Double Q-learning에서의 방식이 아닌 actor($\pi_{\phi_1}, $\pi_{\phi_2}$)와 critic($Q_{\theta_1}, $Q_{\theta_2}$)에 대해 짝을 만들어 다음과 같이 서로의 estimator를 이용해 업데이트 하도록 만들어주었다.
+그 대신에 기존의 Double Q-learning에서의 방식이 아닌 actor($\pi_{\phi_1}, $\pi_{\phi_2}$)와 critic($Q_{\theta_1}, $Q_{\theta_2}$)에 대해 짝을 만들어 서로의 estimator를 이용해 업데이트하는 방법 역시 고려해 볼 수 있다.
 $$
 y_1 = r + \gamma Q_{\theta'_2}(s',\pi_{\phi_1}(s))\\
 y_2 = r + \gamma Q_{\theta'_1}(s',\pi_{\phi_2}(s))
 $$
+자세한 설명을 위해 풀어 설명하자면,
 
+1. 두 critic network의 target을 서로 독립적인 target critic network로 정해 critic update를 진행한다.
+2. 학습된 두 critic network는 해당하는 policy를 업데이트 해준다.
+
+</br>
+
+위와 같은 방식을 이용한다면 policy update에 의한 bias는 피할 수 있을 것이다.
+
+**하지만, 두 critics는 완전히 independent하지 않다!**
+
+그 이유는 같은 replay buffer를 사용하여 서로 다른 critic을 학습하기위해 사용했을 뿐이기 때문이다.
+
+</br>
+
+결과적으로 특정 states들에 대해 $Q_{\theta_2}(s,\pi_{\phi_1}(s)) > Q_{\theta_1}(s,\pi_{\phi_1}(s))$를 만족하게 될 것이며, true value보다 $Q_{\theta_1}$의 값이 overestimate될 수도, 그리고 특정 부분에서는 훨씬 심할수도 있다는 것이다.
+
+이러한 문제를 해결하기 위하여 이 논문에서는 **덜 biased 된 $Q_{\theta_2}$를 biased된 $Q_{\theta_1}$로 upper-bound 제한 하는 방법을 제시한다.** 말로 표현하려니 약간 난해할 수 있지만, 간단히 식으로 다음과 같이 나타낼 수 있다.
+$$
+y_1 = r + \gamma \text{min}_{i=1,2}Q_{\theta'_i}(s',\pi_{\phi_1}(s'))
+$$
+ 즉, 두 추정값의 minimum값을 target으로 이용해 업데이트(*Clipped Double Q-learning algorithm*)하고자 하는 것이다. 
 
 </br>
 
 ### [Addressing Variance]
 
+</br>
+
+### [Experiments]
+
+</br>
+
+### [Conclusion]
