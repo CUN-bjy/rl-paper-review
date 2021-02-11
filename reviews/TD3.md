@@ -125,9 +125,22 @@ $$
 
 </br>
 
- 
+이러한 overestimation은 다음과 같은 두가지 문제를 야기한다.
+
+1. 초기에 작은 overestimation bias였지만 지속적인 업데이트에 의해 bias가 심각하게 커질 수 있다.
+2. 부정확한 value estimation이 poor policy업데이트를 초래하며 suboptimal policy나 형편없는 policy를 만든다.
+
+</br>
+
+**참고.**
+
+이론적인 overestimation의 증명이 과연 실제 SOTA 알고리즘에서도 일어날까?(아래 도표로 필자는 증명하였다.)
 
 ![](../img/td3_1.png)
+
+</br>
+
+#### Clipped Double Q-Learning for Actor-Critic
 
 
 
