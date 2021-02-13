@@ -210,23 +210,71 @@ Overestimation bias뿐만아니라 high variance의 value estimation은 policy u
 
 temporal difference update를 이용하는 모든 estimator는 value를 estimation하는 과정에서 error를 동반한다. 매 업데이트마다는 **아주 작은 error일지라도 이러한 estimation error는 쌓일 수 있기 때문에 잠재적인 거대한 overestimation bias와 이로 인한 suboptimal policy update를 유도**할 수 있다.
 
+이는 function approximation 셋팅에서 훨씬 심각하게 발생하며 이러한 환경에서는 절대로 bellman equation을 만족할 수 없다.(매 업데이트마다  일정량 이상의 TD-residual이 발생하기 때문)
+$$
+Q_\theta(s,a) = r + \gamma\mathbb{E}[Q_\theta(s',a')] - \delta(s,a)
+$$
 </br>
 
+해당 문제는 아래와 같이 expected return의 estimation을 학습한다는 개념을 expected return에서 미래의 td-error의 expected discounted sum을 뺀 값이라고 형태변환 할 수 있다.
 
+즉, 쉽게 설명하자면 **단순히 estimation과정에서의 에러가 아닌 미래에 얻을 reward자체에 대한 error로 보자**는 것이다. 이에 따르면 estimation의 variance는 미래에 얻을 reward(performance)의 variance와 estimation error에 비례함을 의미한다. 
+
+:arrow_right: estimation variance를 잡아야 하는 이유? 를 강조하기 위한 내용으로 추측된다.
 $$
 Q_\theta(s_t,a_t) = r_t + \gamma\mathbb{E}[Q_\theta(s_{t+1},a_{t+1})] - \delta_t
 \\ = r_t + \gamma\mathbb{E}[r_{t+1} + \gamma\mathbb{E}[Q_\theta(s_{t+2},a_{t+2})] - \delta_{t+1}] - \delta_{t}
 \\=\mathbb{E}_{s_i\sim p_\pi,a_i\sim\pi}[\sum^T_{i=t}\gamma^{i-t}(r_i-\delta_i)].
 $$
-
-
 </br>
 
 #### 5.2 Target Networks and Delayed Policy Updates
 
+이번에는 <u>target network와 function approximation의 관계</u>에 대해 파헤쳐보고, 이를 통해 **stable target이 error의 증식을 막아주는 역할**을 할 것임을 보이고자 한다.
+
+</br>
+
+target network는 deep learning에서 잘 알려진 stability tool이다. 보다 안정적인 objective를 제공함으로서  수많은 데이터의 수렴을 원활히 돕는 역할을 해준다.
+
+즉, **학습의 안정성을 부여해 variance를 확실히 낮추는 역할**을 하는 핵심적인 구조이다.
+
+(저자는 적절한 target update 비율을 가진 target network의 중요성을 논문에서 실험을 통해 재차 강조하고있다.)
+
+![](../img/td3_3.png)
+
+</br>
+
+<u>그렇다면 actor-critic method에서 학습을 실패하게하는 요소</u>는 무엇일까?
+
+관찰결과, target network가 없는 상황에서 자주 발생하는 **divergence 문제**는 <u>high variance의 value estimation을 통한 policy update에서 발생</u>한다.
+
+조금 풀어서 말하자면, **value function의 발산은 policy가 poor할 때 overestimation을 통해 발생하며, 반대로 value estimation의 부정확함이 policy를 poor하게 만든다**.
+
+</br>
+
+조금 말장난같고 당연한 이야기를 하는 듯 하지만, 저자가 강조하고싶은 부분은 바로 이것이다.
+
+> policy network를 value network보다 조금 덜 자주 업데이트해야되는거 아니야?
+
+**먼저 estimation error를 최소화 한 다음에 policy update를 진행하자.**
+
+이에 따라 저자는 **delayed policy update**를 제안한다. 변하지 않는 critic에 대해 반복할 가능성을 최대한 줄이기 위해 policy update를 충분히 늦추자는 것이다.
+
+이러한 알고리즘의 효율성에 대한 증명은 실험 파트에서 보인다.
+
 </br>
 
 #### 5.3 Target Policy Smoothing Regularization
+
+deterministic policy에 대한 걱정 중 하나는 바로 **value estimation에 대해 특정 값들에 overfit되는 문제**가 발생하지 않을 지에 대한 문제이다.
+
+stochastic policy와는 달리 deterministic policy에서의 action은 특정 state에 대해 발동할 action이 정해져있다(deterministic하다). 
+
+즉, memory buffer에 저장되어있는 state, action pair에 의해서만 critic network가 학습할 수 있으며 buffer에 없는 pair에 대한 경우의 수는 학습할 수 없다.
+
+</br>
+
+.
 
 </br>
 
