@@ -38,7 +38,9 @@ Scott Fujimoto , Herke van Hoof , David Meger (2018)
 
 </br>
 
-### [Background]
+(Section 1,2는 생략합니다.)
+
+### [3. Background]
 
 기본적인 강화학습의 환경은 아래와 같이 표현된다.
 $$
@@ -74,7 +76,7 @@ $$
 
 </br>
 
-### [Overestimation Bias]
+### [4. Overestimation Bias]
 
 discrete action을 사용하는 Q-learning에서는 가치추정단계에서 다음과 같은 greedy target을 사용한다.
 $$
@@ -92,7 +94,7 @@ $$
 
 </br>
 
-#### Overestimation Bias in Actor-Critic
+#### 4.1 Overestimation Bias in Actor-Critic
 
 먼저, 해당 section에서는 <u>deterministic policy gradient</u>를 사용해 policy를 업데이트한다는 가정 하에 overestimation이 발생한다는 것을 증명하려한다는 것을 알린다.
 
@@ -142,7 +144,7 @@ $$
 
 </br>
 
-#### Clipped Double Q-Learning for Actor-Critic
+#### 4.2 Clipped Double Q-Learning for Actor-Critic
 
 위에서 보인 overestimation bias를 줄이기 위한 다양한 접근방법들이 그동안 제기되어왔지만, actor-critic에서는 대부분 효과적이지 않았다고 한다. 해당 논문에서는 **Double Q-learning에서 제시하였던 일부 이론을 응용해 novel clipped variant를 actor-critic 환경에서 적용가능**함을 보인다.
 
@@ -186,12 +188,54 @@ $$
 
 </br>
 
-### [Addressing Variance]
+저자는 Clipped Double Q-learning을 이용하였을 때 어떠한 **추가적인 overestimation도 발생하지 않았다**고 하며, **비록 underestimation bias가 발생할 수는 있지만 overestimation bias보다 훨씬 낫다**고 이야기한다.
+
+> 개인적으로 해당 논문을 보고 td3를 구현해보았을 때 확실히 value의 estimate 값 자체가 매우 낮게 나타났지만, 낮은 target error덕인지 훈련속도가 현저히 느려지는 것을 체감하였으며 결국 시간이 지나자 td error역시 매우 높아지기 시작했다.. overestimation bias에 대한 효과는 느껴지지만 이것이 학습 자체에 어떤 효과를 주는지에 대한 것은 사실 와닿지 않는 것 같다. 오히려 그냥 DDPG가 더 학습이 잘되는 느낌? 아직 td3를 구현중이어서 그런것일수도있다 ㅜㅜ(테스트하면서 적은 [analysis log](https://github.com/CUN-bjy/gym-td3-keras/issues/10) 참고)
+
+두번째로 function approximation error에 대한 개선덕분에 **high value임에도 lower variance estimation error를 가질 수 있게 되었다**고 이야기한다. 
 
 </br>
 
-### [Experiments]
+### [5. Addressing Variance]
+
+Overestimation bias뿐만아니라 high variance의 value estimation은 policy update를 진행할 때에 noisy한 gradient를 제공한다. Section 4에서도 언급하였듯이 overestimation bias가 variance의 개선에 기여하고있지만, 해당 Section에서는 직접적으로 **variance 자체를 다룰 수 있는 방법**들에 대해 이야기한다.
 
 </br>
 
-### [Conclusion]
+기존 Sutton & Barto의 논문에서 밝혀졌듯이 learning speed를 줄이는 것은  variance를 줄일수는 있지만 실제로 performance에 영향을 줄 수 있다. 해당 논문에서는 **estimation error 최소화의 중요성**을 다시금 강조하고, **target network와 estimation error를 연관지어 variance를 줄일 수 있는 개선된 actor-critic 학습 과정을 제시**하려한다.
+
+</br>
+
+#### 5.1 Accumulating Error
+
+temporal difference update를 이용하는 모든 estimator는 value를 estimation하는 과정에서 error를 동반한다. 매 업데이트마다는 **아주 작은 error일지라도 이러한 estimation error는 쌓일 수 있기 때문에 잠재적인 거대한 overestimation bias와 이로 인한 suboptimal policy update를 유도**할 수 있다.
+
+</br>
+
+
+$$
+Q_\theta(s_t,a_t) = r_t + \gamma\mathbb{E}[Q_\theta(s_{t+1},a_{t+1})] - \delta_t
+\\ = r_t + \gamma\mathbb{E}[r_{t+1} + \gamma\mathbb{E}[Q_\theta(s_{t+2},a_{t+2})] - \delta_{t+1}] - \delta_{t}
+\\=\mathbb{E}_{s_i\sim p_\pi,a_i\sim\pi}[\sum^T_{i=t}\gamma^{i-t}(r_i-\delta_i)].
+$$
+
+
+</br>
+
+#### 5.2 Target Networks and Delayed Policy Updates
+
+</br>
+
+#### 5.3 Target Policy Smoothing Regularization
+
+</br>
+
+아래 간단한 pseudo코드는 TD3의 모든 내용을 짧은 삽화에 담아내었다. 이 논문 전체의 내용이 아래 삽화에서 어떤 방식으로 표현되어있는지 찾아낼 수 있다면 TD3를 이해했다고 생각해도 무방하다. 아직도 잘 모르겠다면 반대로 아래 삽화를 통해서 내용을 추적해나가는게 효과적인 공부가 될 것 같다.
+
+![](../img/td3_2.png)
+
+### [6. Experiments]
+
+</br>
+
+### [7. Conclusion]
