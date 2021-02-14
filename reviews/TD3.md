@@ -216,9 +216,7 @@ Q_\theta(s,a) = r + \gamma\mathbb{E}[Q_\theta(s',a')] - \delta(s,a)
 $$
 </br>
 
-해당 문제는 아래와 같이 expected return의 estimation을 학습한다는 개념을 expected return에서 미래의 td-error의 expected discounted sum을 뺀 값이라고 형태변환 할 수 있다.
-
-즉, 쉽게 설명하자면 **단순히 estimation과정에서의 에러가 아닌 미래에 얻을 reward자체에 대한 error로 보자**는 것이다. 이에 따르면 estimation의 variance는 미래에 얻을 reward(performance)의 variance와 estimation error에 비례함을 의미한다. 
+해당 문제는 아래와 같이 expected return의 estimation을 학습한다는 개념을 expected return에서 미래의 td-error의 expected discounted sum을 뺀 값이라고 형태변환 할 수 있다. 즉, 쉽게 설명하자면 **단순히 estimation과정에서의 에러가 아닌 미래에 얻을 reward자체에 대한 error로 보자**는 것이다. 이에 따르면 estimation의 variance는 미래에 얻을 reward(performance)의 variance와 estimation error에 비례함을 의미한다. 
 
 :arrow_right: estimation variance를 잡아야 하는 이유? 를 강조하기 위한 내용으로 추측된다.
 $$
@@ -246,9 +244,7 @@ target network는 deep learning에서 잘 알려진 stability tool이다. 보다
 
 <u>그렇다면 actor-critic method에서 학습을 실패하게하는 요소</u>는 무엇일까?
 
-관찰결과, target network가 없는 상황에서 자주 발생하는 **divergence 문제**는 <u>high variance의 value estimation을 통한 policy update에서 발생</u>한다.
-
-조금 풀어서 말하자면, **value function의 발산은 policy가 poor할 때 overestimation을 통해 발생하며, 반대로 value estimation의 부정확함이 policy를 poor하게 만든다**.
+관찰결과, target network가 없는 상황에서 자주 발생하는 **divergence 문제**는 <u>high variance의 value estimation을 통한 policy update에서 발생</u>한다. 조금 풀어서 말하자면, **value function의 발산은 policy가 poor할 때 overestimation을 통해 발생하며, 반대로 value estimation의 부정확함이 policy를 poor하게 만든다**.
 
 </br>
 
@@ -266,17 +262,30 @@ target network는 deep learning에서 잘 알려진 stability tool이다. 보다
 
 #### 5.3 Target Policy Smoothing Regularization
 
-deterministic policy에 대한 걱정 중 하나는 바로 **value estimation에 대해 특정 값들에 overfit되는 문제**가 발생하지 않을 지에 대한 문제이다.
-
-stochastic policy와는 달리 deterministic policy에서의 action은 특정 state에 대해 발동할 action이 정해져있다(deterministic하다). 
-
-즉, memory buffer에 저장되어있는 state, action pair에 의해서만 critic network가 학습할 수 있으며 buffer에 없는 pair에 대한 경우의 수는 학습할 수 없게 된다.
+deterministic policy에 대한 걱정 중 하나는 바로 **value estimation에 대해 특정 값들에 overfit되는 문제**가 발생하지 않을 지에 대한 문제이다. stochastic policy와는 달리 deterministic policy에서의 action은 특정 state에 대해 발동할 action이 정해져있기 때문에(deterministic하다), memory buffer에 저장되어있는 state, action pair에 의해서만 critic network가 학습할 수 있으며 buffer에 없는 pair에 대한 경우의 수는 학습할 수 없게 된다.
 
 </br>
 
-해당 논문에서는 **target policy smoothing이라는 regularization 전략을 사용**해 위와 같은 문제를 해결한다.
+해당 논문에서는 **target policy smoothing이라는 regularization 전략을 사용**해 위와 같은 문제를 해결할 수 있음을 제시한다.
+
+즉, target action의 주변에 비슷한 value estimate를 형성하도록 model을 fitting시켜주면 variance를 제거해줄 수 있다.
+
+> (부가설명) deep neural network를 이용한 function approximator의 경우 복잡한 모델인 탓에 특정 값에 대해 overfitting에 취약할 수 있다.
+>
+> 유사한 state와 action에 대해서 Q값의 variance가 생길 수 있는데, (e.g) Q(1.0,1.0) = 1, Q(1.0,1.1) = 3가 아닌 Q(1.0,1.1) = 1.01이 되도록 
+>
+> deterministic policy에 대한 smoothing을 통해 variance를 잡을 수 있다.
+
 $$
 y = r + \mathbb{E}_{\epsilon}[Q_{\theta'}(s',\pi_{\phi'}(s')+\epsilon)]
+$$
+
+그럼 target policy를 smoothing하려면 어떻게 하면 좋을까?
+
+바로 **target value를 구하기 직전의 next action에 random noise를 더해 input을 smoothing하는 방법**으로 다음과 같이 구현 가능하다.
+$$
+y = r + \gamma Q_{\theta'}(s',\pi_{\phi'}(s')+\epsilon),\\
+\epsilon \sim \text{clip}(\mathcal{N}(0,\sigma),-c,c)
 $$
 
 
