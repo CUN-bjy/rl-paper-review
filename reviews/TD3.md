@@ -270,11 +270,15 @@ deterministic policy에 대한 걱정 중 하나는 바로 **value estimation에
 
 stochastic policy와는 달리 deterministic policy에서의 action은 특정 state에 대해 발동할 action이 정해져있다(deterministic하다). 
 
-즉, memory buffer에 저장되어있는 state, action pair에 의해서만 critic network가 학습할 수 있으며 buffer에 없는 pair에 대한 경우의 수는 학습할 수 없다.
+즉, memory buffer에 저장되어있는 state, action pair에 의해서만 critic network가 학습할 수 있으며 buffer에 없는 pair에 대한 경우의 수는 학습할 수 없게 된다.
 
 </br>
 
-.
+해당 논문에서는 **target policy smoothing이라는 regularization 전략을 사용**해 위와 같은 문제를 해결한다.
+$$
+y = r + \mathbb{E}_{\epsilon}[Q_{\theta'}(s',\pi_{\phi'}(s')+\epsilon)]
+$$
+
 
 </br>
 
