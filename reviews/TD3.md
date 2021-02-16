@@ -289,15 +289,62 @@ y = r + \gamma Q_{\theta'}(s',\pi_{\phi'}(s')+\epsilon),\\
 $$
 </br>
 
+### [6. Experiments]
+
+해당 논문에서는 **Twin Delayed Deep Deterministic policy gradient algorithm(TD3)**를 제안하였으며 Deep Deterministic Policy Gradient algorithm(DDPG)를 기반으로 4.2(**Clipped Double Q learning**), 5.2(**Delayed Policy Update**), 5.3(**Target Policy Smoothing**)개념을 적용해 <u>function approximation error와 관련하여 안정성과 성능의 향상</u>시켜주었다.
+
+</br>
+
+TD3는 한 쌍의 critics와 하나의 actor로 구성되어있다.
+
+1. 매 스탭마다 target policy에 의해 선택된 action의 **minimum target value을 이용해 한 쌍의 critics를 업데이트** 시켜준다.
+
+   (여기서 target policy smoothing을 위해 target policy에 $\sigma$만큼의 노이즈를 첨가해준다.)
+
+$$
+y = r + \gamma \text{min}_{i=1,2}Q_{\theta_i'}(s',\pi_{\phi'}(s')+\epsilon)
+\\ \epsilon \sim \text{clip}(\mathcal{N}(0,\sigma),-c,c)
+$$
+
+2. 그리고 **매 d step**마다 $Q_{\theta_1}$을 이용해 **policy 업데이트**를 진행한다.
+
+---
+
 아래 간단한 pseudo코드는 TD3의 모든 내용을 짧은 삽화에 담아내었다. 이 논문 전체의 내용이 아래 삽화에서 어떤 방식으로 표현되어있는지 찾아낼 수 있다면 TD3를 이해했다고 생각해도 무방하다. 아직도 잘 모르겠다면 반대로 아래 삽화를 통해서 내용을 추적해나가는게 효과적인 공부가 될 것 같다.
 
 ![](../img/td3_2.png)
 
-### [6. Experiments]
+</br>
 
+#### Evaluation
 
+> TD3논문 내에 실험내용에 대한 아주 상세한 설명이 담겨있어 자세히 나열해보려한다. 논문에 중요히 언급하지 않은 중요한 스킬들이 담겨있다.
+>
+> (사실 open source로 공개되어있어 직접 코드확인이 가능하다. https://github.com/sfujim/TD3)
+
+- 실험환경은 MuJoCo continuous control tasks를 사용하였으며, OpenAI Gym framework를 사용하였다.
+
+- 각 actor와 critic에 대해 **400,300**의 hidden layer를 사용하였으며 **ReLU**를 activation layer로 사용
+
+- Original DDPG와 다르게 critic의 first layer의 **input으로서 state와 action 모두**를 받도록 하였다.
+
+- **Adam** optimizer를 이용해 actor와 critic을 업데이트 하였으며 learning rate 는 각 **10-3**이다.
+
+- 매 **스텝이 끝난 후 100-transition 만큼**을 replay buffer로 부터 random sample로 꺼내 훈련시킨다.
+
+- target policy smoothing은 **std 0.2**만큼의 normal random noise를 action에 섞어 보내준다. 단, **-0.5, 0.5 clip**된 noise이다.
+
+- **매 d 스텝**마다 actor와 target critic network를 업데이트 시킨다. **critic은 매 스텝** 업데이트 시킨다.
+
+  (d=2로 실험하였다. d 값이 더욱 클 때에는 error의 적체에 대한 이점이 더욱 많다. 당연히 d 값이 너무커 actor의 업데이트를 너무 안하면 문제가 생길것이다.)
+
+- actor와 critic 모두 **tau=0.005** 의 비율로 target update를 진행한다.
+
+- 
 
 </br>
+
+#### Performance
 
 ![](../img/td3_4.png)
 
