@@ -110,7 +110,6 @@ $$
    \mathbb{E}[Q_\theta(s,\pi_{\text{approx}}(s))] \ge \mathbb{E}[Q_\theta(s,\pi_{\text{true}}(s))]
    $$
    
-
 2. 마찬가지로 충분히 작은 error $\epsilon_2$이 존재($\alpha\ge\epsilon_2$)한다고 할 때, $\pi_\text{true}$의 true value는 $\pi_\text{approx}$의 true value보다 작거나 같다.
    $$
    \mathbb{E}[Q^\pi(s,\pi_{\text{true}}(s))] \ge \mathbb{E}[Q^\pi(s,\pi_{\text{approx}}(s))]
@@ -322,15 +321,19 @@ $$
 >
 > (사실 open source로 공개되어있어 직접 코드확인이 가능하다. https://github.com/sfujim/TD3)
 
+**1. 실험 환경**
+
 - 실험환경은 MuJoCo continuous control tasks를 사용하였으며, OpenAI Gym framework를 사용하였다.
 
+**2. 네트워크 구조 및 하이퍼파라미터**
+
 - 각 actor와 critic에 대해 **400,300**의 hidden layer를 사용하였으며 **ReLU**를 activation layer로 사용
-
 - Original DDPG와 다르게 critic의 first layer의 **input으로서 state와 action 모두**를 받도록 하였다.
-
 - **Adam** optimizer를 이용해 actor와 critic을 업데이트 하였으며 learning rate 는 각 **10-3**이다.
-
 - 매 **스텝이 끝난 후 100-transition 만큼**을 replay buffer로 부터 random sample로 꺼내 훈련시킨다.
+- actor와 critic 모두 **tau=0.005** 의 비율로 target update를 진행한다.
+
+**3. TD3에서 추가된 점**
 
 - target policy smoothing은 **std 0.2**만큼의 normal random noise를 action에 섞어 보내준다. 단, **-0.5, 0.5 clip**된 noise이다.
 
@@ -338,11 +341,20 @@ $$
 
   (d=2로 실험하였다. d 값이 더욱 클 때에는 error의 적체에 대한 이점이 더욱 많다. 당연히 d 값이 너무커 actor의 업데이트를 너무 안하면 문제가 생길것이다.)
 
-- actor와 critic 모두 **tau=0.005** 의 비율로 target update를 진행한다.
+**4. Exploration**
 
-- 
+- 초기 initial parameter에 의한 의존성을 줄이기 위해 **초기 10000step정도의 pure exploratory policy**를 진행한다.
+- 초기의 pure exploration이후에는 training시 **매 action에 std 0.1의 gaussian noise**를 더하는 **off-policy exploration 전략**을 사용한다.
+  - DDPG논문에서 사용하였던 OU process는 일반적인 노이즈와 비교해 별다른 이점이 없었다고 함.
+
+**5. 평가방법**
+
+- 각 task에 대해 총 10+6step을 진행하며, 매 5000step마다 evaluation을 진행한다.
+  - exploration noise없이 10회 이상의 episode를 진행. 이를 평균낸다.
 
 </br>
+
+(자세한 내용은 논문 참고)
 
 #### Performance
 
