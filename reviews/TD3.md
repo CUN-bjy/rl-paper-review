@@ -13,12 +13,10 @@ Scott Fujimoto , Herke van Hoof , David Meger (2018)
 ### [Scheme]
 
 - John Schuleman의  TRPO, PPO 이후 policy gradient에서 가장 주목받고 있는 알고리즘들 중 하나인 TD3.
-- 기존 DeepMind에서 발표한 DDPG와 거의 같은 형태를 가지고 있기 때문에 이론적 배경이나 구현과정이 쉬운 편.
-- DDPG와의 차별점으로는 크게 두가지이다,
-  - **Clipped Double Q-network and Update**
-  - **Delayed Policy update**
-  - 그리고 Target Policy Smoothing
-- 그러니 부디 [DDPG](./DDPG.md)를 먼저 공부하고 오는게 좋을 듯 하다.
+- 기존 DeepMind에서 발표한 DDPG와 거의 같은 형태를 가지고 있기 때문에 이론적 배경이나 구현과정이 쉬운 편이며 여느 actor-critic에도 적용 가능하다.
+- 해당 논문에서 해결하고자하는 문제는 크게 두가지이며, 그에 대한 해결책을 제시해 기존의 SOTA를 능가하는 성능을 지녔음을 보인다.
+  1. Overestimation bias -> solution : **Clipped Double Q-network and Update**
+  2. Accomulation error from TD update. -> solution : **Delayed Policy update** & **Target Policy Smoothing**
 
 </br>
 
