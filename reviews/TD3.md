@@ -363,3 +363,22 @@ $$
 </br>
 
 ### [7. Conclusion]
+
+> 논문 전체에 대한 요약이니 따로 중요한부분을 표시하지 않았다. 저자가 결론에 적어낸 한 문장하나하나가 알짜배기다..
+
+1. **Overestimation bias**
+   - Overestimation은 그동안 value-based 방법론에서 주요한 문제로 다루어져왔고, actor-critic방법역시 overestimation bias가 문제가 되고있다는 것을 보였다.
+   - 기존 Deep Q-learning에서 overestimation bias를 줄이기 위한 몇가지 방안이 있었지만 actor-critic setting에서는 효과적이지 않았다.
+   - 이에따라 저자는 Double Q-learning으로부터 착안해 overestimation을 제한할 수 있는 방법을 찾아낸다.
+   - 결과적으로 overestimation 문제의 해소는 modern algorithm의 성능을 크게 향상시키는데에 기여했다.
+2. **Accumulation error from TD learning**
+   - noise와 overestimation의 관계성 탓에, temporal difference learning방식으로부터 발생하는 error의 축적이 생김을 발견하였다.
+   - 이러한 문제해결을 위해 기존의 deep reinforcement learning에서 일반적으로 사용되던 target network의 중요성에 대해 조사하였고, 부정확한 function approximation과 stochastic optimization으로부터 error가 축적되는것을 제한하고 있음을 확인하였다.
+   - 여기에 비슷한 state-action pair들에 대한 bootstrap해줄 수 있도록 SARSA 연구에서 사용되었던 regularization 기법을 적용하였다.
+
+마무리.
+
+- 위와 같은 접근방식들을 모아 개선된 알고리즘인 **Twin Delayed Deep Deterministic policy gradient algorithm(TD3)**를 제안한다.
+- 이는 여러 도전적인 continuous control task들에 대해 학습 속도와 성능 면에서 기존 DDPG에 비해 상당히 개선되었다.
+- 또한 기존의 state of arts(SOTA) 알고리즘들을 능가하는 성능을 지니고 있다.
+- 해당 논문에서 제시한 방법들은 어떤 actor-critic algorithm에도 쉽게 적용해 개선할 수 있다.
