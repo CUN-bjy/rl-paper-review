@@ -26,11 +26,11 @@ Scott Fujimoto , Herke van Hoof , David Meger (2018)
 
 - 이러한 현상은 actor-critic 방식에서도 마찬가지임을 이 논문에서 보이며, value-based 방식에서의 위와 같은 문제를 효과적으로 해결한 Double Q-learning의 이론을 기반으로 새로운 메커니즘을 제안한다.
 
-  :arrow_right:*Clipped Double Q-network*
+  -> *Clipped Double Q-network*
 
 - 또한 이 논문에서는 target network와 overestimation bias의 연관성을 보이고 policy update를 지연시킴으로서 update 당 에러를 줄여 성능을 보다 향상시킨다.
 
-  :arrow_right:Delayed Policy update
+  -> Delayed Policy update
 
 - 위 알고리즘은 OpenAI gym task를 통해 검증하였으며 기존의 SOTA보다 좋은 성능을 나타낸다.
 
@@ -96,12 +96,12 @@ $$
 
 먼저, 해당 section에서는 <u>deterministic policy gradient</u>를 사용해 policy를 업데이트한다는 가정 하에 overestimation이 발생한다는 것을 증명하려한다는 것을 알린다.
 
-주어진 policy parameter $\phi$에 대해 function approximation을 사용해 update를 진행한 policy $\phi_{\text{approx}}$와 optimal policy $\pi$의 true value function을 사용해 update를 진행한 $\phi__{\text{true}}$가 아래와 같이 존재한다고 가정하자.
+주어진 policy parameter $\phi$에 대해 function approximation을 사용해 update를 진행한 policy $\phi_{\text{approx}}$와 optimal policy $\pi$의 true value function을 사용해 update를 진행한 $\phi_{\text{true}}$가 아래와 같이 존재한다고 가정하자.
 $$
 \phi_{\text{approx}} = \phi + \frac{\alpha}{Z_1}\mathbb{E}_{s\sim p_\pi}[\nabla_\phi\pi_\phi(s)\nabla_aQ_\theta(s,a)|_{a=\pi_\phi(s)}]
 \\\phi_{\text{true}} = \phi + \frac{\alpha}{Z_2}\mathbb{E}_{s\sim p_\pi}[\nabla_\phi\pi_\phi(s)\nabla_aQ^\pi(s,a)|_{a=\pi_\phi(s)}].
 $$
-그리고 위 parameter를 사용하고있는 policy를 각각 $\pi_{\text{approx}}, \pi_{\text{true}}$라 할 때 다음이 성립한다.
+그리고 위 parameter를 사용하고있는 policy를 각각 $\pi_{\text{approx}}$, $\pi_{\text{true}}$라 할 때 다음이 성립한다.
 
 1. 충분히 작은 error $\epsilon_1$이 존재($\alpha\ge\epsilon_1$)한다고 할 때, $\pi_\text{approx}$의 approximate value는 $\pi_\text{true}$의 approximate value보다 작거나 같다.
    $$
@@ -133,7 +133,7 @@ $$
 
 **참고.**
 
-이론적인 overestimation의 증명이 과연 실제 SOTA 알고리즘에서도 일어날까? :arrow_right:  **yes**
+이론적인 overestimation의 증명이 과연 실제 SOTA 알고리즘에서도 일어날까?  **yes**
 
 (해당 논문에서는 아래 도표와 같이 실험을 통해 증명하였다.)
 
@@ -155,7 +155,7 @@ Double Q-learning에서는 서로 다른 **두 value estimator를 이용**해 va
 
 하지만 실제로는 actor-critic에서 <u>너무도 천천히 변화하는 policy에 대해</u>서는 **current policy와 target policy의 network가 너무 유사해 독립적인 estimator로서 만들어지기 힘들며** overestimation의 개선이 미미하다는 것을 발견하였다.
 
-그 대신에 기존의 Double Q-learning에서의 방식이 아닌 actor($\pi_{\phi_1}, $\pi_{\phi_2}$)와 critic($Q_{\theta_1}, $Q_{\theta_2}$)에 대해 짝을 만들어 서로의 estimator를 이용해 업데이트하는 방법 역시 고려해 볼 수 있다.
+그 대신에 기존의 Double Q-learning에서의 방식이 아닌 actor($\pi_{\phi_1}$, $\pi_{\phi_2}$)와 critic($Q_{\theta_1}$, $Q_{\theta_2}$)에 대해 짝을 만들어 서로의 estimator를 이용해 업데이트하는 방법 역시 고려해 볼 수 있다.
 $$
 y_1 = r + \gamma Q_{\theta'_2}(s',\pi_{\phi_1}(s))\\
 y_2 = r + \gamma Q_{\theta'_1}(s',\pi_{\phi_2}(s))

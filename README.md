@@ -86,7 +86,7 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov(2017)
 
 Scott Fujimoto , Herke van Hoof , David Meger (2018)
 
-[`REVIEW`](./reviews/TD3.md)  	|	[`PAPER`](https://arxiv.org/pdf/1802.09477.pdf)	|	[`CODE`](https://github.com/CUN-bjy/gym-td3-keras)
+[`REVIEW`](./reviews/TD3.html)  	|	[`PAPER`](https://arxiv.org/pdf/1802.09477.pdf)	|	[`CODE`](https://github.com/CUN-bjy/gym-td3-keras)
 
 </br>
 
