@@ -38,52 +38,44 @@ Scott Fujimoto , Herke van Hoof , David Meger (2018)
 
 (Section 1,2는 생략합니다.)
 
+</br>
+
 ### [3. Background]
 
 기본적인 강화학습의 환경은 아래와 같이 표현된다.
-$$
-t : \text{at discrete time step}
-\\s \in S : \text{with given state}
-\\a \in A: \text{the agent selects actions}
-\\ \pi : S \to A \text{, with respect to its policy}
-\\r : \text{receiving a reward, } s' : \text{and the new state}
-$$
 
-$$
-R_t = \sum^T_{i=t}\gamma^{i-t}r(s_i,a_i) : \text{discounted sum of rewards(return)}
-$$
+<img src="../img/td3_5.png"/>
+
+<img src="../img/td3_6.png"/>
 
 강화학습에서의 **목표**는 반환값의 기대치를 최대화 해줄 수 있는 최적의 policy $\pi_\phi$(즉 이를 구성하는 파라미터 $\phi$)를 구하는 것이며, 이러한 parameterized policy는 **반환값의 기대치의 기울기값을 통해 업데이트** 해준다.
-$$
-\text{expected return : } J(\phi) = \mathbb{E}_{s_i\sim p_\pi,a_i\sim\pi}[R_0]
-\\\text{its gradient : } \nabla_\phi J(\phi) = \mathbb{E}_{s\sim p_\pi}[\nabla_aQ^\pi(s,a)|_{a=\pi(s)}\nabla_\phi\pi_\phi(s)].
-$$
+
+<img src="../img/td3_7.png"/>
+
 그리고 반환값의 기대치는 일반적으로 critic 또는 value function이라 불리는 Q-value를 계산해 구한다.
-$$
-Q^\pi(s,a) = \mathbb{E}_{s_i\sim p_\pi,a_i\sim\pi}[R_t|s,a] :\text{as definition}
-\\ Q^\pi(s,a) = r + \gamma\mathbb{E}_{s',a'}[Q^\pi(s',a')], \space a'\sim\pi(s') : \text{bellman form}
-$$
+
+<img src="../img/td3_8.png"/>
+
 large state space에 대해 Q value를 근사하기 위해 parameter $\theta$를 사용하며, objective $y$에 대해 업데이트 수식은 다음과 같다.
-$$
-y = r + \gamma Q_{\theta'}(s',a'), \space a'\sim\pi_{\phi'}(s')
-$$
+
+<img src="../img/td3_9.png"/>
+
 여기서 $\theta'$와 $\phi'$는 각각 target network에 해당되며 업데이트의 안정성을 위해 존재하며 현재의 actor, critic으로부터 각각 soft update받게된다(DDPG참고)
-$$
-\text{soft update : } \theta' \gets \tau\theta + (1-\tau)\theta'
-$$
+
+<img src="../img/td3_10.png"/>
 
 </br>
 
 ### [4. Overestimation Bias]
 
 discrete action을 사용하는 Q-learning에서는 가치추정단계에서 다음과 같은 greedy target을 사용한다.
-$$
-y = r + \gamma max_{a'}Q(s',a')
-$$
+
+<img src="../img/td3_11.png"/>
+
 하지만, 이러한 방식은 target이 error $\epsilon$에 취약한 경우 error를 가지는 value의 maximum값이 일반적으로 true maximum보다 크다는 것이 입증되었다. *(Thrun & Schwatz, 1993)*
-$$
-\mathbb{E}_\epsilon[max_{a'}(Q(s',a')+\epsilon)] \ge max_{a'}Q(s',a')
-$$
+
+<img src="../img/td3_12.png"/>
+
 즉, 이러한 결과는 **지속적인 overestimation bias**를 만들게 되며 이러한 문제는 function approximation을 이용하게 되었을 때 피할 수 없는 문제이다.
 
 </br>
@@ -97,26 +89,22 @@ $$
 먼저, 해당 section에서는 <u>deterministic policy gradient</u>를 사용해 policy를 업데이트한다는 가정 하에 overestimation이 발생한다는 것을 증명하려한다는 것을 알린다.
 
 주어진 policy parameter $\phi$에 대해 function approximation을 사용해 update를 진행한 policy $\phi_{\text{approx}}$와 optimal policy $\pi$의 true value function을 사용해 update를 진행한 $\phi_{\text{true}}$가 아래와 같이 존재한다고 가정하자.
-$$
-\phi_{\text{approx}} = \phi + \frac{\alpha}{Z_1}\mathbb{E}_{s\sim p_\pi}[\nabla_\phi\pi_\phi(s)\nabla_aQ_\theta(s,a)|_{a=\pi_\phi(s)}]
-\\\phi_{\text{true}} = \phi + \frac{\alpha}{Z_2}\mathbb{E}_{s\sim p_\pi}[\nabla_\phi\pi_\phi(s)\nabla_aQ^\pi(s,a)|_{a=\pi_\phi(s)}].
-$$
+
+<img src="../img/td3_13.png"/>
+
 그리고 위 parameter를 사용하고있는 policy를 각각 $\pi_{\text{approx}}$, $\pi_{\text{true}}$라 할 때 다음이 성립한다.
 
 1. 충분히 작은 error $\epsilon_1$이 존재($\alpha\ge\epsilon_1$)한다고 할 때, $\pi_\text{approx}$의 approximate value는 $\pi_\text{true}$의 approximate value보다 작거나 같다.
-   $$
-   \mathbb{E}[Q_\theta(s,\pi_{\text{approx}}(s))] \ge \mathbb{E}[Q_\theta(s,\pi_{\text{true}}(s))]
-   $$
+   
+   <img src="../img/td3_14.png"/>
    
 2. 마찬가지로 충분히 작은 error $\epsilon_2$이 존재($\alpha\ge\epsilon_2$)한다고 할 때, $\pi_\text{true}$의 true value는 $\pi_\text{approx}$의 true value보다 작거나 같다.
-   $$
-   \mathbb{E}[Q^\pi(s,\pi_{\text{true}}(s))] \ge \mathbb{E}[Q^\pi(s,\pi_{\text{approx}}(s))]
-   $$
 
-3. 마지막으로 $\mathbb{E}[Q_\theta(s,\pi_{\text{true}}(s))] \ge \mathbb{E}[Q^\pi(s,\pi_{\text{true}}(s))]$이 성립한다면, 위 두식에 의해 $\alpha < min(\epsilon_1,\epsilon_2)일 때 value estimation 값은 overestimated될 것이다.
-   $$
-   \mathbb{E}[Q_\theta(s,\pi_{\text{approx}}(s))] \ge \mathbb{E}[Q^\pi(s,\pi_{\text{approx}}(s))]
-   $$
+   <img src="../img/td3_15.png"/>
+
+3. 마지막으로 $\mathbb{E}[Q_\theta(s,\pi_{\text{true}}(s))] \ge \mathbb{E}[Q^\pi(s,\pi_{\text{true}}(s))]$이 성립한다면, 위 두식에 의해 $\alpha < min(\epsilon_1,\epsilon_2)$일 때 value estimation 값은 overestimated될 것이다.
+
+   <img src="../img/td3_16.png"/>
 
 </br>
 
@@ -156,10 +144,9 @@ Double Q-learning에서는 서로 다른 **두 value estimator를 이용**해 va
 하지만 실제로는 actor-critic에서 <u>너무도 천천히 변화하는 policy에 대해</u>서는 **current policy와 target policy의 network가 너무 유사해 독립적인 estimator로서 만들어지기 힘들며** overestimation의 개선이 미미하다는 것을 발견하였다.
 
 그 대신에 기존의 Double Q-learning에서의 방식이 아닌 actor($\pi_{\phi_1}$, $\pi_{\phi_2}$)와 critic($Q_{\theta_1}$, $Q_{\theta_2}$)에 대해 짝을 만들어 서로의 estimator를 이용해 업데이트하는 방법 역시 고려해 볼 수 있다.
-$$
-y_1 = r + \gamma Q_{\theta'_2}(s',\pi_{\phi_1}(s))\\
-y_2 = r + \gamma Q_{\theta'_1}(s',\pi_{\phi_2}(s))
-$$
+
+<img src="../img/td3_17.png"/>
+
 자세한 설명을 위해 풀어 설명하자면,
 
 1. 두 critic network의 target을 서로 독립적인 target critic network로 정해 critic update를 진행한다.
@@ -178,9 +165,9 @@ $$
 결과적으로 특정 states들에 대해 $Q_{\theta_2}(s,\pi_{\phi_1}(s)) > Q_{\theta_1}(s,\pi_{\phi_1}(s))$를 만족하게 될 것이며, true value보다 $Q_{\theta_1}$의 값이 overestimate될 수도, 그리고 특정 부분에서는 훨씬 심할수도 있다는 것이다.
 
 이러한 문제를 해결하기 위하여 이 논문에서는 **덜 biased 된 $Q_{\theta_2}$를 biased된 $Q_{\theta_1}$로 upper-bound 제한 하는 방법을 제시한다.** 말로 표현하려니 약간 난해할 수 있지만, 간단히 식으로 다음과 같이 나타낼 수 있다.
-$$
-y_1 = r + \gamma \text{min}_{i=1,2}Q_{\theta'_i}(s',\pi_{\phi_1}(s'))
-$$
+
+<img src="../img/td3_18.png"/>
+
  즉, 두 추정값의 minimum값을 target으로 이용해 업데이트(*Clipped Double Q-learning algorithm*)하고자 하는 것이다. 
 
 </br>
@@ -208,19 +195,17 @@ Overestimation bias뿐만아니라 high variance의 value estimation은 policy u
 temporal difference update를 이용하는 모든 estimator는 value를 estimation하는 과정에서 error를 동반한다. 매 업데이트마다는 **아주 작은 error일지라도 이러한 estimation error는 쌓일 수 있기 때문에 잠재적인 거대한 overestimation bias와 이로 인한 suboptimal policy update를 유도**할 수 있다.
 
 이는 function approximation 셋팅에서 훨씬 심각하게 발생하며 이러한 환경에서는 절대로 bellman equation을 만족할 수 없다.(매 업데이트마다  일정량 이상의 TD-residual이 발생하기 때문)
-$$
-Q_\theta(s,a) = r + \gamma\mathbb{E}[Q_\theta(s',a')] - \delta(s,a)
-$$
+
+<img src="../img/td3_19.png"/>
+
 </br>
 
 해당 문제는 아래와 같이 expected return의 estimation을 학습한다는 개념을 expected return에서 미래의 td-error의 expected discounted sum을 뺀 값이라고 형태변환 할 수 있다. 즉, 쉽게 설명하자면 **단순히 estimation과정에서의 에러가 아닌 미래에 얻을 reward자체에 대한 error로 보자**는 것이다. 이에 따르면 estimation의 variance는 미래에 얻을 reward(performance)의 variance와 estimation error에 비례함을 의미한다. 
 
-:arrow_right: estimation variance를 잡아야 하는 이유? 를 강조하기 위한 내용으로 추측된다.
-$$
-Q_\theta(s_t,a_t) = r_t + \gamma\mathbb{E}[Q_\theta(s_{t+1},a_{t+1})] - \delta_t
-\\ = r_t + \gamma\mathbb{E}[r_{t+1} + \gamma\mathbb{E}[Q_\theta(s_{t+2},a_{t+2})] - \delta_{t+1}] - \delta_{t}
-\\=\mathbb{E}_{s_i\sim p_\pi,a_i\sim\pi}[\sum^T_{i=t}\gamma^{i-t}(r_i-\delta_i)].
-$$
+>  estimation variance를 잡아야 하는 이유? 를 강조하기 위한 내용으로 추측된다.
+
+<img src="../img/td3_20.png"/>
+
 </br>
 
 #### 5.2 Target Networks and Delayed Policy Updates
@@ -273,17 +258,14 @@ deterministic policy에 대한 걱정 중 하나는 바로 **value estimation에
 >
 > deterministic policy에 대한 smoothing을 통해 variance를 잡을 수 있다.
 
-$$
-y = r + \mathbb{E}_{\epsilon}[Q_{\theta'}(s',\pi_{\phi'}(s')+\epsilon)]
-$$
+<img src="../img/td3_21.png"/>
 
 그럼 target policy를 smoothing하려면 어떻게 하면 좋을까?
 
 바로 **target value를 구하기 직전의 next action에 random noise를 더해 input을 smoothing하는 방법**으로 다음과 같이 구현 가능하다.
-$$
-y = r + \gamma Q_{\theta'}(s',\pi_{\phi'}(s')+\epsilon),\\
-\epsilon \sim \text{clip}(\mathcal{N}(0,\sigma),-c,c)
-$$
+
+<img src="../img/td3_22.png"/>
+
 </br>
 
 ### [6. Experiments]
@@ -297,11 +279,8 @@ TD3는 한 쌍의 critics와 하나의 actor로 구성되어있다.
 1. 매 스탭마다 target policy에 의해 선택된 action의 **minimum target value을 이용해 한 쌍의 critics를 업데이트** 시켜준다.
 
    (여기서 target policy smoothing을 위해 target policy에 $\sigma$만큼의 노이즈를 첨가해준다.)
-
-$$
-y = r + \gamma \text{min}_{i=1,2}Q_{\theta_i'}(s',\pi_{\phi'}(s')+\epsilon)
-\\ \epsilon \sim \text{clip}(\mathcal{N}(0,\sigma),-c,c)
-$$
+   
+   <img src="../img/td3_23.png"/>
 
 2. 그리고 **매 d step**마다 $Q_{\theta_1}$을 이용해 **policy 업데이트**를 진행한다.
 
