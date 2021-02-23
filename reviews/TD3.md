@@ -48,7 +48,7 @@ Scott Fujimoto , Herke van Hoof , David Meger (2018)
 
 <img src="../img/td3_6.png"/>
 
-강화학습에서의 **목표**는 반환값의 기대치를 최대화 해줄 수 있는 최적의 policy $\pi_\phi$(즉 이를 구성하는 파라미터 $\phi$)를 구하는 것이며, 이러한 parameterized policy는 **반환값의 기대치의 기울기값을 통해 업데이트** 해준다.
+강화학습에서의 **목표**는 반환값의 기대치를 최대화 해줄 수 있는 최적의 policy <img src="https://latex.codecogs.com/gif.latex?\pi_\phi" title="\pi_\phi" />(즉 이를 구성하는 파라미터 <img src="https://latex.codecogs.com/gif.latex?\phi" title="\phi" />)를 구하는 것이며, 이러한 parameterized policy는 **반환값의 기대치의 기울기값을 통해 업데이트** 해준다.
 
 <img src="../img/td3_7.png"/>
 
@@ -56,11 +56,11 @@ Scott Fujimoto , Herke van Hoof , David Meger (2018)
 
 <img src="../img/td3_8.png"/>
 
-large state space에 대해 Q value를 근사하기 위해 parameter $\theta$를 사용하며, objective $y$에 대해 업데이트 수식은 다음과 같다.
+large state space에 대해 Q value를 근사하기 위해 parameter <img src="https://latex.codecogs.com/gif.latex?\theta" title="\theta" />를 사용하며, objective <img src="https://latex.codecogs.com/gif.latex?y" title="y" />에 대해 업데이트 수식은 다음과 같다.
 
 <img src="../img/td3_9.png"/>
 
-여기서 $\theta'$와 $\phi'$는 각각 target network에 해당되며 업데이트의 안정성을 위해 존재하며 현재의 actor, critic으로부터 각각 soft update받게된다(DDPG참고)
+여기서 <img src="https://latex.codecogs.com/gif.latex?\theta'" title="\theta'" />와 <img src="https://latex.codecogs.com/gif.latex?\phi'" title="\phi'" />는 각각 target network에 해당되며 업데이트의 안정성을 위해 존재하며 현재의 actor, critic으로부터 각각 soft update받게된다(DDPG참고)
 
 <img src="../img/td3_10.png"/>
 
@@ -72,7 +72,7 @@ discrete action을 사용하는 Q-learning에서는 가치추정단계에서 다
 
 <img src="../img/td3_11.png"/>
 
-하지만, 이러한 방식은 target이 error $\epsilon$에 취약한 경우 error를 가지는 value의 maximum값이 일반적으로 true maximum보다 크다는 것이 입증되었다. *(Thrun & Schwatz, 1993)*
+하지만, 이러한 방식은 target이 error <img src="https://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" />에 취약한 경우 error를 가지는 value의 maximum값이 일반적으로 true maximum보다 크다는 것이 입증되었다. *(Thrun & Schwatz, 1993)*
 
 <img src="../img/td3_12.png"/>
 
@@ -88,25 +88,27 @@ discrete action을 사용하는 Q-learning에서는 가치추정단계에서 다
 
 먼저, 해당 section에서는 <u>deterministic policy gradient</u>를 사용해 policy를 업데이트한다는 가정 하에 overestimation이 발생한다는 것을 증명하려한다는 것을 알린다.
 
-주어진 policy parameter $\phi$에 대해 function approximation을 사용해 update를 진행한 policy $\phi_{\text{approx}}$와 optimal policy $\pi$의 true value function을 사용해 update를 진행한 $\phi_{\text{true}}$가 아래와 같이 존재한다고 가정하자.
+주어진 policy parameter <img src="https://latex.codecogs.com/gif.latex?\phi" title="\phi" />에 대해 function approximation을 사용해 update를 진행한 policy <img src="https://latex.codecogs.com/gif.latex?\phi_{\text{approx}}" title="\phi_{\text{approx}}" />와 optimal policy <img src="https://latex.codecogs.com/gif.latex?\pi" title="\pi" />의 true value function을 사용해 update를 진행한 <img src="https://latex.codecogs.com/gif.latex?\phi_{\text{true}}" title="\phi_{\text{true}}" />가 아래와 같이 존재한다고 가정하자.
 
 <img src="../img/td3_13.png"/>
 
-그리고 위 parameter를 사용하고있는 policy를 각각 $\pi_{\text{approx}}$, $\pi_{\text{true}}$라 할 때 다음이 성립한다.
+그리고 위 parameter를 사용하고있는 policy를 각각 <img src="https://latex.codecogs.com/gif.latex?\pi_{\text{approx}}" title="\pi_{\text{approx}}" />, <img src="https://latex.codecogs.com/gif.latex?\pi_{\text{true}}" title="\pi_{\text{true}}" />라 할 때 다음이 성립한다.
 
-1. 충분히 작은 error $\epsilon_1$이 존재($\alpha\ge\epsilon_1$)한다고 할 때, $\pi_\text{approx}$의 approximate value는 $\pi_\text{true}$의 approximate value보다 작거나 같다.
+1. 충분히 작은 error <img src="https://latex.codecogs.com/gif.latex?\epsilon_1" title="\epsilon_1" />이 존재(<img src="https://latex.codecogs.com/gif.latex?\alpha\ge\epsilon_1" title="\alpha\ge\epsilon_1" />)한다고 할 때, <img src="https://latex.codecogs.com/gif.latex?\pi_\text{approx}" title="\pi_\text{approx}" />의 approximate value는 <img src="https://latex.codecogs.com/gif.latex?\pi_\text{true}" title="\pi_\text{true}" /> approximate value보다 작거나 같다.
    
    <img src="../img/td3_14.png"/>
    
-2. 마찬가지로 충분히 작은 error $\epsilon_2$이 존재($\alpha\ge\epsilon_2$)한다고 할 때, $\pi_\text{true}$의 true value는 $\pi_\text{approx}$의 true value보다 작거나 같다.
+2. 마찬가지로 충분히 작은 error <img src="https://latex.codecogs.com/gif.latex?\epsilon_2" title="\epsilon_2" />이 존재(<img src="https://latex.codecogs.com/gif.latex?\alpha\ge\epsilon_2" title="\alpha\ge\epsilon_2" />)한다고 할 때, <img src="https://latex.codecogs.com/gif.latex?\pi_\text{true}" title="\pi_\text{true}" />의 true value는 <img src="https://latex.codecogs.com/gif.latex?\pi_\text{approx}" title="\pi_\text{approx}" />의 true value보다 작거나 같다.
 
    <img src="../img/td3_15.png"/>
 
-3. 마지막으로 $\mathbb{E}[Q_\theta(s,\pi_{\text{true}}(s))] \ge \mathbb{E}[Q^\pi(s,\pi_{\text{true}}(s))]$이 성립한다면, 위 두식에 의해 $\alpha < min(\epsilon_1,\epsilon_2)$일 때 value estimation 값은 overestimated될 것이다.
+3. 마지막으로 <img src="https://latex.codecogs.com/gif.latex?\mathbb{E}[Q_\theta(s,\pi_{\text{true}}(s))]&space;\ge&space;\mathbb{E}[Q^\pi(s,\pi_{\text{true}}(s))]" title="\mathbb{E}[Q_\theta(s,\pi_{\text{true}}(s))] \ge \mathbb{E}[Q^\pi(s,\pi_{\text{true}}(s))]" />이 성립한다면, 위 두식에 의해 ![img](https://latex.codecogs.com/gif.latex?%5Calpha%20%3C%20min%28%5Cepsilon_1%2C%5Cepsilon_2%29))일 때 value estimation 값은 overestimated될 것이다.
 
    <img src="../img/td3_16.png"/>
 
 </br>
+
+
 
 수식으로 어렵게 씌여져있지만, 결국 전달하고자하는 바는 **function approximation을 이용한 actor-critic역시 true Q-value에 비해 overestimation됨**을 증명하고자 한 것이다.
 
@@ -143,7 +145,7 @@ Double Q-learning에서는 서로 다른 **두 value estimator를 이용**해 va
 
 하지만 실제로는 actor-critic에서 <u>너무도 천천히 변화하는 policy에 대해</u>서는 **current policy와 target policy의 network가 너무 유사해 독립적인 estimator로서 만들어지기 힘들며** overestimation의 개선이 미미하다는 것을 발견하였다.
 
-그 대신에 기존의 Double Q-learning에서의 방식이 아닌 actor($\pi_{\phi_1}$, $\pi_{\phi_2}$)와 critic($Q_{\theta_1}$, $Q_{\theta_2}$)에 대해 짝을 만들어 서로의 estimator를 이용해 업데이트하는 방법 역시 고려해 볼 수 있다.
+그 대신에 기존의 Double Q-learning에서의 방식이 아닌 actor(![img](https://latex.codecogs.com/gif.latex?%5Cpi_%7B%5Cphi_1%7D), ![img](https://latex.codecogs.com/gif.latex?%5Cpi_%7B%5Cphi_2%7D))와 critic(![img](https://latex.codecogs.com/gif.latex?Q_%7B%5Ctheta_1%7D), ![img](https://latex.codecogs.com/gif.latex?Q_%7B%5Ctheta_2%7D))에 대해 짝을 만들어 서로의 estimator를 이용해 업데이트하는 방법 역시 고려해 볼 수 있다.
 
 <img src="../img/td3_17.png"/>
 
@@ -162,9 +164,9 @@ Double Q-learning에서는 서로 다른 **두 value estimator를 이용**해 va
 
 </br>
 
-결과적으로 특정 states들에 대해 $Q_{\theta_2}(s,\pi_{\phi_1}(s)) > Q_{\theta_1}(s,\pi_{\phi_1}(s))$를 만족하게 될 것이며, true value보다 $Q_{\theta_1}$의 값이 overestimate될 수도, 그리고 특정 부분에서는 훨씬 심할수도 있다는 것이다.
+결과적으로 특정 states들에 대해 ![img](https://latex.codecogs.com/gif.latex?Q_%7B%5Ctheta_2%7D%28s%2C%5Cpi_%7B%5Cphi_1%7D%28s%29%29%20%3E%20Q_%7B%5Ctheta_1%7D%28s%2C%5Cpi_%7B%5Cphi_1%7D%28s%29%29)를 만족하게 될 것이며, true value보다 ![img](https://latex.codecogs.com/gif.latex?Q_%7B%5Ctheta_1%7D)의 값이 overestimate될 수도, 그리고 특정 부분에서는 훨씬 심할수도 있다는 것이다.
 
-이러한 문제를 해결하기 위하여 이 논문에서는 **덜 biased 된 $Q_{\theta_2}$를 biased된 $Q_{\theta_1}$로 upper-bound 제한 하는 방법을 제시한다.** 말로 표현하려니 약간 난해할 수 있지만, 간단히 식으로 다음과 같이 나타낼 수 있다.
+이러한 문제를 해결하기 위하여 이 논문에서는 **덜 biased 된 ![img](https://latex.codecogs.com/gif.latex?Q_%7B%5Ctheta_2%7D)를 biased된 ![img](https://latex.codecogs.com/gif.latex?Q_%7B%5Ctheta_1%7D)로 upper-bound 제한 하는 방법을 제시한다.** 말로 표현하려니 약간 난해할 수 있지만, 간단히 식으로 다음과 같이 나타낼 수 있다.
 
 <img src="../img/td3_18.png"/>
 
@@ -278,11 +280,11 @@ TD3는 한 쌍의 critics와 하나의 actor로 구성되어있다.
 
 1. 매 스탭마다 target policy에 의해 선택된 action의 **minimum target value을 이용해 한 쌍의 critics를 업데이트** 시켜준다.
 
-   (여기서 target policy smoothing을 위해 target policy에 $\sigma$만큼의 노이즈를 첨가해준다.)
+   (여기서 target policy smoothing을 위해 target policy에 ![img](https://latex.codecogs.com/gif.latex?%5Csigma)만큼의 노이즈를 첨가해준다.)
    
    <img src="../img/td3_23.png"/>
 
-2. 그리고 **매 d step**마다 $Q_{\theta_1}$을 이용해 **policy 업데이트**를 진행한다.
+2. 그리고 **매 d step**마다 ![img](https://latex.codecogs.com/gif.latex?Q_%7B%5Ctheta_1%7D)을 이용해 **policy 업데이트**를 진행한다.
 
 ---
 
