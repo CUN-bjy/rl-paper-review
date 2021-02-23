@@ -94,7 +94,7 @@ Scott Fujimoto , Herke van Hoof , David Meger (2018)
 
 [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor]
 
-`REVIEW` 	|	[`PAPER`](https://arxiv.org/pdf/1801.01290.pdf)
+[`REVIEW`](./reviews/SAC.md) 	|	[`PAPER`](https://arxiv.org/pdf/1801.01290.pdf)
 
 ---
 
