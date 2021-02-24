@@ -76,7 +76,7 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael I. Jordan and Pieter Abbee
 
 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov(2017)
 
-[`REVIEW`](./reviews/PPO.md) 	|	[`PAPER`](https://arxiv.org/pdf/1707.06347.pdf)	|	[`CODE`](https://github.com/CUN-bjy/gym-ppo-keras)
+[`REVIEW`](./reviews/PPO.md) 	|	[`PAPER`](https://arxiv.org/pdf/1707.06347.pdf)
 
 </br>
 

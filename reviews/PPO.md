@@ -6,7 +6,7 @@
 
 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, Oleg Klimov
 
-[`PAPER`](https://arxiv.org/pdf/1707.06347.pdf)	|	[`CODE`](https://github.com/CUN-bjy/gym-ppo-keras)
+[`PAPER`](https://arxiv.org/pdf/1707.06347.pdf)
 
 <br/>
 
